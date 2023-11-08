@@ -1,0 +1,29 @@
+{
+  "name": "git-commit-prompt",
+  "version": "1.0.0",
+  "description": "Command line utility to structure your git commit messages",
+  "main": "git-commit-prompt.bat",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monolithgoon/git-commit-prompt.git"
+  },
+  "keywords": [
+    "command-line",
+    "git",
+    "ci/cd",
+    "documentation",
+    "automation"
+  ],
+  "author": "MonkeyPawz Collective",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/monolithgoon/git-commit-prompt/issues"
+  },
+  "homepage": "https://github.com/monolithgoon/git-commit-prompt#readme",
+  "dependencies": {
+    "chalk": "^4.1.0"
+  }
+}
