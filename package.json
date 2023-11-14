@@ -4,7 +4,7 @@
   "description": "Command line utility to structure your git commit messages",
   "main": "git-commit-prompt.bat",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "clear && jest"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/monolithgoon/git-commit-prompt#readme",
   "dependencies": {
-    "chalk": "^4.1.0"
+    "chalk": "^4.1.0",
+    "jest": "^29.7.0"
   }
 }
