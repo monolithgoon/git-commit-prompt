@@ -21,7 +21,7 @@ async function writeLocalCommit(commitMsg, readLineInterface) {
 		const commitResponse = await execAsync(`git add -A && git commit -m ${quotedCommitMsg}`, readLineInterface);
 
 		// 
-		console.log(chalk.interaction("LOCAL COMMIT WRITE SUCCESSFUL"));
+		console.log(chalk.success("Local commit write successful"));
 
 		// Print the commit response
 		printCommitMessage(commitResponse);
