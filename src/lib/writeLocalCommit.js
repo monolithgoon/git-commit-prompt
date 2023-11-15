@@ -29,7 +29,7 @@ async function writeLocalCommit(commitMsg, readLineInterface) {
 	} catch (error) {
 		// console.error(chalk.warningBright(`Local commit error: ${error}`));
 		console.error(chalk.warningStrong(error));
-		throw new Error("LOCAL COMMIT WRITE FAILED");
+		throw new Error("Lcoal commit write failed");
 	}
 }
 
