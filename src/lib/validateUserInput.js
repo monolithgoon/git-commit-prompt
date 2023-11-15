@@ -61,7 +61,7 @@ async function validateUserInput(promptMsg, rl, promptFlag) {
 				}
 				break;
 
-			case "CONFIRM":
+			case "LOCAL COMMIT":
 				// Check if the input is a valid confirmation response
 				if (!["yes", "y", "no", "n", "quit", "end", "close"].includes(promptResponse.toLowerCase())) {
 					console.log(chalk.consoleYlow("Invalid input. Please enter 'Y', 'N', 'END' or 'QUIT'"));

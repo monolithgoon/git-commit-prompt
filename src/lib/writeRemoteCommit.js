@@ -1,7 +1,6 @@
 const chalk = require("../chalk-messages.js");
 const { execAsync } = require("./execAsync.js");
 
-
 async function writeRemoteCommit(readLineInterface) {
 	console.log(chalk.consoleGy("Committing to remote .."));
 	try {
@@ -11,6 +10,7 @@ async function writeRemoteCommit(readLineInterface) {
 		console.log(chalk.consoleG(pushRemoteCommitResponse));
 		return true;
 	} catch (error) {
+		console.error(`remoteCommitError: ${error}`);
 		return false;
 	}
 }

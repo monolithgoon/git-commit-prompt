@@ -2,7 +2,10 @@ const readline = require("readline");
 const chalk = require("../chalk-messages.js");
 const { validateUserInput } = require("./validateUserInput.js");
 const { displayCommitTypes } = require("./lib.js");
-const { writeCommits } = require("./writeCommits.js");
+const { promptCommitDest } = require("./promptCommitDest.js");
+const { writeLocalCommit } = require("./writeLocalCommit.js");
+const { writeRemoteCommit } = require("./writeRemoteCommit.js");
+const { forceRemoteCommit } = require("./forceRemoteCommit.js");
 
 /**
  * Prompt the user for input unless the choice is "NONE".
@@ -21,7 +24,6 @@ const getUserCommitCategoryInput = async (choice, rl) => {
  * @function executeCommitPrompts
  */
 async function executeCommitPrompts() {
-
 	// Create a readline interface to prompt the user for input
 	const rl = readline.createInterface({
 		input: process.stdin,
@@ -32,7 +34,7 @@ async function executeCommitPrompts() {
 	displayCommitTypes();
 
 	// Declare variables to store commit information
-	let commitType, commitDomain, commitMsg, completeCommitMsg, commitAmendChoice;
+	let commitType, commitDomain, commitMsg, completeCommitMsg, commitAmendChoice, remoteCommitOk;
 
 	try {
 		// Prompt the user for commit information until they confirm their message
@@ -67,11 +69,11 @@ async function executeCommitPrompts() {
 
 			console.log({ completeCommitMsg });
 
-			// Confirm the commit message with the user
+			// Prompt user to confirm the commit message
 			let localCommitConfirm = await validateUserInput(
 				"Confirm commit message is OK? ( Y / N / QUIT):",
 				rl,
-				"CONFIRM"
+				"LOCAL COMMIT"
 			);
 
 			if (["yes", "y"].includes(localCommitConfirm.toLowerCase())) {
@@ -93,9 +95,25 @@ async function executeCommitPrompts() {
 			}
 		}
 
-		// Write local and remote commits
-		await writeCommits(completeCommitMsg, rl);
+		// Make a local commit
+		await writeLocalCommit(completeCommitMsg, rl);
 
+		// Ask user to commit to remote
+		let remoteCommitCheck = await promptCommitDest("Push commit to remote? (Y / N)", "REMOTE", rl);
+
+		// Commit to remote if the user assents
+		if (remoteCommitCheck === true) {
+			remoteCommitOk = await writeRemoteCommit(rl);
+		}
+
+		// Force push remote commit if it fails initially
+		if (remoteCommitOk === false) {
+			await promptCommitDest(`Force push to remote? (Y / N)`, "REMOTE", rl);
+			// Todo -> invoke a promptForceRemoteCommit fn. here
+			// Other potential options could be rebase, pull, etc
+			// ..
+			// await forceRemoteCommit(rl);
+		}
 	} catch (error) {
 		console.error(chalk.fail(`executeCommitPrompts fn. error`));
 		console.error(chalk.consoleYlow(error.message));
