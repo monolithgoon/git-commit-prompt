@@ -1,29 +1,53 @@
 const readline = require("readline");
 const chalk = require("../chalk-messages.js");
-const { promptUserInput } = require("./promptUserInput.js");
+const { validateUserInput } = require("./validateUserInput.js");
 const { writeLocalCommit } = require("./writeLocalCommit.js");
 const { writeRemoteCommit } = require("./writeRemoteCommit.js");
 const { forceRemoteCommit } = require("./forceRemoteCommit.js");
 const { displayCommitTypes } = require("./lib.js");
 
 /**
- * Asynchronously prompts the user for input based on the specified choice.
+ * Prompt the user for input unless the choice is "NONE".
  *
  * @param {string} choice - The commit choice, e.g., "TYPE", "DOMAIN", "MESSAGE", or "NONE".
  * @param {readline.Interface} rl - The readline interface for reading user input.
  * @returns {Promise<?string>} - A Promise that resolves to the user input or undefined if the choice is "NONE".
  */
-const getUserInput = async (choice, rl) => {
-  /**
-   * Prompt the user for input unless the choice is "NONE".
-   *
-   * @param {string} promptMessage - The prompt message to display to the user.
-   * @param {readline.Interface} rl - The readline interface for reading user input.
-   * @param {string} choice - The commit choice.
-   * @returns {Promise<?string>} - A Promise that resolves to the user input or undefined if the choice is "NONE".
-   */
-  return choice !== "NONE" ? await promptUserInput(`Enter a commit ${choice}:`, rl, choice) : undefined;
+const getUserCommitCategoryInput = async (choice, rl) => {
+	return choice !== "NONE" ? await validateUserInput(`Enter a commit ${choice}:`, rl, choice) : undefined;
 };
+
+/**
+ * Writes local and potentially remote commits based on user input.
+ *
+ * @param {string} commitMsg - The commit message.
+ * @param {readline.Interface} rl - The readline interface for user input.
+ */
+async function writeCommits(commitMsg, rl) {
+  try {
+    // Make a local commit
+    await writeLocalCommit(commitMsg, rl);
+
+    // Prompt user to commit to remote origin
+    const remoteCommitConfirm = await validateUserInput("Push commit to remote origin? (Y/N)", rl, "ORIGIN");
+
+		if (["yes", "y"].includes(remoteCommitConfirm.toLowerCase())) {
+      const remoteCommitOk = writeRemoteCommit(rl);
+      if (!remoteCommitOk) {
+        forceRemoteCommit(rl);
+      }
+    }
+
+    // Set exit code and close readline interface
+    process.exitCode = 0;
+    rl.close();
+  } catch (error) {
+    console.error("An error occurred:", error);
+    // Optionally, set a non-zero exit code if an error occurs
+    process.exitCode = 1;
+    rl.close();
+  }
+}
 
 /**
  * @description Prompts the user for a commit message and number of log lines, then
@@ -41,14 +65,7 @@ async function executeCommitPrompts() {
 	displayCommitTypes();
 
 	// Declare variables to store commit information
-	let commitType,
-		commitDomain,
-		commitMsg,
-		completeCommitMsg,
-		commitConfirm,
-		commitAmendChoice,
-		askRemoteCommit,
-		remoteCommitOk;
+	let commitType, commitDomain, commitMsg, completeCommitMsg, commitAmendChoice;
 
 	try {
 		// Prompt the user for commit information until they confirm their message
@@ -56,15 +73,15 @@ async function executeCommitPrompts() {
 			// Check if the user has requested to change a specific part of the commit message
 			switch (commitAmendChoice?.toUpperCase()) {
 				case "TYPE":
-					commitType = await getUserInput("TYPE", rl);
+					commitType = await getUserCommitCategoryInput("TYPE", rl);
 					break;
 
 				case "DOMAIN":
-					commitDomain = await getUserInput("DOMAIN", rl);
+					commitDomain = await getUserCommitCategoryInput("DOMAIN", rl);
 					break;
 
 				case "MESSAGE":
-					commitMsg = await getUserInput("MESSAGE", rl);
+					commitMsg = await getUserCommitCategoryInput("MESSAGE", rl);
 					break;
 
 				case "NONE":
@@ -72,9 +89,9 @@ async function executeCommitPrompts() {
 
 				default:
 					// Prompt the user for the full commit message if no amendment is requested
-					commitType = await getUserInput("TYPE", rl);
-					commitDomain = await getUserInput("DOMAIN", rl);
-					commitMsg = await getUserInput("MESSAGE", rl);
+					commitType = await getUserCommitCategoryInput("TYPE", rl);
+					commitDomain = await getUserCommitCategoryInput("DOMAIN", rl);
+					commitMsg = await getUserCommitCategoryInput("MESSAGE", rl);
 					break;
 			}
 
@@ -84,12 +101,16 @@ async function executeCommitPrompts() {
 			console.log({ completeCommitMsg });
 
 			// Confirm the commit message with the user
-			commitConfirm = await promptUserInput("Confirm commit message is OK? ( Y / N / QUIT):", rl, "CONFIRM");
+			let localCommitConfirm = await validateUserInput(
+				"Confirm commit message is OK? ( Y / N / QUIT):",
+				rl,
+				"CONFIRM"
+			);
 
-			if (["yes", "y"].includes(commitConfirm.toLowerCase())) {
+			if (["yes", "y"].includes(localCommitConfirm.toLowerCase())) {
 				// Break out of while loop
 				break;
-			} else if (["quit", "q", "end"].includes(commitConfirm.toLowerCase())) {
+			} else if (["quit", "q", "end"].includes(localCommitConfirm.toLowerCase())) {
 				// Quit cmd line program
 				process.exitCode = 0;
 			} else {
@@ -97,7 +118,7 @@ async function executeCommitPrompts() {
 				console.log({ commitType });
 				console.log({ commitDomain });
 				console.log({ commitMsg });
-				commitAmendChoice = await promptUserInput(
+				commitAmendChoice = await validateUserInput(
 					`Select which prompt to amend ( "TYPE", "DOMAIN", "MESSAGE", "NONE"):`,
 					rl,
 					"AMEND"
@@ -105,23 +126,31 @@ async function executeCommitPrompts() {
 			}
 		}
 
-		// Make a local commit
-		await writeLocalCommit(completeCommitMsg, rl);
+		// Write local and remote commits
+		writeCommits(completeCommitMsg, rl);
 
-		// Prompt user to commit to origin / master
-		askRemoteCommit = await promptUserInput("Push commit to remote origin? ( Y / N )", rl, "ORIGIN");
+		// // Make a local commit
+		// await writeLocalCommit(completeCommitMsg, rl);
 
-		remoteCommitOk = writeRemoteCommit(rl);
+		// // Prompt user to commit to remote origin
+		// let remoteCommitConfirm = await validateUserInput("Push commit to remote origin? ( Y / N )", rl, "ORIGIN");
 
-		if (!remoteCommitOk) forceRemoteCommit(rl);
-
-		process.exitCode = 0;
+		// if (["yes", "y"].includes(remoteCommitConfirm.toLowerCase())) {
+		// 	// process.exitCode = 0;
+		// 	let remoteCommitOk = writeRemoteCommit(rl);
+		// 	if (!remoteCommitOk) forceRemoteCommit(rl);
+		// } else {
+		// 	// We're done
+		// 	process.exitCode = 0;
+		// 	rl.close();
+		// }
 	} catch (error) {
-		console.error(chalk.fail(`executeCommitPrompts error`));
+		console.error(chalk.fail(`executeCommitPrompts fn. error`));
 		console.error(chalk.consoleYlow(error.message));
 		process.exitCode = 1;
 	} finally {
 		// Close the readline interface and exit the process
+		process.exitCode = 0;
 		rl.close();
 	}
 }

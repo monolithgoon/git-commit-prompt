@@ -1,5 +1,5 @@
 const chalk = require("../chalk-messages.js");
-const { askCommitPrompt } = require("./promptUserInput.js");
+const { askCommitPrompt } = require("./validateUserInput.js");
 const { execAsync } = require("./execAsync.js");
 
 

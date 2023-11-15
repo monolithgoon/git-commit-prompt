@@ -1,6 +1,6 @@
 const readline = require("readline");
 const chalk = require("../chalk-messages.js");
-const { askCommitPrompt } = require("./promptUserInput.js");
+const { askCommitPrompt } = require("./validateUserInput.js");
 const { writeLocalCommit } = require("./writeLocalCommit.js");
 const { writeRemoteCommit } = require("./writeRemoteCommit.js");
 const { forceRemoteCommit } = require("./forceRemoteCommit.js");
