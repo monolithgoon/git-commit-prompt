@@ -15,7 +15,9 @@ const { forceRemoteCommit } = require("./forceRemoteCommit.js");
  * @returns {Promise<?string>} - A Promise that resolves to the user input or undefined if the categoryFlag is "NONE".
  */
 const getUserCommitCategoryInput = async (categoryFlag, rl) => {
-	return categoryFlag !== "NONE" ? await validateUserInput(`Enter a commit ${categoryFlag}:`, rl, categoryFlag) : undefined;
+	return categoryFlag !== "NONE"
+		? await validateUserInput(`Enter a commit ${categoryFlag}:`, rl, categoryFlag)
+		: undefined;
 };
 
 /**
@@ -117,7 +119,7 @@ async function executeCommitPrompts() {
 		}
 	} catch (error) {
 		console.error(chalk.fail(`executeCommitPrompts fn. error`));
-		console.error(chalk.warningStrong(error.message));
+		console.error(chalk.warningStrong({ error }));
 		process.exitCode = 1;
 	} finally {
 		// Close the readline interface and exit the process
