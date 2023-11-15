@@ -4,6 +4,8 @@ const { execAsync } = require("./execAsync.js");
 
 
 async function forceRemoteCommit(readLineInterface) {
+
+	// 
 	const askForceCommitOrigin = await validateUserInput(
 		"Force push commit to remote origin? ( Y / N )",
 		readLineInterface,
@@ -11,6 +13,7 @@ async function forceRemoteCommit(readLineInterface) {
 	);
 
 	if (["yes", "y"].includes(askForceCommitOrigin.toLowerCase())) {
+
 		console.log(chalk.consoleGy("Force pushing to origin .."));
 
 		try {
@@ -22,7 +25,7 @@ async function forceRemoteCommit(readLineInterface) {
 		}
 	}
 
-	console.log("yeo are here");
+	console.log(chalk.connected("yeo are here"));
 	rl.close();
 	process.exit(0);
 }

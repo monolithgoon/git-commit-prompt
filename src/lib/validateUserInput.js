@@ -14,15 +14,20 @@ const { readlineQuestionAsync } = require("./readlineQuestionAsync.js")
  */
 
 async function validateUserInput(promptMsg, rl, promptFlag) {
+	
 	// Prompt the user for input and await the response
 	let promptResponse = await readlineQuestionAsync(`${promptMsg}`, rl);
 
-	// Validate the user input based on the promptMsg flag
+	// Trim empty space from the end of the response
+	promptResponse = promptResponse.trim();
+
+	// Check that the user input is a valid, non-empty string
 	if (typeof promptResponse !== "string" || promptResponse.trim() === "") {
 		console.log(chalk.consoleYlow(`Response must be a non-empty string`));
 
 		// Recursively call the function until a valid input is received
 		promptResponse = validateUserInput(promptMsg, rl, promptFlag);
+
 	} else {
 		switch (promptFlag) {
 			case "TYPE":
@@ -32,7 +37,7 @@ async function validateUserInput(promptMsg, rl, promptFlag) {
 					promptResponse = await validateUserInput(promptMsg, rl, promptFlag);
 				}
 
-				// Check if the user input is a valid commit type pre-set
+				// Check if the user's input is a valid commit type
 				if (!Object.values(COMMIT_TYPES).includes(promptResponse.toLowerCase())) {
 					console.log(chalk.consoleYlow(`Invalid input. Please enter a correct type:`));
 					console.log(COMMIT_TYPES);

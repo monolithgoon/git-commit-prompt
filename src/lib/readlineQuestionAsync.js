@@ -56,10 +56,10 @@ function readlineQuestionAsync(question, rl) {
 			}
 		});
 
-		// // Listen for the 'close' event to ensure the readline interface is closed
-		// rl.once("close", () => {
-		// 	console.log(chalk.interaction("Readline interface closed"));
-		// });
+		// Listen for the 'close' event to ensure the readline interface is closed
+		rl.once("close", () => {
+			console.log(chalk.interaction("Readline interface closed"));
+		});
 
 		// Listen for the 'error' event to catch errors during the question process
 		rl.on("error", (error) => {

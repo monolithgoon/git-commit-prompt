@@ -17,12 +17,18 @@ async function writeCommits(commitMsg, rl) {
 		await writeLocalCommit(commitMsg, rl);
 
 		// Ask user to commit to remote origin
-		const remoteCommitConfirm = await validateUserInput("Push commit to remote origin? (Y | N)", rl, "ORIGIN");
+		const remoteCommitConfirm = await validateUserInput("Push commit to remote origin? (Y / N)", rl, "ORIGIN");
 
 		// Commit to remote origin
 		if (["yes", "y"].includes(remoteCommitConfirm.toLowerCase())) {
+			
+			// 
 			const remoteCommitOk = await writeRemoteCommit(rl);
-			if (!remoteCommitOk) {
+
+			console.log({remoteCommitOk})
+			
+			// 
+			if (remoteCommitOk === false) {
 				await forceRemoteCommit(rl);
 			}
 		}
