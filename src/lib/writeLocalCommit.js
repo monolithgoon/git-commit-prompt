@@ -1,6 +1,6 @@
 const chalk = require("./chalk-messages.js");
 const { execAsync } = require("./execAsync.js");
-const { printCommitMessage } = require("./lib.js");
+const { printCommitMessage } = require("./logger.js");
 
 /**
  * Writes a local commit using the provided commit message.
