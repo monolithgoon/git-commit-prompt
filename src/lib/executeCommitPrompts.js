@@ -21,6 +21,7 @@ const getUserCommitCategoryInput = async (choice, rl) => {
  * @function executeCommitPrompts
  */
 async function executeCommitPrompts() {
+	
 	// Create a readline interface to prompt the user for input
 	const rl = readline.createInterface({
 		input: process.stdin,

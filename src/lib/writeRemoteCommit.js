@@ -3,7 +3,7 @@ const { execAsync } = require("./execAsync.js");
 
 
 async function writeRemoteCommit(readLineInterface) {
-	console.log(chalk.consoleGy("Committing to origin .."));
+	console.log(chalk.consoleGy("Committing to remote .."));
 	try {
 		const pushOriginResponse = await execAsync(`git push origin master`, readLineInterface);
 		console.log(`pushOriginResponse:`);

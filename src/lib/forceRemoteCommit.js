@@ -1,10 +1,10 @@
 const chalk = require("../chalk-messages.js");
-const { askCommitPrompt } = require("./validateUserInput.js");
+const { validateUserInput } = require("./validateUserInput.js");
 const { execAsync } = require("./execAsync.js");
 
 
 async function forceRemoteCommit(readLineInterface) {
-	const askForceCommitOrigin = await askCommitPrompt(
+	const askForceCommitOrigin = await validateUserInput(
 		"Force push commit to remote origin? ( Y / N )",
 		readLineInterface,
 		"ORIGIN"
