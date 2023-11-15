@@ -1,7 +1,7 @@
-const { execAsync } = require('../src/lib/execAsync');
 const { exec } = require('child_process');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
+const { execAsync } = require('../src/execAsync');
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;

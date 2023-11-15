@@ -1,10 +1,12 @@
 const { expect } = require("chai");
-const { validateUserInput } = require("../src/lib/validateUserInput");
+const readline = require("readline");
+const { validateUserInput } = require("../src/validateUserInput");
 
-// Mock readline interface for testing
-const rlMock = {
-  question: async () => {},
-};
+// Create a readline interface using the readable stream
+const rlMock = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
 describe("validateUserInput", () => {
   it("should validate commit type input", async () => {
@@ -14,12 +16,12 @@ describe("validateUserInput", () => {
     const invalidInput = "a";
 
     // Valid input
-    rlMock.question = async () => validInput;
+    rlMock.question = (query, callback) => callback(validInput);
     const result = await validateUserInput(promptMsg, rlMock, promptFlag);
     expect(result).to.equal(validInput);
 
     // Invalid input (too short)
-    rlMock.question = async () => invalidInput;
+    rlMock.question = (query, callback) => callback(invalidInput);
     const invalidResult = await validateUserInput(promptMsg, rlMock, promptFlag);
     expect(invalidResult).to.not.equal(validInput);
   });
@@ -31,12 +33,12 @@ describe("validateUserInput", () => {
     const invalidInput = "ab";
 
     // Valid input
-    rlMock.question = async () => validInput;
+    rlMock.question = (query, callback) => callback(validInput);
     const result = await validateUserInput(promptMsg, rlMock, promptFlag);
     expect(result).to.equal(validInput);
 
     // Invalid input (too short)
-    rlMock.question = async () => invalidInput;
+    rlMock.question = (query, callback) => callback(invalidInput);
     const invalidResult = await validateUserInput(promptMsg, rlMock, promptFlag);
     expect(invalidResult).to.not.equal(validInput);
   });
@@ -50,10 +52,9 @@ describe("validateUserInput", () => {
     const promptFlag = "TYPE";
     const invalidInput = "";
 
-    rlMock.question = async () => invalidInput;
+    rlMock.question = (query, callback) => callback(invalidInput);
     const result = await validateUserInput(promptMsg, rlMock, promptFlag);
     // Since the input is invalid, it should retry and eventually return a valid result
     expect(result).to.not.equal(invalidInput);
   });
 });
-
