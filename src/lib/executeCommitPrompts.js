@@ -1,10 +1,8 @@
 const readline = require("readline");
 const chalk = require("../chalk-messages.js");
 const { validateUserInput } = require("./validateUserInput.js");
-const { writeLocalCommit } = require("./writeLocalCommit.js");
-const { writeRemoteCommit } = require("./writeRemoteCommit.js");
-const { forceRemoteCommit } = require("./forceRemoteCommit.js");
 const { displayCommitTypes } = require("./lib.js");
+const { writeCommits } = require("./writeCommits.js");
 
 /**
  * Prompt the user for input unless the choice is "NONE".
@@ -16,39 +14,6 @@ const { displayCommitTypes } = require("./lib.js");
 const getUserCommitCategoryInput = async (choice, rl) => {
 	return choice !== "NONE" ? await validateUserInput(`Enter a commit ${choice}:`, rl, choice) : undefined;
 };
-
-/**
- * Writes local and potentially remote commits based on user input.
- *
- * @param {string} commitMsg - The commit message.
- * @param {readline.Interface} rl - The readline interface for user input.
- */
-async function writeCommits(commitMsg, rl) {
-	try {
-		// Make a local commit
-		await writeLocalCommit(commitMsg, rl);
-
-		// Ask user to commit to remote origin
-		const remoteCommitConfirm = await validateUserInput("Push commit to remote origin? (Y | N)", rl, "ORIGIN");
-
-		// Commit to remote origin
-		if (["yes", "y"].includes(remoteCommitConfirm.toLowerCase())) {
-			const remoteCommitOk = await writeRemoteCommit(rl);
-			if (!remoteCommitOk) {
-				forceRemoteCommit(rl);
-			}
-		}
-	} catch (error) {
-		console.error(chalk.warningStrong("An error occurred:"));
-		console.error({ error })
-		// Optionally, set a non-zero exit code if an error occurs
-		process.exitCode = 1;
-		rl.close();
-	}
-	// Set exit code and close readline interface
-	process.exitCode = 0;
-	rl.close();
-}
 
 /**
  * @description Prompts the user for a commit message and number of log lines, then
@@ -128,23 +93,8 @@ async function executeCommitPrompts() {
 		}
 
 		// Write local and remote commits
-		writeCommits(completeCommitMsg, rl);
+		await writeCommits(completeCommitMsg, rl);
 
-		// // Make a local commit
-		// await writeLocalCommit(completeCommitMsg, rl);
-
-		// // Prompt user to commit to remote origin
-		// let remoteCommitConfirm = await validateUserInput("Push commit to remote origin? ( Y / N )", rl, "ORIGIN");
-
-		// if (["yes", "y"].includes(remoteCommitConfirm.toLowerCase())) {
-		// 	// process.exitCode = 0;
-		// 	let remoteCommitOk = writeRemoteCommit(rl);
-		// 	if (!remoteCommitOk) forceRemoteCommit(rl);
-		// } else {
-		// 	// We're done
-		// 	process.exitCode = 0;
-		// 	rl.close();
-		// }
 	} catch (error) {
 		console.error(chalk.fail(`executeCommitPrompts fn. error`));
 		console.error(chalk.consoleYlow(error.message));

@@ -11,6 +11,7 @@ const { printCommitMessage } = require("./lib.js");
  */
 
 async function writeLocalCommit(commitMsg, readLineInterface) {
+	console.log(chalk.consoleGy("Writing local commit .."));
 	try {
 		// Ensure proper quoting around the commit message to handle cases where the commit message contains special characters.
 		// const quotedCommitMsg = `"${commitMsg.replace(/"/g, '\\"')}"`;
@@ -19,8 +20,10 @@ async function writeLocalCommit(commitMsg, readLineInterface) {
 		// Add and commit the changes using the complete commit message
 		const commitResponse = await execAsync(`git add -A && git commit -m ${quotedCommitMsg}`, readLineInterface);
 
-		console.log(chalk.result("Local commit successful"));
+		// 
+		console.log(chalk.interaction("Local commit successful"));
 
+		// Print the commit response
 		printCommitMessage(commitResponse);
 
 	} catch (error) {
