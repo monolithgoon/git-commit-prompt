@@ -1,4 +1,4 @@
-const { executeCommitPrompts } = require("./lib/executeCommitPrompts");
+const { executeCommitPrompts } = require("./executeCommitPrompts");
 
 // Run the program
 executeCommitPrompts();

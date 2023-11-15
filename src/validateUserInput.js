@@ -92,8 +92,8 @@
 
 // module.exports = { validateUserInput };
 
-const chalk = require("./chalk-messages.js");
-const { COMMIT_TYPES } = require("./constants/commit-types.js");
+const chalk = require("./lib/chalk-messages.js");
+const { COMMIT_TYPES } = require("./lib/constants/commit-types.js");
 const { readlineQuestionAsync } = require("./readlineQuestionAsync.js");
 
 /**
@@ -170,14 +170,14 @@ async function validateUserInput(promptMsg, rl, promptFlag) {
 				}
 				break;
 
-			// REMOVE -> DEPRECATED
-			case "REMOTE":
-				// Check if the input is a valid remote response
-				if (!["yes", "y", "no", "n"].includes(promptResponse.toLowerCase())) {
-					console.log(chalk.consoleYlow("Invalid input. Please enter 'Y' or 'N'"));
-					promptResponse = await validateUserInput(promptMsg, rl, promptFlag);
-				}
-				break;
+			// // REMOVE -> DEPRECATED
+			// case "REMOTE":
+			// 	// Check if the input is a valid remote response
+			// 	if (!["yes", "y", "no", "n"].includes(promptResponse.toLowerCase())) {
+			// 		console.log(chalk.consoleYlow("Invalid input. Please enter 'Y' or 'N'"));
+			// 		promptResponse = await validateUserInput(promptMsg, rl, promptFlag);
+			// 	}
+			// 	break;
 
 			case "YES_NO_RESPONSE":
 				// Check if the input is a valid remote response

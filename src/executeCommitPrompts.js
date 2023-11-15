@@ -1,11 +1,12 @@
 const readline = require("readline");
-const chalk = require("./chalk-messages.js");
+const chalk = require("./lib/chalk-messages.js");
 const { validateUserInput } = require("./validateUserInput.js");
-const { displayCommitTypes } = require("./logger.js");
+const { displayCommitTypes } = require("./lib/logger.js");
 const { promptCommitDest } = require("./promptCommitDest.js");
 const { writeLocalCommit } = require("./writeLocalCommit.js");
 const { writeRemoteCommit } = require("./writeRemoteCommit.js");
 const { forceRemoteCommit } = require("./forceRemoteCommit.js");
+const { mapStringToBoolean } = require("./lib/map-string-to-boolean.js");
 
 /**
  * Prompt the user for input unless the categoryFlag is "NONE".
@@ -101,19 +102,17 @@ async function executeCommitPrompts() {
 		// Make a local commit
 		await writeLocalCommit(completeCommitMsg, rl);
 
-		function convetResponseToBinary(yesNoResponse) {
-
-		}
-
 		// Ask user to commit to remote
-		let remoteCommitCheck = await validateUserInput("Push commit to remote? (Y / N)", rl,"YES_NO_RESPONSE");
+		let remoteCommitCheck = mapStringToBoolean(
+			await validateUserInput("Push commit to remote? (Y / N)", rl, "YES_NO_RESPONSE")
+		);
 
 		// Commit to remote if the user assents
 		remoteCommitCheck && (remoteCommitOk = await writeRemoteCommit(rl));
 
 		// Force push remote commit if it fails initially
-		!remoteCommitOk && (await validateUserInput(`Force push to remote? (Y / N)`, rl, "YES_NO_RESPONSE"));
-
+		!remoteCommitOk &&
+			mapStringToBoolean(await validateUserInput(`Force push to remote? (Y / N)`, rl, "YES_NO_RESPONSE"));
 	} catch (error) {
 		console.error(chalk.fail(`executeCommitPrompts fn. error`));
 		console.error(chalk.warningStrong(error));
