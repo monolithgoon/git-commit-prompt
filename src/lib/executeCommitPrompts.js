@@ -8,14 +8,14 @@ const { writeRemoteCommit } = require("./writeRemoteCommit.js");
 const { forceRemoteCommit } = require("./forceRemoteCommit.js");
 
 /**
- * Prompt the user for input unless the choice is "NONE".
+ * Prompt the user for input unless the categoryFlag is "NONE".
  *
- * @param {string} choice - The commit choice, e.g., "TYPE", "DOMAIN", "MESSAGE", or "NONE".
+ * @param {string} categoryFlag - The commit categoryFlag, e.g., "TYPE", "DOMAIN", "MESSAGE", or "NONE".
  * @param {readline.Interface} rl - The readline interface for reading user input.
- * @returns {Promise<?string>} - A Promise that resolves to the user input or undefined if the choice is "NONE".
+ * @returns {Promise<?string>} - A Promise that resolves to the user input or undefined if the categoryFlag is "NONE".
  */
-const getUserCommitCategoryInput = async (choice, rl) => {
-	return choice !== "NONE" ? await validateUserInput(`Enter a commit ${choice}:`, rl, choice) : undefined;
+const getUserCommitCategoryInput = async (categoryFlag, rl) => {
+	return categoryFlag !== "NONE" ? await validateUserInput(`Enter a commit ${categoryFlag}:`, rl, categoryFlag) : undefined;
 };
 
 /**

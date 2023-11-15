@@ -1,16 +1,33 @@
 const chalk = require("../chalk-messages.js");
 const { execAsync } = require("./execAsync.js");
+const { readlineQuestionAsync } = require("./readlineQuestionAsync.js");
 
 async function writeRemoteCommit(readLineInterface) {
-	console.log(chalk.consoleGy("Committing to remote .."));
 	try {
 		// TODO > create a const. for the phrase `git push oritin master`
-		const pushRemoteCommitResponse = await execAsync(`git push origin master`, readLineInterface);
+
+		// Display available remote repo names
+		const remoteBranches = await execAsync(`git remote -v`, readLineInterface);
+		console.log({ remoteBranches });
+
+		// Validate remote repo. name
+		const remoteRepoName = await readlineQuestionAsync(`Enter the name of the remote repo:`, readLineInterface);
+
+		// Validate remote repo. branch name
+		const remoteBranchName = await readlineQuestionAsync(`Enter the name of the remote branch:`, readLineInterface);
+
+	console.log(chalk.consoleGy("Committing to remote .."));
+
+		const pushRemoteCommitResponse = await execAsync(
+			`git push ${remoteRepoName} ${remoteBranchName}`,
+			readLineInterface
+		);
 		console.log(`pushRemoteCommitResponse:`);
 		console.log(chalk.consoleG(pushRemoteCommitResponse));
+
 		return true;
 	} catch (error) {
-		console.error(`remoteCommitError: ${error}`);
+		console.error(chalk.warningStrong(`remoteCommitError: ${error}`));
 		return false;
 	}
 }

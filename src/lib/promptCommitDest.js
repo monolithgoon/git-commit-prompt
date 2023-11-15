@@ -14,8 +14,7 @@ async function promptCommitDest(promptQuestion, destination, rl) {
 			return true;
 		}
 	} catch (error) {
-		console.error(chalk.fail("An error occurred:"));
-		console.error(`promptCommitDestErr: ${error}` );
+		console.error(chalk.warningStrong(`promptCommitDestErr: ${error}`));
 		// Set a non-zero exit code if an error occurs
 		process.exitCode = 1;
 	} finally {
