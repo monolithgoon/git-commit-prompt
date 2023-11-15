@@ -119,7 +119,7 @@ async function executeCommitPrompts() {
 		}
 	} catch (error) {
 		console.error(chalk.fail(`executeCommitPrompts fn. error`));
-		console.error(chalk.warningStrong({ error }));
+		console.error(chalk.warningStrong(error));
 		process.exitCode = 1;
 	} finally {
 		// Close the readline interface and exit the process
