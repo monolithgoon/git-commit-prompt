@@ -1,4 +1,4 @@
-const chalk = require("../chalk-messages.js");
+const chalk = require("./chalk-messages.js");
 const { validateUserInput } = require("./validateUserInput.js");
 
 // Todo

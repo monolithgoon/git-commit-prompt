@@ -1,5 +1,5 @@
 const readline = require("readline");
-const chalk = require("../chalk-messages.js");
+const chalk = require("./chalk-messages.js");
 const { validateUserInput } = require("./validateUserInput.js");
 const { displayCommitTypes } = require("./lib.js");
 const { promptCommitDest } = require("./promptCommitDest.js");
@@ -81,7 +81,8 @@ async function executeCommitPrompts() {
 				break;
 			} else if (["quit", "q", "end"].includes(localCommitConfirm.toLowerCase())) {
 				// Quit cmd line program
-				process.exitCode = 0;
+				rl.close();
+				// process.exitCode = 0;
 			} else {
 				// If the user doesn't confirm their message, allow them to amend it
 				console.log({ commitType });

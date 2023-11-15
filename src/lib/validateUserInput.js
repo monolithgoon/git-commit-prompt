@@ -1,4 +1,4 @@
-const chalk = require("../chalk-messages.js");
+const chalk = require("./chalk-messages.js");
 const { COMMIT_TYPES } = require("./constants/commit-types.js");
 const { readlineQuestionAsync } = require("./readlineQuestionAsync.js")
 

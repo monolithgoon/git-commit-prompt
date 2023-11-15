@@ -1,4 +1,4 @@
-const chalk = require("../chalk-messages.js");
+const chalk = require("./chalk-messages.js");
 const { execAsync } = require("./execAsync.js");
 const { printCommitMessage } = require("./lib.js");
 

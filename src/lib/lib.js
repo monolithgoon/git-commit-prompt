@@ -1,5 +1,5 @@
 `use strict`;
-const chalk = require("../chalk-messages.js");
+const chalk = require("./chalk-messages.js");
 const { COMMIT_TYPES_DETAIL } = require("./constants/commit-types.js");
 
 /**
