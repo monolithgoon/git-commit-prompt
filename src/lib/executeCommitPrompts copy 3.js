@@ -1,27 +1,26 @@
 const readline = require("readline");
 const chalk = require("../chalk-messages.js");
-const { COMMIT_TYPES_DETAIL } = require("./constants/commit-types.js");
 const { askCommitPrompt } = require("./askCommitPrompt.js");
-const { execAsync } = require("./execAsync.js");
 const { writeLocalCommit } = require("./writeLocalCommit.js");
 const { writeRemoteCommit } = require("./writeRemoteCommit.js");
 const { forceRemoteCommit } = require("./forceRemoteCommit.js");
+const { displayCommitTypes } = require("./lib.js");
 
 /**
  * @description Prompts the user for a commit message and number of log lines, then
  * executes a git commit and push to origin.
  * @function executeCommitPrompts
  */
-
 async function executeCommitPrompts() {
+
 	// Create a readline interface to prompt the user for input
 	const rl = readline.createInterface({
 		input: process.stdin,
 		output: process.stdout,
 	});
 
-	console.log(chalk.consoleYlow(`Valid commit types:`));
-	console.log({ COMMIT_TYPES_DETAIL });
+	//
+	displayCommitTypes();
 
 	// Declare variables to store commit information
 	let commitType,
@@ -30,11 +29,8 @@ async function executeCommitPrompts() {
 		completeCommitMsg,
 		commitConfirm,
 		commitAmendChoice,
-		// commitResponse,
 		askRemoteCommit,
-		remoteCommitOk,
-		askForceCommitOrigin,
-		pushOriginResponse;
+		remoteCommitOk;
 
 	try {
 		// Prompt the user for commit information until they confirm their message
@@ -101,67 +97,14 @@ async function executeCommitPrompts() {
 
 		if (!remoteCommitOk) forceRemoteCommit(rl);
 
-		process.exit(0);
-
-		// User chooses to commit to remote origin
-		if (["yes", "y"].includes(askRemoteCommit.toLowerCase())) {
-			console.log(chalk.consoleGy("Committing to origin .."));
-
-			pushOriginResponse = await execAsync(`git push origin master`, rl);
-
-			console.log(`pushOriginResponse:`);
-			console.log(chalk.consoleG(pushOriginResponse));
-			// try {
-			// 	pushOriginResponse = await execAsync(`git push origin master`, rl);
-			// 	console.log(`pushOriginResponse`);
-			// 	console.log(chalk.consoleG(pushOriginResponse));
-			// } catch (error) {
-			// 	console.error(chalk.fail(`origin commit error:`))
-			// 	console.error(chalk.fail(error))
-			// 	// Give option to user to force the commit to origin
-			// 	console.log(error)
-			// 	// if (error.message.toLowerCase().includes("command failed")) {
-			// 	// 	const askForceCommitOrigin = await askCommitPrompt("Force push commit to remote origin? ( Y / N )", rl, "ORIGIN");
-			// 	// 	if (["yes", "y"].includes(askForceCommitOrigin.toLowerCase())) {
-			// 	// 		console.log(chalk.consoleGy("Committing to origin .."));
-			// 	// 		try {
-			// 	// 			pushOriginResponse = await execAsync(`git push origin master`, rl);
-			// 	// 			console.log(`pushOriginResponse:`);
-			// 	// 			console.log(chalk.consoleG(pushOriginResponse));
-			// 	// 		} catch (error) {
-			// 	// 			console.error(chalk.fail(`origin commit error: ${error}`));
-			// 	// 		}
-			// 	// 	}
-			// 	// }
-			// }	finally {
-			// 	rl.close();
-			// 	process.exit();
-			// }
-		} else {
-		}
+		process.exitCode = 0;
 	} catch (error) {
 		console.error(chalk.fail(`executeCommitPrompts error`));
 		console.error(chalk.consoleYlow(error.message));
-
-		// if (error.message.toLowerCase().includes("command failed")) {
-		// 	askForceCommitOrigin = await askCommitPrompt("Force push commit to remote origin? ( Y / N )", rl, "ORIGIN");
-		// 	if (["yes", "y"].includes(askForceCommitOrigin.toLowerCase())) {
-		// 		console.log(chalk.consoleGy("Committing to origin .."));
-		// 		try {
-		// 			pushOriginResponse = await execAsync(`git push origin master --force`, rl);
-		// 			console.log({ pushOriginResponse });
-		// 		} catch (error) {
-		// 			console.error(chalk.fail(`origin commit error: ${error}`));
-		// 		}
-		// 	}
-		// 	console.log("yeo are here")
-		// 	rl.close();
-		// 	process.exit(0);
-		// }
+		process.exitCode = 1;
 	} finally {
 		// Close the readline interface and exit the process
 		rl.close();
-		process.exit();
 	}
 }
 
