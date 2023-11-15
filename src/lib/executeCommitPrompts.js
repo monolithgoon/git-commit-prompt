@@ -101,22 +101,19 @@ async function executeCommitPrompts() {
 		// Make a local commit
 		await writeLocalCommit(completeCommitMsg, rl);
 
+		function convetResponseToBinary(yesNoResponse) {
+
+		}
+
 		// Ask user to commit to remote
-		let remoteCommitCheck = await promptCommitDest("Push commit to remote? (Y / N)", "REMOTE", rl);
+		let remoteCommitCheck = await validateUserInput("Push commit to remote? (Y / N)", rl,"YES_NO_RESPONSE");
 
 		// Commit to remote if the user assents
-		if (remoteCommitCheck === true) {
-			remoteCommitOk = await writeRemoteCommit(rl);
-		}
+		remoteCommitCheck && (remoteCommitOk = await writeRemoteCommit(rl));
 
 		// Force push remote commit if it fails initially
-		if (remoteCommitOk === false) {
-			await promptCommitDest(`Force push to remote? (Y / N)`, "REMOTE", rl);
-			// Todo -> invoke a promptForceRemoteCommit fn. here
-			// Other potential options could be rebase, pull, etc
-			// ..
-			// await forceRemoteCommit(rl);
-		}
+		!remoteCommitOk && (await validateUserInput(`Force push to remote? (Y / N)`, rl, "YES_NO_RESPONSE"));
+
 	} catch (error) {
 		console.error(chalk.fail(`executeCommitPrompts fn. error`));
 		console.error(chalk.warningStrong(error));

@@ -1,5 +1,6 @@
-const chalk = require("../src/chalk-messages.js");
-const { execAsync, readlineQuestionAsync } = require("../src/lib/lib.js");
+const chalk = require("../src/lib/chalk-messages.js");
+const { execAsync  } = require("../src/lib/execAsync.js");
+const { readlineQuestionAsync } = require("../src/lib/readlineQuestionAsync.js");
 
 describe("execAsync()", () => {
 	test("should return stdout when the command is executed successfully", async () => {
