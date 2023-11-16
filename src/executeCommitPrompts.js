@@ -115,7 +115,7 @@ async function executeCommitPrompts() {
 			mapStringToBoolean(await validateUserInput(`Force push commit to remote? (Y / N)`, rl, "YES_NO_RESPONSE")));
 
 		// Force push commit to remote
-		// askForceRemoteCommit && forceRemoteCommit(rl);
+		askForceRemoteCommit && forceRemoteCommit(rl);
 
 		//
 	} catch (error) {
