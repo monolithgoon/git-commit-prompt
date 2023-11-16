@@ -1,4 +1,4 @@
-const { validateUserInput } = require("./lib/validators/validateUserInput");
+const { readlineQuestionAsync } = require("./lib/readlineQuestionAsync");
 
 /**
  * Ask the user to input a commit flag
@@ -6,6 +6,6 @@ const { validateUserInput } = require("./lib/validators/validateUserInput");
  * @returns {Promise<string>} - Resolves with the user's input for the commit flag
  */
 const askCommitFlag = async (readLineInterface) => {
-	return validateUserInput("Enter the commit flag (e.g., -m):", readLineInterface);
+	return readlineQuestionAsync("Enter the commit flag (e.g., -m):", readLineInterface);
 };
 exports.askCommitFlag = askCommitFlag;

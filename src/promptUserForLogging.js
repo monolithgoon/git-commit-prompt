@@ -1,4 +1,4 @@
-const { validateUserInput } = require("./lib/validators/validateUserInput");
+const { readlineQuestionAsync } = require("./lib/readlineQuestionAsync");
 
 /**
  * Prompts the user to allow logging or not.
@@ -9,7 +9,7 @@ const { validateUserInput } = require("./lib/validators/validateUserInput");
 
 async function promptUserForLogging(readLineInterface) {
 	try {
-		const allowLogging = await validateUserInput("Do you want to allow logging in development mode? (yes / no):", readLineInterface);
+		const allowLogging = await readlineQuestionAsync("Do you want to allow logging in development mode? (yes / no):", readLineInterface);
 		return allowLogging.toLowerCase() === "yes";
 	} catch (error) {
 		console.error(`Error while prompting for logging preference: ${error}`);
