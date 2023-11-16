@@ -22,7 +22,7 @@ const commitToRemote = async (remoteRepoName, remoteBranchName, readLineInterfac
 		console.log(`pushRemoteCommitResponse:`);
 		console.log(chalk.consoleG(pushRemoteCommitResponse));
 	} catch (error) {
-		console.error(chalk.warningStrong(`writeRemoteCommit error: ${error}`));
+		console.error(chalk.warningStrong(`commitToRemote error: ${error}`));
 	}
 };
 exports.commitToRemote = commitToRemote;

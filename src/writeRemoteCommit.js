@@ -53,7 +53,8 @@ const writeRemoteCommit = async (readLineInterface) => {
 		const { remoteBranches, remoteRepoName, remoteBranchName } = await askRemoteRepositoryInfo(readLineInterface);
 
 		// Commit changes to the remote repository
-		return await commitToRemote(remoteRepoName, remoteBranchName, readLineInterface);
+		await commitToRemote(remoteRepoName, remoteBranchName, readLineInterface);
+		return true; 
 	} catch (error) {
 		console.error(chalk.warningStrong(`writeRemoteCommit error: ${error}`));
 		return false;

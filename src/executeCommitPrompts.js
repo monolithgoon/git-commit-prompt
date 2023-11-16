@@ -97,7 +97,7 @@ async function executeCommitPrompts() {
 				);
 			}
 		}
-		
+
 		// Make a local commit
 		await writeLocalCommit(completeCommitMsg, rl);
 
@@ -106,13 +106,20 @@ async function executeCommitPrompts() {
 			await validateUserInput("Push commit to remote? (Y / N)", rl, "YES_NO_RESPONSE")
 		);
 
+		console.log({ askRemoteCommit });
+
 		// Commit to remote if the user assents
 		askRemoteCommit && (remoteCommitOk = await writeRemoteCommit(rl));
-		// askRemoteCommit && await writeRemoteCommit(rl);
 
+		console.log({ remoteCommitOk });
+		
 		// Ask to force push remote commit if it fails initially
-		!remoteCommitOk && (askForceRemoteCommit =
-			mapStringToBoolean(await validateUserInput(`Force push commit to remote? (Y / N)`, rl, "YES_NO_RESPONSE")));
+		!remoteCommitOk &&
+			(askForceRemoteCommit = mapStringToBoolean(
+				await validateUserInput(`Try to commit to remote with flags? (Y / N)`, rl, "YES_NO_RESPONSE")
+			));
+
+		console.log({ askForceRemoteCommit });
 
 		// Force push commit to remote
 		askForceRemoteCommit && flaggedRemoteCommit(rl);
