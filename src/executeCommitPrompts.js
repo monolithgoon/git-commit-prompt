@@ -119,7 +119,6 @@ async function executeCommitPrompts() {
 		!remoteCommitOk && (askForceRemoteCommit =
 			mapStringToBoolean(await validateUserInput(`Force push to remote? (Y / N)`, rl, "YES_NO_RESPONSE")));
 
-		console.log({ askForceRemoteCommit })
 		// Force push commit to remote
 		// askForceRemoteCommit && forceRemoteCommit(rl);
 
