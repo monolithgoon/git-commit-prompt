@@ -1,28 +1,6 @@
 const { exec } = require("child_process");
 
 /**
- */
-// function execAsync(command, rl) {
-// 	return new Promise((resolve, reject) => {
-// 		exec(command, (error, stdout, stderr) => {
-// 			if (error) {
-// 				reject(error);
-// 				if (rl) {
-// 					rl.close();
-// 				}
-// 			} else if (stderr) {
-// 				reject(stderr);
-// 				if (rl) {
-// 					rl.close();
-// 				}
-// 			} else {
-// 				resolve(stdout);
-// 			}
-// 		});
-// 	});
-// }
-
-/**
  * Executes a shell command asynchronously and returns a Promise.
  * 
  * The execAsync() function is a utility function that wraps the `exec()` method from the `child_process` module in Node.js and returns a promise.
