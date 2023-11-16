@@ -1,4 +1,5 @@
 const { askCommitFlag } = require("./lib/askCommitFlag.js");
+const { askRemoteRepositoryInfo } = require("./lib/askRemoteRepositoryInfo.js");
 const chalk = require("./lib/chalkMessages.js");
 const { execAsync } = require("./lib/execAsync.js");
 
