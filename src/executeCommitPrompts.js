@@ -100,11 +100,6 @@ async function executeCommitPrompts() {
 		
 		// Make a local commit
 		await writeLocalCommit(completeCommitMsg, rl);
-		// try {
-		// 	await writeLocalCommit(completeCommitMsg, rl);
-		// } catch (commitError) {
-			
-		// }
 
 		// Ask user to commit to remote
 		let askRemoteCommit = mapStringToBoolean(
@@ -117,7 +112,7 @@ async function executeCommitPrompts() {
 
 		// Ask to force push remote commit if it fails initially
 		!remoteCommitOk && (askForceRemoteCommit =
-			mapStringToBoolean(await validateUserInput(`Force push to remote? (Y / N)`, rl, "YES_NO_RESPONSE")));
+			mapStringToBoolean(await validateUserInput(`Force push commit to remote? (Y / N)`, rl, "YES_NO_RESPONSE")));
 
 		// Force push commit to remote
 		// askForceRemoteCommit && forceRemoteCommit(rl);

@@ -32,7 +32,6 @@ async function writeRemoteCommit(readLineInterface) {
 	} catch (error) {
 		console.error(chalk.warningStrong(`writeRemoteCommit error: ${error}`));
 		// throw new Error("Remote commit write failed");
-
 		return false;
 	}
 }
