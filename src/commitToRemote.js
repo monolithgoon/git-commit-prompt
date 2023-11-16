@@ -1,5 +1,5 @@
-const chalk = require("./chalkMessages.js");
-const { execAsync } = require("./execAsync.js");
+const chalk = require("./lib/chalkMessages.js");
+const { execAsync } = require("./lib/execAsync.js");
 
 /**
  * Commit changes to a remote repository
@@ -22,7 +22,8 @@ const commitToRemote = async (remoteRepoName, remoteBranchName, readLineInterfac
 		console.log(`pushRemoteCommitResponse:`);
 		console.log(chalk.consoleG(pushRemoteCommitResponse));
 	} catch (error) {
-		console.error(chalk.warningStrong(`commitToRemote error: ${error}`));
+		console.error((`commitToRemote error: ${error}`));
+		throw new Error(`Commit failed`)
 	}
 };
 exports.commitToRemote = commitToRemote;

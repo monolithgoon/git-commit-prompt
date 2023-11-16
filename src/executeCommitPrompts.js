@@ -1,40 +1,18 @@
-const readline = require("readline");
 const chalk = require("./lib/chalkMessages.js");
-const { validateUserInput } = require("./validateUserInput.js");
-const { displayCommitTypes } = require("./lib/logger.js");
+const { validateUserInput } = require("./lib/validators/validateUserInput.js");
 const { writeLocalCommit } = require("./writeLocalCommit.js");
 const { writeRemoteCommit } = require("./writeRemoteCommit.js");
 const { flaggedRemoteCommit } = require("./flaggedRemoteCommit.js");
 const { mapStringToBoolean } = require("./lib/mapStringToBoolean.js");
+const { getUserCommitCategoryInput } = require("./getUserCommitCategoryInput.js");
+const { logger } = require("./lib/logger.js");
 
 /**
- * Prompt the user for input unless the categoryFlag is "NONE".
- *
- * @param {string} categoryFlag - The commit categoryFlag, e.g., "TYPE", "DOMAIN", "MESSAGE", or "NONE".
- * @param {readline.Interface} rl - The readline interface for reading user input.
- * @returns {Promise<?string>} - A Promise that resolves to the user input or undefined if the categoryFlag is "NONE".
- */
-const getUserCommitCategoryInput = async (categoryFlag, rl) => {
-	return categoryFlag !== "NONE"
-		? await validateUserInput(`Enter a commit ${categoryFlag}:`, rl, categoryFlag)
-		: undefined;
-};
-
-/**
- * @description Prompts the user for a commit message and number of log lines, then
- * executes a git commit and push to origin.
+ * @description Prompts the user for a commit message,
+ * and then executes a git commit and push to remote.
  * @function executeCommitPrompts
  */
-async function executeCommitPrompts() {
-	// Create a readline interface to prompt the user for input
-	const rl = readline.createInterface({
-		input: process.stdin,
-		output: process.stdout,
-	});
-
-	// Show allowed commit types to user
-	displayCommitTypes();
-
+async function executeCommitPrompts(rl, allowDevLoggingChk) {
 	// Declare variables to store commit information
 	let commitType, commitDomain, commitMsg, completeCommitMsg, commitAmendChoice, remoteCommitOk, askForceRemoteCommit;
 
@@ -69,7 +47,7 @@ async function executeCommitPrompts() {
 			// Combine the commit information into a single message
 			completeCommitMsg = `"${commitType} (${commitDomain}) - ${commitMsg}"`;
 
-			console.log({ completeCommitMsg });
+			logger(completeCommitMsg, allowDevLoggingChk, "production")
 
 			// Prompt user to confirm the commit message
 			let localCommitConfirm = await validateUserInput(
@@ -106,23 +84,23 @@ async function executeCommitPrompts() {
 			await validateUserInput("Push commit to remote? (Y / N)", rl, "YES_NO_RESPONSE")
 		);
 
-		console.log({ askRemoteCommit });
+		logger(askRemoteCommit, allowDevLoggingChk);
 
 		// Commit to remote if the user assents
 		askRemoteCommit && (remoteCommitOk = await writeRemoteCommit(rl));
 
-		console.log({ remoteCommitOk });
-		
+		logger(remoteCommitOk, allowDevLoggingChk);
+
 		// Ask to force push remote commit if it fails initially
 		!remoteCommitOk &&
 			(askForceRemoteCommit = mapStringToBoolean(
 				await validateUserInput(`Try to commit to remote with flags? (Y / N)`, rl, "YES_NO_RESPONSE")
 			));
 
-		console.log({ askForceRemoteCommit });
+		logger(askForceRemoteCommit, allowDevLoggingChk);
 
 		// Force push commit to remote
-		askForceRemoteCommit && flaggedRemoteCommit(rl);
+		askForceRemoteCommit && (await flaggedRemoteCommit(rl));
 
 		//
 	} catch (error) {

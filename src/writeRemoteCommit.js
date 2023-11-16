@@ -39,8 +39,8 @@
 // exports.writeRemoteCommit = writeRemoteCommit;
 
 const chalk = require("./lib/chalkMessages.js");
-const { commitToRemote } = require("./lib/commitToRemote.js");
-const { askRemoteRepositoryInfo } = require("./lib/askRemoteRepositoryInfo.js");
+const { commitToRemote } = require("./commitToRemote.js");
+const { askRemoteRepositoryInfo } = require("./askRemoteRepositoryInfo.js");
 
 /**
  * Write changes to a remote repository

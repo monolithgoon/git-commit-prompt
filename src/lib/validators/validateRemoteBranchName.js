@@ -1,4 +1,4 @@
-const { readlineQuestionAsync } = require("./readlineQuestionAsync.js");
+const { readlineQuestionAsync } = require("../readlineQuestionAsync.js");
 
 /**
  * Validate the remote branch name

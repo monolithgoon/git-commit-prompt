@@ -92,9 +92,9 @@
 
 // module.exports = { validateUserInput };
 
-const chalk = require("./lib/chalkMessages.js");
-const { COMMIT_TYPES } = require("./lib/constants/commit-types.js");
-const { readlineQuestionAsync } = require("./lib/readlineQuestionAsync.js");
+const chalk = require("../chalkMessages.js");
+const { COMMIT_TYPES } = require("../constants/commit-types.js");
+const { readlineQuestionAsync } = require("../readlineQuestionAsync.js");
 
 /**
  * @function validateUserInput

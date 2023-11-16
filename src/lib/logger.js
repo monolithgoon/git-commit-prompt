@@ -1,19 +1,16 @@
-`use strict`;
-const chalk = require("./chalkMessages.js");
-const { COMMIT_TYPES_DETAIL } = require("./constants/commit-types.js");
-
 /**
- * Prints a commit message to the console with a stylized format.
+ * Wrapper function for console.log() that logs messages based on environment and logging preferences.
  *
- * @param {string} commitMsg - The commit message to print.
+ * @param {string} message - The message to be logged.
+ * @param {boolean} allowLogging - Whether logging is allowed or not.
+ * @param {string} prodFlag - The environment flag ('development' or 'production').
  */
-function printCommitMessage(commitMsg) {
-	console.log((commitMsg));
+function logger(message, allowLogging, prodFlag = process.env) {
+	// Log messages in 'development' environment only if allowLogging is true
+	// Log messages in 'production' environment regardless of the logging preference
+	if ((prodFlag === "development" && allowLogging) || prodFlag === "production") {
+		console.log({ message });
+	}
 }
 
-function displayCommitTypes() {
-	console.log(chalk.consoleYlow(`Valid commit types:`));
-	console.log({ COMMIT_TYPES_DETAIL });
-}
-
-module.exports = { printCommitMessage, displayCommitTypes};
+exports.logger = logger;
