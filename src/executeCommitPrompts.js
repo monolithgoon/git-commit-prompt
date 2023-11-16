@@ -32,11 +32,11 @@ async function executeCommitPrompts() {
 		output: process.stdout,
 	});
 
-	//
+	// Show allowed commit types to user
 	displayCommitTypes();
 
 	// Declare variables to store commit information
-	let commitType, commitDomain, commitMsg, completeCommitMsg, commitAmendChoice, remoteCommitOk;
+	let commitType, commitDomain, commitMsg, completeCommitMsg, commitAmendChoice, remoteCommitOk, askForceRemoteCommit;
 
 	try {
 		// Prompt the user for commit information until they confirm their message
@@ -97,24 +97,36 @@ async function executeCommitPrompts() {
 				);
 			}
 		}
-
+		
 		// Make a local commit
 		await writeLocalCommit(completeCommitMsg, rl);
+		// try {
+		// 	await writeLocalCommit(completeCommitMsg, rl);
+		// } catch (commitError) {
+			
+		// }
 
 		// Ask user to commit to remote
-		let remoteCommitCheck = mapStringToBoolean(
+		let askRemoteCommit = mapStringToBoolean(
 			await validateUserInput("Push commit to remote? (Y / N)", rl, "YES_NO_RESPONSE")
 		);
 
 		// Commit to remote if the user assents
-		remoteCommitCheck && (remoteCommitOk = await writeRemoteCommit(rl));
+		askRemoteCommit && (remoteCommitOk = await writeRemoteCommit(rl));
+		// askRemoteCommit && await writeRemoteCommit(rl);
 
-		// Force push remote commit if it fails initially
-		!remoteCommitOk &&
-			mapStringToBoolean(await validateUserInput(`Force push to remote? (Y / N)`, rl, "YES_NO_RESPONSE"));
+		// Ask to force push remote commit if it fails initially
+		!remoteCommitOk && (askForceRemoteCommit =
+			mapStringToBoolean(await validateUserInput(`Force push to remote? (Y / N)`, rl, "YES_NO_RESPONSE")));
+
+		console.log({ askForceRemoteCommit })
+		// Force push commit to remote
+		// askForceRemoteCommit && forceRemoteCommit(rl);
+
+		//
 	} catch (error) {
 		console.error(chalk.fail(`executeCommitPrompts fn. error`));
-		console.error(chalk.warningStrong(error));
+		console.error(chalk.fail(error));
 		process.exitCode = 1;
 	} finally {
 		// Close the readline interface and exit the process

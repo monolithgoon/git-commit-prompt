@@ -16,18 +16,23 @@ async function writeRemoteCommit(readLineInterface) {
 		// Validate remote repo. branch name
 		const remoteBranchName = await readlineQuestionAsync(`Enter the name of the remote branch:`, readLineInterface);
 
-	console.log(chalk.consoleGy("Committing to remote .."));
+		console.log(chalk.consoleGy("Committing to remote .."));
 
+		// Execute the commit command
 		const pushRemoteCommitResponse = await execAsync(
 			`git push ${remoteRepoName} ${remoteBranchName}`,
 			readLineInterface
 		);
+
+		// Log the commit responses
 		console.log(`pushRemoteCommitResponse:`);
 		console.log(chalk.consoleG(pushRemoteCommitResponse));
 
 		return true;
 	} catch (error) {
-		console.error(chalk.warningStrong(`remoteCommitError: ${error}`));
+		console.error(chalk.warningStrong(`writeRemoteCommit error: ${error}`));
+		// throw new Error("Remote commit write failed");
+
 		return false;
 	}
 }

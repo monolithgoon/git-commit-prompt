@@ -21,13 +21,13 @@ async function forceRemoteCommit(readLineInterface) {
 			console.log({ pushOriginResponse });
 		} catch (error) {
 			console.error(chalk.fail(`remote commit error: ${error}`));
-			process.exit(0);
+			process.exitCode = 0;
 		}
 	}
 
 	console.log(chalk.connected("yeo are here"));
 	rl.close();
-	process.exit(0);
+	process.exitCode = 0;
 }
 
 exports.forceRemoteCommit = forceRemoteCommit;
