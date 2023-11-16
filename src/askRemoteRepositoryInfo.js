@@ -1,6 +1,7 @@
 const { displayRemoteBranches } = require("./lib/displayRemoteBranches.js");
 const { validateRemoteRepoName } = require("./lib/validators/validateRemoteRepoName.js");
 const { validateRemoteBranchName } = require("./lib/validators/validateRemoteBranchName.js");
+const { validateRemoteCommand } = require("./lib/validators/validateRemoteCommand.js");
 
 /**
  * Ask the user for remote repository information
@@ -12,12 +13,16 @@ const askRemoteRepositoryInfo = async (readLineInterface) => {
 	const remoteBranches = await displayRemoteBranches(readLineInterface);
 	console.log({ remoteBranches });
 
+	// Validate remote commit commands
+	const remoteCommand = await validateRemoteCommand(readLineInterface);
+
 	// Validate remote repo name
 	const remoteRepoName = await validateRemoteRepoName(readLineInterface);
 
 	// Validate remote repo branch name
 	const remoteBranchName = await validateRemoteBranchName(readLineInterface);
 
-	return { remoteBranches, remoteRepoName, remoteBranchName };
+	return { remoteCommand, remoteBranches, remoteRepoName, remoteBranchName };
 };
+
 exports.askRemoteRepositoryInfo = askRemoteRepositoryInfo;

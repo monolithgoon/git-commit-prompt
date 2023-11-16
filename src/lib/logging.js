@@ -1,6 +1,6 @@
 `use strict`;
 const chalk = require("./chalkMessages.js");
-const { COMMIT_TYPES_DETAIL } = require("./constants/commit-types.js");
+const { COMMIT_TYPES_DETAIL } = require("./constants/commit_types.js");
 
 /**
  * Prints a commit message to the console with a stylized format.

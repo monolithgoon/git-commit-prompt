@@ -8,21 +8,21 @@ const { execAsync } = require("./lib/execAsync.js");
  * @param {Object} readLineInterface - The readline interface
  * @returns {Promise<boolean>} - Resolves with true if successful, false otherwise
  */
-const commitToRemote = async (remoteRepoName, remoteBranchName, readLineInterface) => {
+const commitToRemote = async (remoteCommand, remoteRepoName, remoteBranchName, readLineInterface) => {
 	try {
 		console.log(chalk.consoleGy("Committing to remote .."));
 
 		// Execute the commit command
-		const pushRemoteCommitResponse = await execAsync(
-			`git push ${remoteRepoName} ${remoteBranchName}`,
+		const remoteCommitReponse = await execAsync(
+			`git ${remoteCommand} ${remoteRepoName} ${remoteBranchName}`,
 			readLineInterface
 		);
 
 		// Log the commit responses
-		console.log(`pushRemoteCommitResponse:`);
-		console.log(chalk.consoleG(pushRemoteCommitResponse));
+		console.log(`remoteCommitReponse:`);
+		console.log(chalk.consoleG(remoteCommitReponse));
 	} catch (error) {
-		console.error((`commitToRemote error: ${error}`));
+		console.error(chalk.warningStrong(`commitToRemote error: ${error}`));
 		throw new Error(`Commit failed`)
 	}
 };

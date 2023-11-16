@@ -50,11 +50,13 @@ const { askRemoteRepositoryInfo } = require("./askRemoteRepositoryInfo.js");
 const writeRemoteCommit = async (readLineInterface) => {
 	try {
 		// Ask the user for remote repository information
-		const { remoteBranches, remoteRepoName, remoteBranchName } = await askRemoteRepositoryInfo(readLineInterface);
+		const { remoteCommand, remoteBranches, remoteRepoName, remoteBranchName } = await askRemoteRepositoryInfo(
+			readLineInterface
+		);
 
 		// Commit changes to the remote repository
-		await commitToRemote(remoteRepoName, remoteBranchName, readLineInterface);
-		return true; 
+		await commitToRemote(remoteCommand, remoteRepoName, remoteBranchName, readLineInterface);
+		return true;
 	} catch (error) {
 		console.error(chalk.warningStrong(`writeRemoteCommit error: ${error}`));
 		return false;

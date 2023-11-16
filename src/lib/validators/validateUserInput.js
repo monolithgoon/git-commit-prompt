@@ -1,3 +1,7 @@
+const chalk = require("../chalkMessages.js");
+const { COMMIT_TYPES } = require("../constants/commit_types.js");
+const { readlineQuestionAsync } = require("../readlineQuestionAsync.js");
+
 // const chalk = require("./chalk-messages.js");
 // const { COMMIT_TYPES } = require("./constants/commit-types.js");
 // const { readlineQuestionAsync } = require("./readlineQuestionAsync.js")
@@ -91,10 +95,6 @@
 // }
 
 // module.exports = { validateUserInput };
-
-const chalk = require("../chalkMessages.js");
-const { COMMIT_TYPES } = require("../constants/commit-types.js");
-const { readlineQuestionAsync } = require("../readlineQuestionAsync.js");
 
 /**
  * @function validateUserInput
