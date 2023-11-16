@@ -15,10 +15,11 @@ async function writeLocalCommit(commitMsg, readLineInterface) {
 	try {
 		// Ensure proper quoting around the commit message to handle cases where the commit message contains special characters.
 		// const quotedCommitMsg = `"${commitMsg.replace(/"/g, '\\"')}"`;
-		const quotedCommitMsg = commitMsg;
+		// const quotedCommitMsg = commitMsg;
+		const escapedComment = commitMsg.replace(/`/g, '\\`');
 
 		// Add and commit the changes using the complete commit message
-		const commitResponse = await execAsync(`git add -A && git commit -m ${quotedCommitMsg}`, readLineInterface);
+		const commitResponse = await execAsync(`git add -A && git commit -m ${escapedComment}`, readLineInterface);
 
 		// 
 		console.log(chalk.success("Local commit write successful"));
