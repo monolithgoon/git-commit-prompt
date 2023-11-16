@@ -1,5 +1,5 @@
 const chalk = require("../src/lib/chalk-messages.js");
-const { execAsync  } = require("../src/lib/execAsync.js");
+const { execAsync } = require("../src/lib/execAsync.js");
 const { readlineQuestionAsync } = require("../src/lib/readlineQuestionAsync.js");
 
 describe("execAsync()", () => {

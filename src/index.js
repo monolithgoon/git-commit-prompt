@@ -6,7 +6,7 @@ const { promptUserForLogging } = require("./promptUserForLogging");
 (async () => {
 	// Create a readline interface to prompt the user for input
 	const rl = createReadlineInterface();
-	// Now you can use `rl` to prompt the user for input.
+
 	// Prompt the user for logging preference
 	const allowDevLoggingChk = await promptUserForLogging(rl);
 
