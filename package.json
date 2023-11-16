@@ -4,8 +4,7 @@
   "description": "Command line utility to structure your git commit messages",
   "main": "git-commit-prompt.bat",
   "scripts": {
-    "test": "clear && jest",
-    "mocha-test": "clear && mocha"
+    "test": "clear && mocha"
   },
   "repository": {
     "type": "git",
