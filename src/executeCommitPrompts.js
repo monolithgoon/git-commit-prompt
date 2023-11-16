@@ -1,11 +1,11 @@
 const readline = require("readline");
-const chalk = require("./lib/chalk-messages.js");
+const chalk = require("./lib/chalkMessages.js");
 const { validateUserInput } = require("./validateUserInput.js");
 const { displayCommitTypes } = require("./lib/logger.js");
 const { writeLocalCommit } = require("./writeLocalCommit.js");
 const { writeRemoteCommit } = require("./writeRemoteCommit.js");
-const { forceRemoteCommit } = require("./forceRemoteCommit.js");
-const { mapStringToBoolean } = require("./lib/map-string-to-boolean.js");
+const { flaggedRemoteCommit } = require("./flaggedRemoteCommit.js");
+const { mapStringToBoolean } = require("./lib/mapStringToBoolean.js");
 
 /**
  * Prompt the user for input unless the categoryFlag is "NONE".
@@ -115,7 +115,7 @@ async function executeCommitPrompts() {
 			mapStringToBoolean(await validateUserInput(`Force push commit to remote? (Y / N)`, rl, "YES_NO_RESPONSE")));
 
 		// Force push commit to remote
-		askForceRemoteCommit && forceRemoteCommit(rl);
+		askForceRemoteCommit && flaggedRemoteCommit(rl);
 
 		//
 	} catch (error) {
