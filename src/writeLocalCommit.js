@@ -24,9 +24,6 @@ async function writeLocalCommit(commitMsg, readlineInterface) {
 		const escapedComment = commitMsg;
 
 		// Add and commit the changes using the complete commit message
-		// const commitResponse = await execAsync(`git add -A && git commit -m ${escapedComment}`, readlineInterface);
-
-		//
 		const commitResponse = await exeGitCommand(readlineInterface, `add -A && git commit -m ${escapedComment}`)
 
 		// 
