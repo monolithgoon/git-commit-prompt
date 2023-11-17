@@ -1,3 +1,4 @@
+const { exeGitCommand } = require("./exeGitCommand.js");
 const chalk = require("./lib/chalkMessages.js");
 const { execAsync } = require("./lib/execAsync.js");
 const { printCommitMessage } = require("./lib/logging.js");
@@ -33,7 +34,6 @@ async function writeLocalCommit(commitMsg, readLineInterface) {
 
 	} catch (error) {
 		console.error(chalk.warningStrong(`writeLocalCommit error: ${error}`));
-		// throw new Error("Local commit write failed");
 	}
 }
 

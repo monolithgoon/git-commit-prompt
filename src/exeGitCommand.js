@@ -2,28 +2,27 @@ const chalk = require("./lib/chalkMessages.js");
 const { execAsync } = require("./lib/execAsync.js");
 
 /**
- * Commit changes to a remote repository
+ * Execute a Git command
  * @param {string} remoteRepoName - The name of the remote repository
  * @param {string} remoteBranchName - The name of the remote branch
  * @param {Object} readLineInterface - The readline interface
  * @returns {Promise<boolean>} - Resolves with true if successful, false otherwise
  */
-const exeCommitToRemote = async (remoteCommand, remoteRepoName, remoteBranchName, readLineInterface) => {
+const exeGitCommand = async (remoteCommand, remoteRepoName, remoteBranchName, readLineInterface) => {
 	try {
-		console.log(chalk.consoleGy("Committing to remote .."));
 
 		// Execute the commit command
-		const remoteCommitReponse = await execAsync(
+		const gitCommandResult = await execAsync(
 			`git ${remoteCommand} ${remoteRepoName} ${remoteBranchName}`,
 			readLineInterface
 		);
 
 		// Log the commit responses
-		console.log(`remoteCommitReponse:`);
-		console.log(chalk.consoleG(remoteCommitReponse));
+		console.log(`gitCommandResult:`);
+		console.log(chalk.consoleG(gitCommandResult));
 	} catch (error) {
-		console.error(chalk.warningStrong(`exeCommitToRemote error: ${error}`));
+		console.error(chalk.warningStrong(`exeGitCommand error: ${error}`));
 		throw new Error(`Commit failed`)
 	}
 };
-exports.exeCommitToRemote = exeCommitToRemote;
+exports.exeGitCommand = exeGitCommand;
