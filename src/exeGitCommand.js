@@ -20,6 +20,7 @@ const exeGitCommand = async (readLineInterface, remoteGitCommand, {remoteRepoNam
 		// Log the commit responses
 		console.log(`gitCommandResult:`);
 		console.log(chalk.consoleG(gitCommandResult));
+		return gitCommandResult;
 	} catch (error) {
 		console.error(chalk.warningStrong(`exeGitCommand error: ${error}`));
 		throw new Error(`Commit failed`);
