@@ -39,7 +39,7 @@
 // exports.writeRemoteCommit = writeRemoteCommit;
 
 const chalk = require("./lib/chalkMessages.js");
-const { commitToRemote } = require("./commitToRemote.js");
+const { exeCommitToRemote } = require("./exeCommitToRemote.js");
 const { askRemoteRepositoryInfo } = require("./askRemoteRepositoryInfo.js");
 
 /**
@@ -55,7 +55,7 @@ const writeRemoteCommit = async (readLineInterface) => {
 		);
 
 		// Commit changes to the remote repository
-		await commitToRemote(remoteCommand, remoteRepoName, remoteBranchName, readLineInterface);
+		await exeCommitToRemote(remoteCommand, remoteRepoName, remoteBranchName, readLineInterface);
 		return true;
 	} catch (error) {
 		console.error(chalk.warningStrong(`writeRemoteCommit error: ${error}`));
