@@ -96,11 +96,19 @@ async function runProgram(rl, allowDevLoggingChk) {
 			await validateUserInput("Collaborate with remote? (Y / N)", rl, "YES_NO_RESPONSE")
 		);
 
+		// Alert user
 		logger(askRemoteCommit, allowDevLoggingChk);
 
-		// Commit to remote if the user assents
-		askRemoteCommit && (remoteCommitOk = await writeRemoteCommit(rl));
+		// Ask to user to proceed
+		const askToProceed = mapStringToBoolean(await validateUserInput("Continue? (Y / N)", rl, "YES_NO_RESPONSE"));
 
+		// Alert user
+		logger(askToProceed, allowDevLoggingChk);
+
+		// Commit to remote if the user assents
+		askToProceed && (remoteCommitOk = await writeRemoteCommit(rl));
+
+		// Alert user
 		logger(remoteCommitOk, allowDevLoggingChk);
 
 		// Ask to force push remote commit if it fails initially
