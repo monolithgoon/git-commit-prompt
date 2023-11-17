@@ -91,9 +91,6 @@ async function runProgram(rl, allowDevLoggingChk) {
 		//
 		askLocalCommit && (await (localCommitOk = writeLocalCommit(completeCommitMsg, rl)));
 
-		// Make a local commit
-		await writeLocalCommit(completeCommitMsg, rl);
-
 		// Ask user to commit to remote
 		const askRemoteCommit = mapStringToBoolean(
 			await validateUserInput("Collaborate with remote? (Y / N)", rl, "YES_NO_RESPONSE")
