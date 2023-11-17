@@ -1,11 +1,18 @@
 # Git Commit Prompt
-## git-commit-prompt.sh
 
-Command line utility to enforce structured git commit messages
+### git-commit-prompt.sh
 
-![git-commit-prompt-flow](https://github.com/monolithgoon/git-commit-prompt/assets/60096838/9d61edb7-ef79-47e1-b49d-c86d9c08581e)
+_`BASH` command line utility to enforce a structured git commit message convention._
 
-```bash
+This repository follows a structured approach to commit messages to enhance clarity and organization. Each commit message should start with a tag enclosed in square brackets, followed by a brief description.
+
+![git-commit-prompt-flow](https://github.com/monolithgoon/git-commit-prompt/assets/60096838/00533453-5d40-49c5-a336-058fd6967a6e)
+
+## _Pre-set Git Commit Categories_
+
+ Here is an overview of the commit message categories:
+
+```javascript
 const COMMIT_TYPES_DETAIL = Object.freeze({
 	1: "[ build  ]: Related to build or CI/CD system configuration and scripts",
 	2: "[ chore  ]: Maintenance tasks, code cleanup, or general changes that don't fit into other categories",
@@ -21,3 +28,4 @@ const COMMIT_TYPES_DETAIL = Object.freeze({
 	12: "[ test    ]: Adding or modifying tests, test frameworks, or test data",
 });
 ```
+Adhering to this convention helps maintain a clean and organized commit history, making it easier to track changes and understand the development history of the project. Please use these tags consistently when crafting commit messages.
