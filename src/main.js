@@ -14,7 +14,14 @@ const { logger } = require("./lib/logger.js");
  */
 async function runProgram(rl, allowDevLoggingChk) {
 	// Declare variables to store commit information
-	let commitType, commitDomain, commitMsg, completeCommitMsg, commitAmendChoice, remoteCommitOk, askForceRemoteCommit;
+	let commitType,
+		commitDomain,
+		commitMsg,
+		completeCommitMsg,
+		commitAmendChoice,
+		localCommitOk,
+		remoteCommitOk,
+		askForceRemoteCommit;
 
 	try {
 		// Prompt the user for commit information until they confirm their message
@@ -47,13 +54,13 @@ async function runProgram(rl, allowDevLoggingChk) {
 			// Combine the commit information into a single message
 			completeCommitMsg = `"${commitType} (${commitDomain}) - ${commitMsg}"`;
 
-			logger(completeCommitMsg, allowDevLoggingChk, "production")
+			logger(completeCommitMsg, allowDevLoggingChk, "production");
 
 			// Prompt user to confirm the commit message
 			let localCommitConfirm = await validateUserInput(
 				"Confirm commit message is OK? ( Y / N / QUIT):",
 				rl,
-				"LOCAL COMMIT"
+				"COMMIT_MESSAGE_OK"
 			);
 
 			if (["yes", "y"].includes(localCommitConfirm.toLowerCase())) {
@@ -76,11 +83,19 @@ async function runProgram(rl, allowDevLoggingChk) {
 			}
 		}
 
+		// Ask user to commit to remote
+		const askLocalCommit = mapStringToBoolean(
+			await validateUserInput("Write local commit (Y / N)", rl, "YES_NO_RESPONSE")
+		);
+
+		//
+		askLocalCommit && (await (localCommitOk = writeLocalCommit(completeCommitMsg, rl)));
+
 		// Make a local commit
 		await writeLocalCommit(completeCommitMsg, rl);
 
 		// Ask user to commit to remote
-		let askRemoteCommit = mapStringToBoolean(
+		const askRemoteCommit = mapStringToBoolean(
 			await validateUserInput("Collaborate with remote? (Y / N)", rl, "YES_NO_RESPONSE")
 		);
 
