@@ -6,6 +6,7 @@ const { flaggedRemoteCommit } = require("./flaggedRemoteCommit.js");
 const { mapStringToBoolean } = require("./lib/mapStringToBoolean.js");
 const { getUserCommitCategoryInput } = require("./getUserCommitCategoryInput.js");
 const { logger } = require("./lib/logger.js");
+const { readlineQuestionAsync } = require("./lib/readlineQuestionAsync.js");
 
 /**
  * @description Prompts the user for a commit message,
@@ -21,7 +22,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 		commitAmendChoice,
 		localCommitOk,
 		remoteCommitOk,
-		askForceRemoteCommit;
+		askFlaggedRemoteCommit;
 
 	try {
 		// Prompt the user for commit information until they confirm their message
@@ -102,26 +103,29 @@ async function runProgram(rl, allowDevLoggingChk) {
 		// Commit to remote if the user assents
 		askRemoteCollab && (remoteCommitOk = await writeRemoteCommit(rl));
 
+		// Alert user
+		logger(remoteCommitOk, allowDevLoggingChk);
+
 		// Ask to user to proceed
 		const askToProceed = mapStringToBoolean(await validateUserInput("Continue? (yes / no)", rl, "YES_NO_RESPONSE"));
 
 		// Alert user
 		logger(askToProceed, allowDevLoggingChk);
 
-		// Alert user
-		logger(remoteCommitOk, allowDevLoggingChk);
-
 		// Ask to force push remote commit if it fails initially
 		askToProceed &&
 			!remoteCommitOk &&
-			(askForceRemoteCommit = mapStringToBoolean(
+			(askFlaggedRemoteCommit = mapStringToBoolean(
 				await validateUserInput(`Try to commit to remote with flags? (yes / no)`, rl, "YES_NO_RESPONSE")
 			));
 
-		logger(askForceRemoteCommit, allowDevLoggingChk);
+		logger(askFlaggedRemoteCommit, allowDevLoggingChk);
 
 		// Force push commit to remote
-		askForceRemoteCommit && (await flaggedRemoteCommit(rl));
+		askFlaggedRemoteCommit && (await flaggedRemoteCommit(rl));
+
+		//
+		readlineQuestionAsync(`Do you want to write a custom .git command? (yes / no)`, rl);
 
 		//
 	} catch (error) {
