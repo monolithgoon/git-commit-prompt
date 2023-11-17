@@ -10,9 +10,9 @@ const { logger } = require("./lib/logger.js");
 /**
  * @description Prompts the user for a commit message,
  * and then executes a git commit and push to remote.
- * @function executeCommitPrompts
+ * @function runProgram
  */
-async function executeCommitPrompts(rl, allowDevLoggingChk) {
+async function runProgram(rl, allowDevLoggingChk) {
 	// Declare variables to store commit information
 	let commitType, commitDomain, commitMsg, completeCommitMsg, commitAmendChoice, remoteCommitOk, askForceRemoteCommit;
 
@@ -81,7 +81,7 @@ async function executeCommitPrompts(rl, allowDevLoggingChk) {
 
 		// Ask user to commit to remote
 		let askRemoteCommit = mapStringToBoolean(
-			await validateUserInput("Push commit to remote? (Y / N)", rl, "YES_NO_RESPONSE")
+			await validateUserInput("Collaborate with remote? (Y / N)", rl, "YES_NO_RESPONSE")
 		);
 
 		logger(askRemoteCommit, allowDevLoggingChk);
@@ -104,7 +104,7 @@ async function executeCommitPrompts(rl, allowDevLoggingChk) {
 
 		//
 	} catch (error) {
-		console.error(chalk.fail(`executeCommitPrompts fn. error`));
+		console.error(chalk.fail(`runProgram fn. error`));
 		console.error(chalk.fail(error));
 		process.exitCode = 1;
 	} finally {
@@ -114,4 +114,4 @@ async function executeCommitPrompts(rl, allowDevLoggingChk) {
 	}
 }
 
-module.exports = { executeCommitPrompts };
+module.exports = { runProgram };

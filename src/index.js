@@ -1,4 +1,4 @@
-const { executeCommitPrompts } = require("./executeCommitPrompts");
+const { runProgram } = require("./main");
 const { createReadlineInterface } = require("./lib/createReadlineInterface");
 const { displayCommitTypes } = require("./lib/logging");
 const { promptUserForLogging } = require("./promptUserForLogging");
@@ -14,5 +14,5 @@ const { promptUserForLogging } = require("./promptUserForLogging");
 	displayCommitTypes();
 
 	// Run the program
-	executeCommitPrompts(rl, allowDevLoggingChk);
+	runProgram(rl, allowDevLoggingChk);
 })();
