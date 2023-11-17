@@ -2,7 +2,7 @@ const { readlineQuestionAsync } = require("../readlineQuestionAsync.js");
 const { COMMIT_COMMANDS } = require("../constants/commit_commands.js");
 const chalk = require("../chalkMessages.js");
 
-const validateRemoteCommand = async (readLineInterface) => {
+const validateRemoteGitCommand = async (readLineInterface) => {
 	//
 	console.log({ COMMIT_COMMANDS });
 
@@ -21,9 +21,9 @@ const validateRemoteCommand = async (readLineInterface) => {
 			)
 		);
 		// You can choose to recursively call the function to prompt the user again or handle it in another way
-		await validateRemoteCommand(readLineInterface);
+		await validateRemoteGitCommand(readLineInterface);
 	}
 	return userCommitCommand;
 };
 
-exports.validateRemoteCommand = validateRemoteCommand;
+exports.validateRemoteGitCommand = validateRemoteGitCommand;
