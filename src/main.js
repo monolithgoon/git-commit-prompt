@@ -58,7 +58,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 
 			// Prompt user to confirm the commit message
 			let localCommitConfirm = await validateUserInput(
-				"Confirm commit message is OK? ( Y / N / QUIT):",
+				"Confirm commit message is OK? ( yes / no / quit):",
 				rl,
 				"COMMIT_MESSAGE_OK"
 			);
@@ -85,31 +85,28 @@ async function runProgram(rl, allowDevLoggingChk) {
 
 		// Ask user to commit to remote
 		const askLocalCommit = mapStringToBoolean(
-			await validateUserInput("Write local commit (Y / N)", rl, "YES_NO_RESPONSE")
+			await validateUserInput("Write local commit (yes / no)", rl, "YES_NO_RESPONSE")
 		);
 
 		//
 		askLocalCommit && (await (localCommitOk = writeLocalCommit(completeCommitMsg, rl)));
 
 		// Ask user to commit to remote
-		const askRemoteCommit = mapStringToBoolean(
-			await validateUserInput("Collaborate with remote? (Y / N)", rl, "YES_NO_RESPONSE")
+		const askRemoteCollab = mapStringToBoolean(
+			await validateUserInput("Collaborate with remote? (yes / no)", rl, "YES_NO_RESPONSE")
 		);
 
 		// Alert user
-		logger(askRemoteCommit, allowDevLoggingChk);
+		logger(askRemoteCollab, allowDevLoggingChk);
 
 		// Commit to remote if the user assents
-		askRemoteCommit && (remoteCommitOk = await writeRemoteCommit(rl));
+		askRemoteCollab && (remoteCommitOk = await writeRemoteCommit(rl));
 
 		// Ask to user to proceed
-		const askToProceed = mapStringToBoolean(await validateUserInput("Continue? (Y / N)", rl, "YES_NO_RESPONSE"));
+		const askToProceed = mapStringToBoolean(await validateUserInput("Continue? (yes / no)", rl, "YES_NO_RESPONSE"));
 
 		// Alert user
 		logger(askToProceed, allowDevLoggingChk);
-
-		// // Commit to remote if the user assents
-		// askToProceed && askRemoteCommit (remoteCommitOk = await writeRemoteCommit(rl));
 
 		// Alert user
 		logger(remoteCommitOk, allowDevLoggingChk);
@@ -118,7 +115,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 		askToProceed &&
 			!remoteCommitOk &&
 			(askForceRemoteCommit = mapStringToBoolean(
-				await validateUserInput(`Try to commit to remote with flags? (Y / N)`, rl, "YES_NO_RESPONSE")
+				await validateUserInput(`Try to commit to remote with flags? (yes / no)`, rl, "YES_NO_RESPONSE")
 			));
 
 		logger(askForceRemoteCommit, allowDevLoggingChk);

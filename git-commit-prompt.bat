@@ -1,5 +1,5 @@
 @echo off
-
+export NODE_ENV="development" 
 clear
 git status
 git log --oneline -5
