@@ -92,6 +92,12 @@ async function runProgram(rl, allowDevLoggingChk) {
 		//
 		askLocalCommit && (await (localCommitOk = writeLocalCommit(completeCommitMsg, rl)));
 
+		// Quit program if local commit fails
+		if (!localCommitOk) {
+			process.exitCode = 0;
+			rl.close();
+		};
+
 		// Ask user to commit to remote
 		const askRemoteCollab = mapStringToBoolean(
 			await validateUserInput("Collaborate with remote? (yes / no)", rl, "YES_NO_RESPONSE")
@@ -106,20 +112,21 @@ async function runProgram(rl, allowDevLoggingChk) {
 		// Alert user
 		logger(remoteCommitOk, allowDevLoggingChk);
 
-		// Ask to user to proceed
-		const askToProceed = mapStringToBoolean(await validateUserInput("Continue? (yes / no)", rl, "YES_NO_RESPONSE"));
-
-		// Alert user
-		logger(askToProceed, allowDevLoggingChk);
-
 		// Ask to force push remote commit if it fails initially
-		askToProceed &&
-			!remoteCommitOk &&
+		!remoteCommitOk &&
 			(askFlaggedRemoteCommit = mapStringToBoolean(
 				await validateUserInput(`Try to commit to remote with flags? (yes / no)`, rl, "YES_NO_RESPONSE")
 			));
 
 		logger(askFlaggedRemoteCommit, allowDevLoggingChk);
+
+		// Ask to user to proceed
+		const askToProceed = mapStringToBoolean(
+			await validateUserInput("Continue with commit? (yes / no)", rl, "YES_NO_RESPONSE")
+		);
+
+		// Alert user
+		logger(askToProceed, allowDevLoggingChk);
 
 		// Force push commit to remote
 		askFlaggedRemoteCommit && (await flaggedRemoteCommit(rl));
