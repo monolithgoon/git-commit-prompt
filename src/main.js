@@ -7,6 +7,7 @@ const { mapStringToBoolean } = require("./lib/mapStringToBoolean.js");
 const { getUserCommitCategoryInput } = require("./getUserCommitCategoryInput.js");
 const { logger } = require("./lib/logger.js");
 const { readlineQuestionAsync } = require("./lib/readlineQuestionAsync.js");
+const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
 
 /**
  * @description Prompts the user for a commit message,
@@ -23,6 +24,10 @@ async function runProgram(rl, allowDevLoggingChk) {
 		localCommitOk,
 		remoteCommitOk,
 		askFlaggedRemoteCommit;
+
+	// Show allowed commit types to user
+	console.log(chalk.consoleYlow(`Valid commit types:`));
+	console.log({ COMMIT_TYPES_DETAIL });
 
 	try {
 		// Prompt the user for commit information until they confirm their message
@@ -96,7 +101,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 		if (!localCommitOk) {
 			process.exitCode = 0;
 			rl.close();
-		};
+		}
 
 		// Ask user to commit to remote
 		const askRemoteCollab = mapStringToBoolean(
@@ -106,7 +111,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 		// Alert user
 		logger(askRemoteCollab, allowDevLoggingChk);
 
-		// 
+		//
 		if (!askRemoteCollab) {
 			process.exitCode = 0;
 			rl.close();

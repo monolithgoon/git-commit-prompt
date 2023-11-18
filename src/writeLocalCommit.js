@@ -1,7 +1,5 @@
 const { exeGitCommand } = require("./exeGitCommand.js");
 const chalk = require("./lib/chalkMessages.js");
-const { execAsync } = require("./lib/execAsync.js");
-const { printCommitMessage } = require("./lib/logging.js");
 
 /**
  * Writes a local commit using the provided commit message.
@@ -24,14 +22,13 @@ async function writeLocalCommit(commitMsg, readlineInterface) {
 		const escapedComment = commitMsg;
 
 		// Add and commit the changes using the complete commit message
-		const commitResponse = await exeGitCommand(readlineInterface, `add -A && git commit -m ${escapedComment}`)
+		const commitResponse = await exeGitCommand(readlineInterface, `add -A && git commit -m ${escapedComment}`);
 
-		// 
+		//
 		console.log(chalk.success("Local commit write successful"));
 
 		// Print the commit response
-		printCommitMessage(commitResponse);
-
+		console.log({ commitResponse });
 	} catch (error) {
 		console.error(chalk.warningStrong(`writeLocalCommit error: ${error}`));
 	}

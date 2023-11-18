@@ -1,6 +1,5 @@
 const { runProgram } = require("./main");
 const { createReadlineInterface } = require("./lib/createReadlineInterface");
-const { displayCommitTypes } = require("./lib/logging");
 const { promptUserForLogging } = require("./promptUserForLogging");
 
 (async () => {
@@ -9,9 +8,6 @@ const { promptUserForLogging } = require("./promptUserForLogging");
 
 	// Prompt the user for logging preference
 	const allowDevLoggingChk = await promptUserForLogging(rl);
-
-	// Show allowed commit types to user
-	displayCommitTypes();
 
 	// Run the program
 	runProgram(rl, allowDevLoggingChk);
