@@ -53,7 +53,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 			}
 
 			// Combine the commit information into a single message
-			completeCommitMsg = `["${commitType}] (${commitDomain}) - ${commitMsg}"`;
+			completeCommitMsg = `"[${commitType}] (${commitDomain}) - ${commitMsg}"`;
 
 			logger(completeCommitMsg, allowDevLoggingChk, "production");
 
@@ -106,8 +106,14 @@ async function runProgram(rl, allowDevLoggingChk) {
 		// Alert user
 		logger(askRemoteCollab, allowDevLoggingChk);
 
+		// 
+		if (!askRemoteCollab) {
+			process.exitCode = 0;
+			rl.close();
+		}
+
 		// Commit to remote if the user assents
-		askRemoteCollab && (remoteCommitOk = await writeRemoteCommit(rl));
+		remoteCommitOk = await writeRemoteCommit(rl);
 
 		// Alert user
 		logger(remoteCommitOk, allowDevLoggingChk);
