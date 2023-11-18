@@ -28,11 +28,16 @@ export NODE_ENV="development"
 clear
 box_text ".GIT BRANCHES "
 git branch
-box_text ".GIT STATE "
+box_text ".GIT LOG  "
+git log --oneline -1
+box_text ".GIT STATE  "
 git status
 @REM git log --oneline -5
-box_text "> GIT COMMIT PROMPT UTILITY "
+echo ``
 echo Automating Git commit...
+echo ``
+box_text "> GIT COMMIT PROMPT UTILITY "
+echo ``
 cd src
 node index.js
 git log --oneline -10

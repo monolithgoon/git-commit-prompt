@@ -1,4 +1,6 @@
 git-commit-prompt.bat
+package-lock.json
+package.json
 src/index.js
-src/main.js
-test/validateRemoteCommand.test.js
+temp/changed-files.txt
+temp/untracked-files.txt
