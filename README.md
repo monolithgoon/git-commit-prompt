@@ -2,11 +2,11 @@
 
 ### `bash git-commit-prompt.bat`
 
-_`BASH` command line utility to enforce a structured git commit message convention._
+_`BASH` command line utility to enforce a structured `Git` commit message convention._
 
-This repository follows a structured approach to commit messages to enhance clarity and organization. Each commit message should start with a tag enclosed in square brackets, followed by a brief description.
+This repository enforced a structured approach to commit messages to enhance clarity and organization. Each commit message is designed start with a tag enclosed in square brackets, followed by a domain of the commit, and a brief description.
 
-![git-commit-prompt-flow](https://github.com/monolithgoon/git-commit-prompt/assets/60096838/00533453-5d40-49c5-a336-058fd6967a6e)
+![git-commit-prompt-flow](https://github.com/monolithgoon/git-commit-prompt/assets/60096838/e46b06f8-4e65-4298-a16b-1ecf5ebd723c)
 
 ## _Pre-set Git Commit Categories_
 
