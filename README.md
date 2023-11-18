@@ -1,6 +1,6 @@
 # Git Commit Prompt
 
-### git-commit-prompt.sh
+### `bash git-commit-prompt.bat`
 
 _`BASH` command line utility to enforce a structured git commit message convention._
 
