@@ -53,7 +53,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 			}
 
 			// Combine the commit information into a single message
-			completeCommitMsg = `"${commitType} (${commitDomain}) - ${commitMsg}"`;
+			completeCommitMsg = `["${commitType}] (${commitDomain}) - ${commitMsg}"`;
 
 			logger(completeCommitMsg, allowDevLoggingChk, "production");
 
