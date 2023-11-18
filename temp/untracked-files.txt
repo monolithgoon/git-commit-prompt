@@ -1,0 +1,5 @@
+changed-files.txt
+src/lib/getFileData.js
+temp/changed-files.txt
+temp/untracked-files.txt
+test/readFile.test.js

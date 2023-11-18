@@ -94,7 +94,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 			await validateUserInput("Write local commit (yes / no)", rl, "YES_NO_RESPONSE")
 		);
 
-		//
+		// Write local commit
 		askLocalCommit && (await (localCommitOk = writeLocalCommit(completeCommitMsg, rl)));
 
 		// Quit program if local commit fails
