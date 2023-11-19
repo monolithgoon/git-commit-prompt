@@ -34,7 +34,7 @@ function getWorkingGitFiles() {
 
 	//
 	if (allFilesArray.length === 0) {
-		console.log(chalk.consoleY("Nothing to commit. Everything up to date."));
+		console.log(chalk.consoleY("Nothing to commit. Everything up to date.", "\n"));
 		process.exit();
 	}
 

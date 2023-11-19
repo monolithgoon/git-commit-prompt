@@ -1,3 +1,5 @@
+src/getUserCommitCategoryInput.js
+src/lib/displayRemoteBranches.js
 src/lib/getWorkingGitFiles.js
+src/main.js
 temp/changed-files.txt
-temp/untracked-files.txt

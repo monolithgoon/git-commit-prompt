@@ -6,6 +6,6 @@ const { execAsync } = require("./execAsync.js");
  * @returns {Promise<string>} - Resolves with the available remote branches
  */
 const displayRemoteBranches = async (readLineInterface) => {
-	return execAsync("git remote -v", readLineInterface);
+	return execAsync("git branch -r", readLineInterface);
 };
 exports.displayRemoteBranches = displayRemoteBranches;
