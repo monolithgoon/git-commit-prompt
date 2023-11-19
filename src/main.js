@@ -154,7 +154,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 
 		// Ask to user to proceed
 		let askToProceed = false;
-		!remoteCommitOk &&
+		!askFlaggedRemoteCommit &&
 			(askToProceed = mapStringToBoolean(
 				await validateUserInput("Continue with commit? (yes / no)", rl, "YES_NO_RESPONSE")
 			));

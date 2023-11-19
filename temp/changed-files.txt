@@ -1,3 +1,7 @@
-src/flaggedRemoteCommit.js
+src/askRemoteRepositoryInfo.js
+src/exeGitCommand.js
+src/lib/readlineQuestionAsync.js
 src/main.js
+src/writeLocalCommit.js
+src/writeRemoteCommit.js
 temp/changed-files.txt

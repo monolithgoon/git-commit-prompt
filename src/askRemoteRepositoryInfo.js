@@ -18,7 +18,7 @@ const askRemoteRepositoryInfo = async (readLineInterface) => {
 	// Validate remote repo branch name
 	const remoteBranchName = await validateRemoteBranchName(readLineInterface);
 
-	return { remoteGitCommand, remoteBranches, remoteRepoName, remoteBranchName };
+	return { remoteGitCommand, remoteRepoName, remoteBranchName };
 };
 
 exports.askRemoteRepositoryInfo = askRemoteRepositoryInfo;

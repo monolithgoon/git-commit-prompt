@@ -10,7 +10,7 @@ const { askRemoteRepositoryInfo } = require("./askRemoteRepositoryInfo.js");
 const writeRemoteCommit = async (readlineInterface) => {
 	try {
 		// Ask the user for remote repository information
-		const { remoteGitCommand, remoteBranches, remoteRepoName, remoteBranchName } = await askRemoteRepositoryInfo(
+		const { remoteGitCommand, remoteRepoName, remoteBranchName } = await askRemoteRepositoryInfo(
 			readlineInterface
 		);
 

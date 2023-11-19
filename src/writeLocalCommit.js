@@ -25,7 +25,7 @@ async function writeLocalCommit(commitMsg, readlineInterface) {
 		await exeGitCommand(readlineInterface, `add -A && git commit -m ${escapedComment}`);
 
 		//
-		console.log(chalk.interaction("Local commit write successful"));
+		console.log(chalk.consoleG("Local commit write successful"));
 
 	} catch (error) {
 		console.error(chalk.warningStrong(`writeLocalCommit error: ${error}`));
