@@ -149,17 +149,26 @@ async function runProgram(rl, allowDevLoggingChk) {
 		// logger(askFlaggedRemoteCommit, allowDevLoggingChk);
 		allowDevLoggingChk && console.log({ askFlaggedRemoteCommit });
 
+		// Force push commit to remote
+		askFlaggedRemoteCommit && (remoteCommitOk = await flaggedRemoteCommit(rl));
+
 		// Ask to user to proceed
-		const askToProceed = mapStringToBoolean(
-			await validateUserInput("Continue with commit? (yes / no)", rl, "YES_NO_RESPONSE")
-		);
+		let askToProceed = false;
+		!remoteCommitOk &&
+			(askToProceed = mapStringToBoolean(
+				await validateUserInput("Continue with commit? (yes / no)", rl, "YES_NO_RESPONSE")
+			));
+		// Ask to user to proceed
+		// const askToProceed = mapStringToBoolean(
+		// 	await validateUserInput("Continue with commit? (yes / no)", rl, "YES_NO_RESPONSE")
+		// );
 
 		// Alert user
 		// logger(askToProceed, allowDevLoggingChk);
 		allowDevLoggingChk && console.log({ askToProceed });
 
-		// Force push commit to remote
-		askFlaggedRemoteCommit && (await flaggedRemoteCommit(rl));
+		// // Force push commit to remote
+		// askFlaggedRemoteCommit && (await flaggedRemoteCommit(rl));
 
 		//
 		readlineQuestionAsync(`Do you want to write a custom .git command? (yes / no)`, rl);

@@ -21,6 +21,7 @@ async function flaggedRemoteCommit(readLineInterface) {
 
 		pushOriginResponse = await execAsync(`git push ${remoteRepoName} ${remoteBranchName} ${commitFlag}`, readLineInterface);
 		console.log({ pushOriginResponse });
+		return pushOriginResponse;
 	} catch (error) {
 		console.error(chalk.fail(`Remote commit error: ${error}`));
 	}
