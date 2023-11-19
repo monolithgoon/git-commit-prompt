@@ -12,4 +12,5 @@ const getUserCommitCategoryInput = async (categoryFlag, rl) => {
 		? await validateUserInput(`Enter a commit ${categoryFlag}:`, rl, categoryFlag)
 		: undefined;
 };
+
 exports.getUserCommitCategoryInput = getUserCommitCategoryInput;

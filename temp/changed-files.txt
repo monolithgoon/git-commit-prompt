@@ -1,5 +1,10 @@
-src/getUserCommitCategoryInput.js
+README.md
+git-commit-prompt.bat
+src/askRemoteRepositoryInfo.js
+src/index.js
 src/lib/displayRemoteBranches.js
-src/lib/getWorkingGitFiles.js
+src/lib/getUserCommitCategoryInput.js
+src/lib/readlineQuestionAsync.js
 src/main.js
 temp/changed-files.txt
+temp/untracked-files.txt

@@ -1,1 +1,2 @@
-src/lib/getUserCommitCategoryInput.js
+src/getInquirerInput.js
+src/lib/getRemoteBranches.js

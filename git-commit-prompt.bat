@@ -34,7 +34,7 @@ box_text ".GIT STATE  "
 git status
 @REM git log --oneline -5
 echo ``
-echo Automating Git commit...
+echo Structuring Git commit message...
 echo ``
 box_text "> GIT COMMIT PROMPT UTILITY "
 echo ``

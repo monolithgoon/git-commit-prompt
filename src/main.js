@@ -8,6 +8,14 @@ const { getUserCommitCategoryInput } = require("./lib/getUserCommitCategoryInput
 const { logger } = require("./lib/logger.js");
 const { readlineQuestionAsync } = require("./lib/readlineQuestionAsync.js");
 const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
+const { getRemoteBranches } = require("./lib/getRemoteBranches.js");
+const { createReadlineInterface } = require("./lib/createReadlineInterface.js");
+const getInquirerInput = require("./getInquirerInput.js");
+
+function exitProgram(rlInterface) {
+	process.exitCode = 0;
+	rlInterface.close();
+}
 
 /**
  * @description Prompts the user for a commit message,
@@ -33,6 +41,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 		// Prompt the user for commit information until they confirm their message
 		while (true) {
 			// Check if the user has requested to change a specific part of the commit message
+			// If they have, `commitAmmendChoice` is truthy
 			switch (commitAmendChoice?.toUpperCase()) {
 				case "TYPE":
 					commitType = await getUserCommitCategoryInput("TYPE", rl);
@@ -52,7 +61,11 @@ async function runProgram(rl, allowDevLoggingChk) {
 				default:
 					// Prompt the user for the full commit message if no amendment is requested
 					commitType = await getUserCommitCategoryInput("TYPE", rl);
-					commitDomain = await getUserCommitCategoryInput("DOMAIN", rl);
+					rl.pause();
+					commitDomain = await getInquirerInput.selectGitFile();
+					// commitDomain = await validateUserInput("", rl, "DOMAIN_INQUIRER");
+					rl.resume();
+					// commitDomain = await getUserCommitCategoryInput("DOMAIN", rl);
 					commitMsg = await getUserCommitCategoryInput("MESSAGE", rl);
 					break;
 			}
@@ -74,8 +87,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 				break;
 			} else if (["quit", "q", "end"].includes(localCommitConfirm.toLowerCase())) {
 				// Quit cmd line program
-				process.exitCode = 0;
-				rl.close();
+				exitProgram(rl);
 			} else {
 				// If the user doesn't confirm their message, allow them to amend it
 				console.log({ commitType });
@@ -98,10 +110,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 		askLocalCommit && (await (localCommitOk = writeLocalCommit(completeCommitMsg, rl)));
 
 		// Quit program if local commit fails
-		if (!localCommitOk) {
-			process.exitCode = 0;
-			rl.close();
-		}
+		!localCommitOk && exitProgram(rl);
 
 		// Ask user to commit to remote
 		const askRemoteCollab = mapStringToBoolean(
@@ -111,11 +120,14 @@ async function runProgram(rl, allowDevLoggingChk) {
 		// Alert user
 		logger(askRemoteCollab, allowDevLoggingChk);
 
+		// Display available remote repo names
+		const remoteBranches = await getRemoteBranches(rl);
+
 		//
-		if (!askRemoteCollab) {
-			process.exitCode = 0;
-			rl.close();
-		}
+		console.table(remoteBranches);
+
+		// Close program if user declines to collab. with remote
+		!askRemoteCollab && exitProgram(rl);
 
 		// Commit to remote if the user assents
 		remoteCommitOk = await writeRemoteCommit(rl);
@@ -152,8 +164,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 		process.exitCode = 1;
 	} finally {
 		// Close the readline interface and exit the process
-		process.exitCode = 0;
-		rl.close();
+		exitProgram(rl);
 	}
 }
 

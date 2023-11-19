@@ -20,6 +20,10 @@ function readlineQuestionAsync(question, rl) {
       }
     });
 
+    // rl.on('line', (input) => {
+    //   console.log(`Received: ${input}`);
+    // }); 
+
     // Listen for the 'close' event to ensure the readline interface is closed
     rl.once('close', () => {
       rl.close();
