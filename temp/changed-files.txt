@@ -1,6 +1,3 @@
-git-commit-prompt.bat
-package-lock.json
-package.json
-src/index.js
+src/lib/getWorkingGitFiles.js
 temp/changed-files.txt
 temp/untracked-files.txt

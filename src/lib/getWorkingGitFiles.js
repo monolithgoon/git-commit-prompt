@@ -15,7 +15,15 @@ function getWorkingGitFiles() {
 	const changedFilesArr = processArray(getFileData(FILE_PATHS.changed_files));
 	const untrackedFilesArr = processArray(getFileData(FILE_PATHS.untracked_files));
 
-	const allFiles = [].concat(...changedFilesArr, untrackedFilesArr);
+	// Array of all changed files
+	let allFiles = [].concat(...changedFilesArr, untrackedFilesArr);
+
+	// Get file paths from constants
+	let changedFilesPath = (FILE_PATHS.changed_files.match(/temp\/changed-files\.txt$/) || [])[0] || "";
+	let untrackedFilesPath = (FILE_PATHS.untracked_files.match(/temp\/untracked-files\.txt$/) || [])[0] || "";
+
+	// Exclude the changed-files.txt and untracked-files.txt
+	allFiles = allFiles.filter((file) => file !== changedFilesPath && file !== untrackedFilesPath);
 
 	const allFilesArray = allFiles.map((item, index) => {
 		return {
