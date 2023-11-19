@@ -39,7 +39,7 @@ const getInquirerInput = (() => {
 			// Re-open the readline interface
 			// // Purge the contents of the readline buffer to clear the input from Inquirer
 			// rl.write(null, { ctrl: true, name: "u" });
-			createReadlineInterface();
+			// createReadlineInterface();
 		},
 	};
 })();

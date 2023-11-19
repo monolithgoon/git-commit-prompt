@@ -1,2 +1,0 @@
-src/getInquirerInput.js
-src/lib/getRemoteBranches.js

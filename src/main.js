@@ -73,7 +73,9 @@ async function runProgram(rl, allowDevLoggingChk) {
 			// Combine the commit information into a single message
 			completeCommitMsg = `"[${commitType}] (${commitDomain}) - ${commitMsg}"`;
 
-			logger(completeCommitMsg, allowDevLoggingChk, "production");
+			// Alert user
+			// logger(completeCommitMsg, allowDevLoggingChk, "production");
+			console.table({ completeCommitMsg });
 
 			// Prompt user to confirm the commit message
 			let localCommitConfirm = await validateUserInput(
@@ -118,13 +120,14 @@ async function runProgram(rl, allowDevLoggingChk) {
 		);
 
 		// Alert user
-		logger(askRemoteCollab, allowDevLoggingChk);
+		// logger(askRemoteCollab, allowDevLoggingChk);
+		allowDevLoggingChk && console.log({ askRemoteCollab });
 
 		// Display available remote repo names
 		const remoteBranches = await getRemoteBranches(rl);
 
-		//
-		console.table(remoteBranches);
+		// Alert user
+		console.table({ remoteBranches });
 
 		// Close program if user declines to collab. with remote
 		!askRemoteCollab && exitProgram(rl);
@@ -133,7 +136,8 @@ async function runProgram(rl, allowDevLoggingChk) {
 		remoteCommitOk = await writeRemoteCommit(rl);
 
 		// Alert user
-		logger(remoteCommitOk, allowDevLoggingChk);
+		// logger(remoteCommitOk, allowDevLoggingChk);
+		allowDevLoggingChk && console.log({ remoteCommitOk });
 
 		// Ask to force push remote commit if it fails initially
 		!remoteCommitOk &&
@@ -141,7 +145,9 @@ async function runProgram(rl, allowDevLoggingChk) {
 				await validateUserInput(`Try to commit to remote with flags? (yes / no)`, rl, "YES_NO_RESPONSE")
 			));
 
-		logger(askFlaggedRemoteCommit, allowDevLoggingChk);
+		// Alert user
+		// logger(askFlaggedRemoteCommit, allowDevLoggingChk);
+		allowDevLoggingChk && console.log({ askFlaggedRemoteCommit });
 
 		// Ask to user to proceed
 		const askToProceed = mapStringToBoolean(
@@ -149,7 +155,8 @@ async function runProgram(rl, allowDevLoggingChk) {
 		);
 
 		// Alert user
-		logger(askToProceed, allowDevLoggingChk);
+		// logger(askToProceed, allowDevLoggingChk);
+		allowDevLoggingChk && console.log({ askToProceed });
 
 		// Force push commit to remote
 		askFlaggedRemoteCommit && (await flaggedRemoteCommit(rl));

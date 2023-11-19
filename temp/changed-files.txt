@@ -1,10 +1,6 @@
-README.md
-git-commit-prompt.bat
-src/askRemoteRepositoryInfo.js
-src/index.js
-src/lib/displayRemoteBranches.js
-src/lib/getUserCommitCategoryInput.js
-src/lib/readlineQuestionAsync.js
+src/exeGitCommand.js
+src/getInquirerInput.js
 src/main.js
+src/writeLocalCommit.js
 temp/changed-files.txt
 temp/untracked-files.txt
