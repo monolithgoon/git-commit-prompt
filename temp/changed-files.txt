@@ -1,7 +1,2 @@
-src/askRemoteRepositoryInfo.js
-src/exeGitCommand.js
-src/lib/readlineQuestionAsync.js
-src/main.js
-src/writeLocalCommit.js
-src/writeRemoteCommit.js
+README.md
 temp/changed-files.txt
