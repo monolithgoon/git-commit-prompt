@@ -1,10 +1,5 @@
-src/askCommitFlag.js
-src/askRemoteRepositoryInfo.js
-src/flaggedRemoteCommit.js
-src/lib/constants/commit_commands.js
-src/lib/execAsync.js
-src/lib/validators/validateRemoteGitCommand.js
+src/index.js
 src/main.js
-src/writeRemoteCommit.js
+src/writeLocalCommit.js
 temp/changed-files.txt
 temp/untracked-files.txt

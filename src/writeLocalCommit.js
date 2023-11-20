@@ -9,7 +9,7 @@ const chalk = require("./lib/chalkMessages.js");
  * @throws {Error} Throws an error if the local commit process fails.
  */
 
-async function writeLocalCommit(commitMsg, readlineInterface) {
+async function writeLocalCommit(readlineInterface, commitMsg) {
 	console.log(chalk.consoleGy("Writing local commit .."));
 	try {
 		// Ensure proper quoting around the commit message to handle cases where the commit message contains special characters.

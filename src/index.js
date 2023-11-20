@@ -1,5 +1,4 @@
 const chalk = require("../src/lib/chalkMessages");
-const inquirer = require("inquirer");
 const { runProgram } = require("./main");
 const { createReadlineInterface } = require("./lib/createReadlineInterface");
 const { promptUserForLogging } = require("./promptUserForLogging");

@@ -109,7 +109,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 		);
 
 		// Write local commit
-		askLocalCommit && (await (localCommitOk = writeLocalCommit(completeCommitMsg, rl)));
+		askLocalCommit && (await (localCommitOk = writeLocalCommit(rl, completeCommitMsg)));
 
 		// Quit program if local commit fails
 		!localCommitOk && exitProgram(rl);

@@ -1,4 +1,1 @@
-src/lib/constants/remote_commit_commands.js
-src/promptRemoteCommitFlag.js
-src/promptRemoteRepositoryInfo.js
-src/writeFlaggedRemoteCommit.js
+src/main-fn.js
