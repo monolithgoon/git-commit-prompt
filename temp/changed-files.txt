@@ -1,2 +1,2 @@
-README.md
+src/exeGitCommand.js
 temp/changed-files.txt

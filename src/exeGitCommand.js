@@ -17,7 +17,7 @@ const exeGitCommand = async (
 	try {
 		// Execute the commit command
 		const gitCommandResult = await execAsync(
-			`git ${remoteGitCommand} ${remoteRepoName} ${remoteBranchName}`,
+			`git ${remoteGitCommand} ${remoteRepoName} ${remoteBranchName} --quiet`,
 			readLineInterface
 		);
 
