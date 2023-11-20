@@ -11,6 +11,7 @@ const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
 const { getRemoteBranches } = require("./lib/getRemoteBranches.js");
 const { createReadlineInterface } = require("./lib/createReadlineInterface.js");
 const getInquirerInput = require("./getInquirerInput.js");
+const { execAsync } = require("./lib/execAsync.js");
 
 function exitProgram(rlInterface) {
 	process.exitCode = 0;
@@ -119,6 +120,15 @@ async function runProgram(rl, allowDevLoggingChk) {
 			await validateUserInput("Collaborate with remote? (yes / no)", rl, "YES_NO_RESPONSE")
 		);
 
+		const askShowRemoteDiff = mapStringToBoolean(
+			await validateUserInput("Show diff with remote? (yes / no)", rl, "YES_NO_RESPONSE")
+		);
+
+		// askShowRemoteDiff && await askShowRemoteBranchDiff(`feature/list-select-commit-domain-files`, rl);
+		askShowRemoteDiff && (()=>{
+			execAsync(`git show feature/inquirer-list-changed-files --minimal`, rl)
+		})();
+
 		// Alert user
 		// logger(askRemoteCollab, allowDevLoggingChk);
 		allowDevLoggingChk && console.log({ askRemoteCollab });
@@ -179,6 +189,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 		console.error(chalk.fail(error));
 		process.exitCode = 1;
 	} finally {
+		console.log(chalk.interaction("Closing program ..."))
 		// Close the readline interface and exit the process
 		exitProgram(rl);
 	}

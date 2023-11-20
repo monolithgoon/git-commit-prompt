@@ -1,2 +1,4 @@
 src/exeGitCommand.js
+src/lib/validators/validateRemoteGitCommand.js
+src/main.js
 temp/changed-files.txt

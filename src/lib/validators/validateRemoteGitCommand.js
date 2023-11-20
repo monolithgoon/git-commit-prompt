@@ -7,7 +7,7 @@ const validateRemoteGitCommand = async (readLineInterface) => {
 	console.log({ COMMIT_COMMANDS });
 
 	const userCommitCommand = await readlineQuestionAsync(
-		`Enter the commit command (1: build, 2: chore, 3: test, etc.):`,
+		`Enter the commit command:`,
 		readLineInterface
 	);
 
