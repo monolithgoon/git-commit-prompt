@@ -2,16 +2,15 @@ const chalk = require("./lib/chalkMessages.js");
 const { validateUserInput } = require("./lib/validators/validateUserInput.js");
 const { writeLocalCommit } = require("./writeLocalCommit.js");
 const { writeRemoteCommit } = require("./writeRemoteCommit.js");
-const { flaggedRemoteCommit } = require("./flaggedRemoteCommit.js");
+const { writeFlaggedRemoteCommit } = require("./writeFlaggedRemoteCommit.js");
 const { mapStringToBoolean } = require("./lib/mapStringToBoolean.js");
 const { getUserCommitCategoryInput } = require("./lib/getUserCommitCategoryInput.js");
 const { logger } = require("./lib/logger.js");
-const { readlineQuestionAsync } = require("./lib/readlineQuestionAsync.js");
 const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
 const { getRemoteBranches } = require("./lib/getRemoteBranches.js");
-const { createReadlineInterface } = require("./lib/createReadlineInterface.js");
 const getInquirerInput = require("./getInquirerInput.js");
 const { execAsync } = require("./lib/execAsync.js");
+const { promptRemoteCommitFlag } = require("./promptRemoteCommitFlag.js");
 
 function exitProgram(rlInterface) {
 	process.exitCode = 0;
@@ -120,18 +119,12 @@ async function runProgram(rl, allowDevLoggingChk) {
 			await validateUserInput("Collaborate with remote? (yes / no)", rl, "YES_NO_RESPONSE")
 		);
 
-		const askShowRemoteDiff = mapStringToBoolean(
-			await validateUserInput("Show diff with remote? (yes / no)", rl, "YES_NO_RESPONSE")
-		);
-
-		// askShowRemoteDiff && await askShowRemoteBranchDiff(`feature/list-select-commit-domain-files`, rl);
-		askShowRemoteDiff && (()=>{
-			execAsync(`git show feature/inquirer-list-changed-files --minimal`, rl)
-		})();
-
 		// Alert user
 		// logger(askRemoteCollab, allowDevLoggingChk);
 		allowDevLoggingChk && console.log({ askRemoteCollab });
+
+		// Close program if user declines to collab. with remote
+		!askRemoteCollab && exitProgram(rl);
 
 		// Display available remote repo names
 		const remoteBranches = await getRemoteBranches(rl);
@@ -139,8 +132,15 @@ async function runProgram(rl, allowDevLoggingChk) {
 		// Alert user
 		console.table({ remoteBranches });
 
-		// Close program if user declines to collab. with remote
-		!askRemoteCollab && exitProgram(rl);
+		const askShowRemoteDiff = mapStringToBoolean(
+			await validateUserInput("Show diff with remote? (yes / no)", rl, "YES_NO_RESPONSE")
+		);
+
+		// Alert user
+		allowDevLoggingChk && console.log({ askShowRemoteDiff });
+
+		// Prompt user to be show diff. with remote branch
+		askShowRemoteDiff && await execAsync(`git show feature/inquirer-list-changed-files --minimal`, rl);
 
 		// Commit to remote if the user assents
 		remoteCommitOk = await writeRemoteCommit(rl);
@@ -149,47 +149,64 @@ async function runProgram(rl, allowDevLoggingChk) {
 		// logger(remoteCommitOk, allowDevLoggingChk);
 		allowDevLoggingChk && console.log({ remoteCommitOk });
 
-		// Ask to force push remote commit if it fails initially
+		// Ask to user to proceed
+		let askToProceed = false;
 		!remoteCommitOk &&
-			(askFlaggedRemoteCommit = mapStringToBoolean(
-				await validateUserInput(`Try to commit to remote with flags? (yes / no)`, rl, "YES_NO_RESPONSE")
+			(askToProceed = mapStringToBoolean(
+				await validateUserInput("Continue with remote commit? (yes / no)", rl, "YES_NO_RESPONSE")
+			));
+
+		// Exit program if user declines to proceed
+		!askToProceed && exitProgram();
+
+		// Ask to user to proceed
+		let promptFlaggedRemoteCommit = false;
+		!remoteCommitOk &&
+			(promptFlaggedRemoteCommit = mapStringToBoolean(
+				await validateUserInput(
+					"Do you want to write a --flagged .git command to commit to remote? (yes / no)",
+					rl,
+					"YES_NO_RESPONSE"
+				)
+			));
+
+		// Alert user
+		allowDevLoggingChk && console.log({ promptFlaggedRemoteCommit });
+
+		// Exit program if user declines
+		!promptFlaggedRemoteCommit && exitProgram();
+
+		// Ask the user to input a commit flag
+		const remoteCommitFlag = await promptRemoteCommitFlag(rl);
+
+		// Force push commit to remote
+		remoteCommitOk = await writeFlaggedRemoteCommit(rl, remoteCommitFlag);
+
+		// Ask to force push remote commit if it fails initially
+		let promptCustomRemoteCommand = false;
+		!remoteCommitOk &&
+			(promptCustomRemoteCommand = mapStringToBoolean(
+				await validateUserInput(
+					`Do you want to write a custom .git command with --flags? (yes / no)`,
+					rl,
+					"YES_NO_RESPONSE"
+				)
 			));
 
 		// Alert user
 		// logger(askFlaggedRemoteCommit, allowDevLoggingChk);
-		allowDevLoggingChk && console.log({ askFlaggedRemoteCommit });
+		allowDevLoggingChk && console.log({ promptCustomRemoteCommand });
 
-		// Force push commit to remote
-		askFlaggedRemoteCommit && (remoteCommitOk = await flaggedRemoteCommit(rl));
+		// Exit program if user declines
+		!promptCustomRemoteCommand && exitProgram();
 
-		// Ask to user to proceed
-		let askToProceed = false;
-		!askFlaggedRemoteCommit &&
-			(askToProceed = mapStringToBoolean(
-				await validateUserInput("Continue with commit? (yes / no)", rl, "YES_NO_RESPONSE")
-			));
-		// Ask to user to proceed
-		// const askToProceed = mapStringToBoolean(
-		// 	await validateUserInput("Continue with commit? (yes / no)", rl, "YES_NO_RESPONSE")
-		// );
-
-		// Alert user
-		// logger(askToProceed, allowDevLoggingChk);
-		allowDevLoggingChk && console.log({ askToProceed });
-
-		// // Force push commit to remote
-		// askFlaggedRemoteCommit && (await flaggedRemoteCommit(rl));
-
-		//
-		readlineQuestionAsync(`Do you want to write a custom .git command? (yes / no)`, rl);
-
-		//
+		console.log(chalk.highlight("** write more code here ***"));
 	} catch (error) {
 		console.error(chalk.fail(`runProgram fn. error`));
 		console.error(chalk.fail(error));
 		process.exitCode = 1;
 	} finally {
-		console.log(chalk.interaction("Closing program ..."))
+		console.log(chalk.consoleGy("Closing program ..."));
 		// Close the readline interface and exit the process
 		exitProgram(rl);
 	}

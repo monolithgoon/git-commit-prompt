@@ -1,4 +1,3 @@
-const { displayRemoteBranches } = require("./lib/getRemoteBranches.js");
 const { validateRemoteRepoName } = require("./lib/validators/validateRemoteRepoName.js");
 const { validateRemoteBranchName } = require("./lib/validators/validateRemoteBranchName.js");
 const { validateRemoteGitCommand } = require("./lib/validators/validateRemoteGitCommand.js");
@@ -8,7 +7,7 @@ const { validateRemoteGitCommand } = require("./lib/validators/validateRemoteGit
  * @param {Object} readLineInterface - The readline interface
  * @returns {Promise<{ remoteGitCommand: string, remoteBranches: string, remoteRepoName: string, remoteBranchName: string }>} - Resolves with remote repository information
  */
-const askRemoteRepositoryInfo = async (readLineInterface) => {
+const promptRemoteRepositoryInfo = async (readLineInterface) => {
 	// Validate remote commit commands
 	const remoteGitCommand = await validateRemoteGitCommand(readLineInterface);
 
@@ -21,4 +20,4 @@ const askRemoteRepositoryInfo = async (readLineInterface) => {
 	return { remoteGitCommand, remoteRepoName, remoteBranchName };
 };
 
-exports.askRemoteRepositoryInfo = askRemoteRepositoryInfo;
+exports.promptRemoteRepositoryInfo = promptRemoteRepositoryInfo;

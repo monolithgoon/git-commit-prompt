@@ -1,22 +1,22 @@
 const { readlineQuestionAsync } = require("../readlineQuestionAsync.js");
-const { COMMIT_COMMANDS } = require("../constants/commit_commands.js");
+const { REMOTE_COMMIT_COMMANDS } = require("../constants/remote_commit_commands.js");
 const chalk = require("../chalkMessages.js");
 
 const validateRemoteGitCommand = async (readLineInterface) => {
 	//
-	console.log({ COMMIT_COMMANDS });
+	console.table({ REMOTE_COMMIT_COMMANDS });
 
 	const userCommitCommand = await readlineQuestionAsync(
-		`Enter the commit command:`,
+		`Enter the remote commit command:`,
 		readLineInterface
 	);
 
-	if (Object.values(COMMIT_COMMANDS).includes(userCommitCommand)) {
+	if (Object.values(REMOTE_COMMIT_COMMANDS).includes(userCommitCommand)) {
 	} else {
 		console.log(
 			chalk.consoleYlow(
 				`Invalid commit command. Please enter a valid commit command from the list: ${Object.values(
-					COMMIT_COMMANDS
+					REMOTE_COMMIT_COMMANDS
 				).join(", ")}`
 			)
 		);
