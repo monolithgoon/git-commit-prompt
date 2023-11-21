@@ -28,7 +28,7 @@ clear
 box_text ".GIT BRANCHES "
 git branch
 box_text ".GIT LOG  "
-git log --oneline -1
+git show --no-patch
 box_text ".GIT STATE  "
 git status
 @REM git log --oneline -5

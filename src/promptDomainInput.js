@@ -34,7 +34,7 @@ const promptDomainInput = (() => {
 				]);
 
 				// Show user the selection
-				console.info(`\n`, chalk.consoleYlow("Selected domain "), chalk.consoleB(inquirerResponse.commit_domain), `\n`);
+				// console.info(`\n`, chalk.consoleYlow("Selected domain "), chalk.consoleB(inquirerResponse.commit_domain), `\n`);
 
 				// Return the selected file
 				return inquirerResponse.commit_domain;

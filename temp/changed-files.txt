@@ -1,6 +1,3 @@
-src/index.js
-src/main-fn.js
-src/main.js
-src/promptCategoryInput.js
+git-commit-prompt.bat
 src/promptDomainInput.js
 temp/changed-files.txt
