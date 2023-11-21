@@ -1,3 +1,6 @@
-src/exeGitCommand.js
+src/index.js
+src/main-fn.js
+src/main.js
+src/promptCategoryInput.js
+src/promptDomainInput.js
 temp/changed-files.txt
-temp/untracked-files.txt

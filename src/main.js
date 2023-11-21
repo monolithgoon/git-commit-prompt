@@ -1,4 +1,5 @@
 const chalk = require("./lib/chalkMessages.js");
+const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
 const { validateUserInput } = require("./lib/validators/validateUserInput.js");
 const { writeLocalCommit } = require("./writeLocalCommit.js");
 const { writeRemoteCommit } = require("./writeRemoteCommit.js");
@@ -6,11 +7,10 @@ const { writeFlaggedRemoteCommit } = require("./writeFlaggedRemoteCommit.js");
 const { mapStringToBoolean } = require("./lib/mapStringToBoolean.js");
 const { getUserCommitCategoryInput } = require("./promptCategoryInput.js");
 const { logger } = require("./lib/logger.js");
-const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
 const { getRemoteBranches } = require("./lib/getRemoteBranches.js");
-const getInquirerInput = require("./promptDomainInput.js");
 const { execAsync } = require("./lib/execAsync.js");
 const { promptRemoteCommitFlag } = require("./promptRemoteCommitFlag.js");
+const promptDomainInput = require("./promptDomainInput.js");
 
 function exitProgram(rlInterface) {
 	process.exitCode = 0;
@@ -22,7 +22,7 @@ function exitProgram(rlInterface) {
  * and then executes a git commit and push to remote.
  * @function runProgram
  */
-async function runProgram(rl, allowDevLoggingChk) {
+async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 	// Declare variables to store commit information
 	let commitType,
 		commitDomain,
@@ -62,7 +62,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 					// Prompt the user for the full commit message if no amendment is requested
 					commitType = await getUserCommitCategoryInput("TYPE", rl);
 					rl.pause();
-					commitDomain = await getInquirerInput.selectGitFile();
+					commitDomain = await promptDomainInput.selectGitFile(allWorkingGitFilesArr);
 					// commitDomain = await validateUserInput("", rl, "DOMAIN_INQUIRER");
 					rl.resume();
 					// commitDomain = await getUserCommitCategoryInput("DOMAIN", rl);

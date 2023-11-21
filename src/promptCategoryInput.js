@@ -9,7 +9,7 @@ const { validateUserInput } = require("./lib/validators/validateUserInput.js");
  */
 const getUserCommitCategoryInput = async (categoryFlag, rl) => {
 	return categoryFlag !== "NONE"
-		? await validateUserInput(`Enter a commit ${categoryFlag}:`, rl, categoryFlag)
+		? await validateUserInput(`Enter a commit ${categoryFlag} >`, rl, categoryFlag)
 		: undefined;
 };
 

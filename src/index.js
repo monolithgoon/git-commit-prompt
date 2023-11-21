@@ -6,10 +6,10 @@ const { getWorkingGitFiles } = require("./lib/getWorkingGitFiles");
 
 (async () => {
 	// Get array of all un-committed .git files
-	const allFilesArray = getWorkingGitFiles();
+	const workingGitFiles = getWorkingGitFiles();
 
 	//
-	if (allFilesArray.length === 0) {
+	if (workingGitFiles.length === 0) {
 		console.log(chalk.consoleY("Nothing to commit. Everything up to date."));
 		process.exit();
 	}
@@ -21,5 +21,5 @@ const { getWorkingGitFiles } = require("./lib/getWorkingGitFiles");
 	const allowDevLoggingChk = await promptUserForLogging(rl);
 
 	// Run the program
-	await runProgram(rl, allowDevLoggingChk);
+	await runProgram(rl, allowDevLoggingChk, workingGitFiles);
 })();
