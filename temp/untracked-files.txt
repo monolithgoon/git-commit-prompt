@@ -1,1 +1,2 @@
-src/main-fn.js
+src/promptCategoryInput.js
+src/promptDomainInput.js

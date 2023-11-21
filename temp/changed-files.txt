@@ -1,5 +1,9 @@
-src/index.js
+README.md
+git-commit-prompt.bat
+src/exeGitCommand.js
+src/getInquirerInput.js
+src/lib/getUserCommitCategoryInput.js
+src/main-fn.js
 src/main.js
-src/writeLocalCommit.js
 temp/changed-files.txt
 temp/untracked-files.txt

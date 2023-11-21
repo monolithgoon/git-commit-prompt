@@ -4,11 +4,11 @@ const { writeLocalCommit } = require("./writeLocalCommit.js");
 const { writeRemoteCommit } = require("./writeRemoteCommit.js");
 const { writeFlaggedRemoteCommit } = require("./writeFlaggedRemoteCommit.js");
 const { mapStringToBoolean } = require("./lib/mapStringToBoolean.js");
-const { getUserCommitCategoryInput } = require("./lib/getUserCommitCategoryInput.js");
+const { getUserCommitCategoryInput } = require("./promptCategoryInput.js");
 const { logger } = require("./lib/logger.js");
 const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
 const { getRemoteBranches } = require("./lib/getRemoteBranches.js");
-const getInquirerInput = require("./getInquirerInput.js");
+const getInquirerInput = require("./promptDomainInput.js");
 const { execAsync } = require("./lib/execAsync.js");
 const { promptRemoteCommitFlag } = require("./promptRemoteCommitFlag.js");
 
@@ -140,7 +140,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 		allowDevLoggingChk && console.log({ askShowRemoteDiff });
 
 		// Prompt user to be show diff. with remote branch
-		askShowRemoteDiff && await execAsync(`git show feature/inquirer-list-changed-files --minimal`, rl);
+		askShowRemoteDiff && (await execAsync(`git show feature/inquirer-list-changed-files --minimal`, rl));
 
 		// Commit to remote if the user assents
 		remoteCommitOk = await writeRemoteCommit(rl);
@@ -157,7 +157,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 			));
 
 		// Exit program if user declines to proceed
-		!askToProceed && exitProgram();
+		!askToProceed && exitProgram(rl);
 
 		// Ask to user to proceed
 		let promptFlaggedRemoteCommit = false;
@@ -174,7 +174,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 		allowDevLoggingChk && console.log({ promptFlaggedRemoteCommit });
 
 		// Exit program if user declines
-		!promptFlaggedRemoteCommit && exitProgram();
+		!promptFlaggedRemoteCommit && exitProgram(rl);
 
 		// Ask the user to input a commit flag
 		const remoteCommitFlag = await promptRemoteCommitFlag(rl);
@@ -198,7 +198,7 @@ async function runProgram(rl, allowDevLoggingChk) {
 		allowDevLoggingChk && console.log({ promptCustomRemoteCommand });
 
 		// Exit program if user declines
-		!promptCustomRemoteCommand && exitProgram();
+		!promptCustomRemoteCommand && exitProgram(rl);
 
 		console.log(chalk.highlight("** write more code here ***"));
 	} catch (error) {

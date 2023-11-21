@@ -5,9 +5,9 @@ const { writeRemoteCommit } = require("./writeRemoteCommit.js");
 const { execAsync } = require("./lib/execAsync.js");
 const { getRemoteBranches } = require("./lib/getRemoteBranches.js");
 const { promptRemoteCommitFlag } = require("./promptRemoteCommitFlag.js");
-const { getUserCommitCategoryInput } = require("./lib/getUserCommitCategoryInput.js");
+const { getUserCommitCategoryInput } = require("./promptCategoryInput.js");
 const { mapStringToBoolean } = require("./lib/mapStringToBoolean.js");
-const getInquirerInput = require("./getInquirerInput.js");
+const getInquirerInput = require("./promptDomainInput.js");
 const { writeFlaggedRemoteCommit } = require("./writeFlaggedRemoteCommit.js");
 const { writeLocalCommit } = require("./writeLocalCommit.js");
 

@@ -21,7 +21,6 @@ box_text() {
 }
 
 
-box_text "SETUP `/home/ubuntu/.profile` FOR ENV VAR "
 git diff --name-only > temp/changed-files.txt
 git ls-files --others --exclude-standard > temp/untracked-files.txt
 export NODE_ENV="development" 

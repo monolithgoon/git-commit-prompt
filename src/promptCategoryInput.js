@@ -1,4 +1,4 @@
-const { validateUserInput } = require("./validators/validateUserInput.js");
+const { validateUserInput } = require("./lib/validators/validateUserInput.js");
 
 /**
  * Prompt the user for input unless the categoryFlag is "NONE".

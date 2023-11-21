@@ -1,5 +1,5 @@
 # Git Commit Prompt
-_An interactive command line utility to enforce a structured git commit message convention._
+_An interactive command line utility that enforces a structured git commit message convention._
 
 ## _Overview_
 
@@ -12,7 +12,7 @@ _An interactive command line utility to enforce a structured git commit message 
 
 ### `[ TAG ] (<DOMAIN>) - <MESSAGE>`
 
-This CLI tool enforces a strict, opinionated approach to commit messages to enhance clarity, consistency and organization for a codebase. Each commit is tagged with a label or `TAG` enclosed in square brackets, signifying the nature of the modification, a major `DOMAIN` (preferebaly a specific file, but could be a directory) indicating where the change was made the commit, and finally followed by a brief `MESSAGE` describing the commit.
+This CLI tool enforces a strict, opinionated approach to commit messages in a way that enhances clarity, consistency and organization for a codebase. Each commit is tagged with a label enclosed in square brackets, signifying the category of change, followed by a `DOMAIN` — preferebaly a specific file, but could be a directory — indicating where the major change was made, and finally followed by a brief `MESSAGE` describing the commit.
 
 ## _Installation_
 

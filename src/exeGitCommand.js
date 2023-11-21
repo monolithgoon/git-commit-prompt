@@ -15,9 +15,10 @@ const exeGitCommand = async (
 	{ remoteRepoName = "", remoteBranchName = "" } = {}
 ) => {
 	try {
+		console.log({remoteGitCommand, remoteRepoName, remoteBranchName})
 		// Execute the commit command
 		const gitCommandResult = await execAsync(
-			`git ${remoteGitCommand} ${remoteRepoName} ${remoteBranchName} --quiet`,
+			`git ${remoteGitCommand} ${remoteRepoName} ${remoteBranchName}`,
 			readLineInterface
 		);
 
