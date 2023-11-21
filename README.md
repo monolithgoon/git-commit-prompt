@@ -76,7 +76,7 @@ const COMMIT_TYPES_DETAIL = Object.freeze({
 
 ### _System Diagram_
 
-![git-commit-prompt-system-diagram](https://github.com/monolithgoon/git-commit-prompt/assets/60096838/e728221d-cf33-45d9-8c17-efc74d251b97)
+![git-commit-prompt-system-diagram](https://github.com/monolithgoon/git-commit-prompt/assets/60096838/8596bb08-949b-4ef6-9033-2f83b86a24c1)
 
 ### _User Prompt Flow_
 
