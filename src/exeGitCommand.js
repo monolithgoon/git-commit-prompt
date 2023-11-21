@@ -15,7 +15,6 @@ const exeGitCommand = async (
 	{ remoteRepoName = "", remoteBranchName = "" } = {}
 ) => {
 	try {
-		console.log({remoteGitCommand, remoteRepoName, remoteBranchName})
 		// Execute the commit command
 		const gitCommandResult = await execAsync(
 			`git ${remoteGitCommand} ${remoteRepoName} ${remoteBranchName}`,
@@ -24,6 +23,7 @@ const exeGitCommand = async (
 
 		// Log the commit responses
 		console.info({ gitCommandResult });
+		
 		return gitCommandResult;
 	} catch (error) {
 		console.error(chalk.warningStrong(`exeGitCommand error: ${error}`));
