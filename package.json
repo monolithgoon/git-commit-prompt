@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "clear && mocha",
-    "postinstall": "pkg --out-path bin git-commit-prompt.bat"
+    "postinstall": "pkg --out-path bin git-commit-prompt"
   },
   "repository": {
     "type": "git",
