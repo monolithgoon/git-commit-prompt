@@ -1,7 +1,38 @@
 # Git Commit Prompt
 _An interactive command line utility that enforces a structured git commit message convention._
 
-## _Overview_
+##  _Overview_
+
+This module will save you time in 3 ways -
+- **_Easy Message Formatting_** - The program guides you through setting up commit messages in a consistent way. You don't need to spend time thinking about the format.
+
+```bash
+Select the type of change:
+1. Feature
+2. Bugfix
+3. Documentation
+...
+
+Enter a short, imperative tense description (max 50 characters):
+
+```
+
+- ***Task Tracking Made Simple -*** If your team tracks tasks or issues, the prompt can automatically link commits to these tasks. This means less manual work for you——no need to mention or close tasks in every commit.
+
+```bash
+Enter the task/issue number (or leave blank if not applicable):
+```
+
+- ***Quick Branch and Remote Operations -*** The prompt simplifies common Git tasks like creating branches or pushing changes. It gives developers shortcuts, so they don't have to remember and type out complex commands, saving them time and effort.
+
+```bash
+Select an operation:
+1. Create a new branch
+2. Switch to an existing branch
+3. Push changes to a remote
+```
+
+## _Details_
 
 ### Version
 ```bash
@@ -18,13 +49,15 @@ This CLI tool enforces a strict, opinionated approach to commit messages in a wa
 
 ### _Executables_
 
-The executables encapsulate the Node.js runtime, and all necessary dependencies within a single binary file. Pre-compiled binaries can be downloaded here
+The executables encapsulate the Node.js runtime, and all other necessary dependencies inside a single binary file.
+
+Download the pre-compiled binaries here -
 
 | Operating System |Supported Versions 
 |--- |-----------
-| _Windows_ | Microsoft Windows 10+
-| _Linux_ | Ubuntu 20.04+ (x64 and ARM64)
-| _macOS_ | 11+ (x64 and ARM64)
+| Windows | Microsoft Windows 10+
+| Linux | Ubuntu 20.04+ (x64 and ARM64)
+| macOS | 11+ (x64 and ARM64)
 
 ### _Builds_
 
