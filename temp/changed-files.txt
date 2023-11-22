@@ -1,3 +1,3 @@
-git-commit-prompt.bat
-src/promptDomainInput.js
+.gitignore
+src/exeGitCommand.js
 temp/changed-files.txt
