@@ -24,7 +24,8 @@
   },
   "homepage": "https://github.com/monolithgoon/git-commit-prompt#readme",
   "dependencies": {
-    "chalk": "^4.1.0"
+    "chalk": "^4.1.0",
+    "inquirer": "^8.2.6"
   },
   "devDependencies": {
     "chai": "^4.3.10",

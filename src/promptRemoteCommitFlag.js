@@ -5,7 +5,7 @@ const { readlineQuestionAsync } = require("./lib/readlineQuestionAsync");
  * @param {Object} readLineInterface - The readline interface
  * @returns {Promise<string>} - Resolves with the user's input for the commit flag
  */
-const askCommitFlag = async (readLineInterface) => {
-	return readlineQuestionAsync("Enter the commit flag (e.g., -m):", readLineInterface);
+const promptRemoteCommitFlag = async (readLineInterface) => {
+	return readlineQuestionAsync("Enter a remote commit --flag (e.g., -m):", readLineInterface);
 };
-exports.askCommitFlag = askCommitFlag;
+exports.promptRemoteCommitFlag = promptRemoteCommitFlag;

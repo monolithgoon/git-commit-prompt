@@ -9,7 +9,11 @@ const { execAsync } = require("./lib/execAsync.js");
  * @param {string} remoteBranchName - The name of the remote branch
  * @returns {Promise<boolean>} - Resolves with true if successful, false otherwise
  */
-const exeGitCommand = async (readLineInterface, remoteGitCommand, {remoteRepoName="", remoteBranchName="" } = {}) => {
+const exeGitCommand = async (
+	readLineInterface,
+	remoteGitCommand,
+	{ remoteRepoName = "", remoteBranchName = "" } = {}
+) => {
 	try {
 		// Execute the commit command
 		const gitCommandResult = await execAsync(
@@ -18,8 +22,8 @@ const exeGitCommand = async (readLineInterface, remoteGitCommand, {remoteRepoNam
 		);
 
 		// Log the commit responses
-		console.log(`gitCommandResult:`);
-		console.log(chalk.consoleG(gitCommandResult));
+		console.info({ gitCommandResult });
+		
 		return gitCommandResult;
 	} catch (error) {
 		console.error(chalk.warningStrong(`exeGitCommand error: ${error}`));

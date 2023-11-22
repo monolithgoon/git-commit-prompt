@@ -1,6 +1,6 @@
 const chalk = require("./lib/chalkMessages.js");
 const { exeGitCommand } = require("./exeGitCommand.js");
-const { askRemoteRepositoryInfo } = require("./askRemoteRepositoryInfo.js");
+const { promptRemoteRepositoryInfo } = require("./promptRemoteRepositoryInfo.js");
 
 /**
  * Write changes to a remote repository
@@ -10,7 +10,7 @@ const { askRemoteRepositoryInfo } = require("./askRemoteRepositoryInfo.js");
 const writeRemoteCommit = async (readlineInterface) => {
 	try {
 		// Ask the user for remote repository information
-		const { remoteGitCommand, remoteBranches, remoteRepoName, remoteBranchName } = await askRemoteRepositoryInfo(
+		const { remoteGitCommand, remoteRepoName, remoteBranchName } = await promptRemoteRepositoryInfo(
 			readlineInterface
 		);
 
@@ -18,7 +18,6 @@ const writeRemoteCommit = async (readlineInterface) => {
 		console.log(chalk.consoleGy("Committing to remote .."));
 
 		// Commit changes to the remote repository
-		// await exeGitCommand(readlineInterface, remoteGitCommand, remoteRepoName, remoteBranchName);
 		await exeGitCommand(readlineInterface, remoteGitCommand, {
 			remoteRepoName: remoteRepoName,
 			remoteBranchName: remoteBranchName,

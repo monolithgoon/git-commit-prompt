@@ -1,7 +1,7 @@
-const COMMIT_COMMANDS = Object.freeze({
-	1: "fetch",
+const REMOTE_COMMIT_COMMANDS = Object.freeze({
+	1: "push",
 	2: "pull",
-	3: "push",
+	3: "fetch",
 	// ...
 	// 11: "build",
 	// 12: "chore",
@@ -9,4 +9,4 @@ const COMMIT_COMMANDS = Object.freeze({
 	// Add other valid commit types with their corresponding numeric keys
 });
 
-exports.COMMIT_COMMANDS = COMMIT_COMMANDS;
+exports.REMOTE_COMMIT_COMMANDS = REMOTE_COMMIT_COMMANDS;
