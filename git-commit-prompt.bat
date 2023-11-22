@@ -21,14 +21,14 @@ box_text() {
 }
 
 
+clear
 git diff --name-only > temp/changed-files.txt
 git ls-files --others --exclude-standard > temp/untracked-files.txt
 export NODE_ENV="development" 
-clear
 box_text ".GIT BRANCHES "
 git branch
-box_text ".GIT LOG  "
-git show --no-patch
+box_text ".GIT SHOW "
+git show --pretty=medium --no-patch
 box_text ".GIT STATE  "
 git status
 @REM git log --oneline -5

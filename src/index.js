@@ -10,7 +10,7 @@ const { getWorkingGitFiles } = require("./lib/getWorkingGitFiles");
 
 	//
 	if (workingGitFiles.length === 0) {
-		console.log(chalk.consoleY("Nothing to commit. Everything up to date."));
+		console.log(chalk.consoleY("Nothing to commit locally. Everything up to date."));
 		process.exit();
 	}
 
