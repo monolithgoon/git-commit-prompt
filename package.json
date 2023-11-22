@@ -1,10 +1,14 @@
 {
   "name": "git-commit-prompt",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "description": "Command line utility to structure your git commit messages",
   "main": "git-commit-prompt.bat",
+  "bin": {
+    "git-commit-prompt": "git-commit-prompt.bat"
+  },
   "scripts": {
-    "test": "clear && mocha"
+    "test": "clear && mocha",
+    "postinstall": "pkg --out-path bin git-commit-prompt"
   },
   "repository": {
     "type": "git",
@@ -31,6 +35,7 @@
     "chai": "^4.3.10",
     "chai-as-promised": "^7.1.1",
     "mocha": "^10.2.0",
+    "pkg": "^5.8.1",
     "sinon": "^17.0.1"
   }
 }
