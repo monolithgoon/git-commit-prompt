@@ -1,6 +1,6 @@
 {
   "name": "git-commit-prompt",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "Command line utility to structure your git commit messages",
   "main": "git-commit-prompt.bat",
   "bin": {
