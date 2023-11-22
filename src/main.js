@@ -132,15 +132,15 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		// Alert user
 		console.table({ remoteBranches });
 
-		const askShowRemoteDiff = mapStringToBoolean(
-			await validateUserInput("Show diff with remote? (yes / no)", rl, "YES_NO_RESPONSE")
-		);
+		// const askShowRemoteDiff = mapStringToBoolean(
+		// 	await validateUserInput("Show diff with remote? (yes / no)", rl, "YES_NO_RESPONSE")
+		// );
 
-		// Alert user
-		allowDevLoggingChk && console.log({ askShowRemoteDiff });
+		// // Alert user
+		// allowDevLoggingChk && console.log({ askShowRemoteDiff });
 
-		// Prompt user to be show diff. with remote branch
-		askShowRemoteDiff && (await execAsync(`git show feature/inquirer-list-changed-files --minimal`, rl));
+		// // Prompt user to be show diff. with remote branch
+		// askShowRemoteDiff && (await execAsync(`git show feature/inquirer-list-changed-files --minimal`, rl));
 
 		// Commit to remote if the user assents
 		remoteCommitOk = await writeRemoteCommit(rl);

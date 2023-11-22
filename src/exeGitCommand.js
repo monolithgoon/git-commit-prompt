@@ -16,15 +16,15 @@ const exeGitCommand = async (
 ) => {
 	try {
 		// Execute the commit command
-		const gitCommandResult = await execAsync(
+		const output = await execAsync(
 			`git ${remoteGitCommand} ${remoteRepoName} ${remoteBranchName}`,
 			readLineInterface
 		);
 
 		// Log the commit responses
-		console.info({ gitCommandResult });
+		console.info({output });
 		
-		return gitCommandResult;
+		return output;
 	} catch (error) {
 		console.error(chalk.warningStrong(`exeGitCommand error: ${error}`));
 		throw new Error(`Commit failed`);
