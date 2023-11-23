@@ -6,7 +6,6 @@ const { writeRemoteCommit } = require("./writeRemoteCommit.js");
 const { writeFlaggedRemoteCommit } = require("./writeFlaggedRemoteCommit.js");
 const { mapStringToBoolean } = require("./lib/mapStringToBoolean.js");
 const { getUserCommitCategoryInput } = require("./promptCategoryInput.js");
-const { logger } = require("./lib/logger.js");
 const { getRemoteBranches } = require("./lib/getRemoteBranches.js");
 const { execAsync } = require("./lib/execAsync.js");
 const { promptRemoteCommitFlag } = require("./promptRemoteCommitFlag.js");
@@ -28,7 +27,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		commitDomain,
 		commitMsg,
 		completeCommitMsg,
-		commitAmendChoice,
+		commitAmendChoice = null,
 		localCommitOk,
 		remoteCommitOk,
 		askFlaggedRemoteCommit;
@@ -48,7 +47,8 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 					break;
 
 				case "DOMAIN":
-					commitDomain = await getUserCommitCategoryInput("DOMAIN", rl);
+					// commitDomain = await getUserCommitCategoryInput("DOMAIN", rl);
+					commitDomain = await promptDomainInput.selectGitFile(allWorkingGitFilesArr);
 					break;
 
 				case "MESSAGE":
@@ -59,48 +59,52 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 					break;
 
 				default:
-					// Prompt the user for the full commit message if no amendment is requested
+					// Here => `commitAmmendChoice` is falsy
 					commitType = await getUserCommitCategoryInput("TYPE", rl);
+					// *** hack => to allow use combined use of node readline, and Inquirer ***
 					rl.pause();
 					commitDomain = await promptDomainInput.selectGitFile(allWorkingGitFilesArr);
-					// commitDomain = await validateUserInput("", rl, "DOMAIN_INQUIRER");
+					// *** hack ***
 					rl.resume();
-					// commitDomain = await getUserCommitCategoryInput("DOMAIN", rl);
 					commitMsg = await getUserCommitCategoryInput("MESSAGE", rl);
 					break;
 			}
+
+			// Alert user
+			allowDevLoggingChk && console.log({ commitType });
+			allowDevLoggingChk && console.log({ commitDomain });
+			allowDevLoggingChk && console.log({ commitMsg });
 
 			// Combine the commit information into a single message
 			completeCommitMsg = `"[${commitType}] (${commitDomain}) - ${commitMsg}"`;
 
 			// Alert user
-			// logger(completeCommitMsg, allowDevLoggingChk, "production");
 			console.table({ completeCommitMsg });
 
 			// Prompt user to confirm the commit message
-			let localCommitConfirm = await validateUserInput(
+			let commitMsgConfirmOk = await validateUserInput(
 				"Confirm commit message is OK? ( yes / no / quit):",
 				rl,
 				"COMMIT_MESSAGE_OK"
 			);
 
-			if (["yes", "y"].includes(localCommitConfirm.toLowerCase())) {
-				// Break out of while loop
-				break;
-			} else if (["quit", "q", "end"].includes(localCommitConfirm.toLowerCase())) {
-				// Quit cmd line program
-				exitProgram(rl);
-			} else {
-				// If the user doesn't confirm their message, allow them to amend it
-				console.log({ commitType });
-				console.log({ commitDomain });
-				console.log({ commitMsg });
+			// commitMsgConfirmOk => "Y"
+			// If the user determines their message is not OK, allow them to amend it
+			if (!mapStringToBoolean(commitMsgConfirmOk)) {
 				commitAmendChoice = await validateUserInput(
 					`Select which prompt to amend ( "TYPE", "DOMAIN", "MESSAGE", "NONE"):`,
 					rl,
 					"AMEND"
 				);
 			}
+
+			// commitMsgConfirmOk => "N"
+			// Break out of while loop if user is ok with commit msg.
+			if (mapStringToBoolean(commitMsgConfirmOk)) break;
+
+			// commitMsgConfirmOk => "QUIT"
+			// Quit cmd line program if user chooses the option
+			if (["quit", "q", "end"].includes(commitMsgConfirmOk.toLowerCase())) exitProgram(rl);
 		}
 
 		// Ask user to commit to remote
@@ -120,7 +124,6 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		);
 
 		// Alert user
-		// logger(askRemoteCollab, allowDevLoggingChk);
 		allowDevLoggingChk && console.log({ askRemoteCollab });
 
 		// Close program if user declines to collab. with remote
@@ -146,7 +149,6 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		remoteCommitOk = await writeRemoteCommit(rl);
 
 		// Alert user
-		// logger(remoteCommitOk, allowDevLoggingChk);
 		allowDevLoggingChk && console.log({ remoteCommitOk });
 
 		// Ask to user to proceed
@@ -194,7 +196,6 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 			));
 
 		// Alert user
-		// logger(askFlaggedRemoteCommit, allowDevLoggingChk);
 		allowDevLoggingChk && console.log({ promptCustomRemoteCommand });
 
 		// Exit program if user declines

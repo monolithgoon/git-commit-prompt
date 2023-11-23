@@ -20,6 +20,9 @@ const { getWorkingGitFiles } = require("./lib/getWorkingGitFiles");
 	// Prompt the user for logging preference
 	const allowDevLoggingChk = await promptUserForLogging(rl);
 
+	// 
+	allowDevLoggingChk && (process.env.ALLOW_DEV_LOGGING = true);
+
 	// Run the program
 	await runProgram(rl, allowDevLoggingChk, workingGitFiles);
 })();

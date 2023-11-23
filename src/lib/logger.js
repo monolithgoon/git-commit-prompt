@@ -5,7 +5,7 @@
  * @param {boolean} allowLogging - Whether logging is allowed or not.
  * @param {string} prodFlag - The environment flag ('development' or 'production').
  */
-function logger(message, allowLogging, prodFlag = process.env.NODE_ENV) {
+function logger(message) {
 	// Log messages in 'development' environment only if allowLogging is true
 	// Log messages in 'production' environment regardless of the logging preference
 	if ((prodFlag === "development" && allowLogging) || prodFlag === "production") {
