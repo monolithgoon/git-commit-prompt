@@ -37,6 +37,5 @@ echo Structuring Git commit message...
 echo ``
 box_text "> GIT COMMIT PROMPT UTILITY "
 echo ``
-cd src
-node index.js
+node src/index.js
 git log --oneline -10

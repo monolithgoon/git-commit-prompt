@@ -4,10 +4,10 @@
   "description": "Command line utility to structure your git commit messages",
   "main": "git-commit-prompt.bat",
   "bin": {
-    "git-commit-prompt": "./git-commit-prompt.bat"
+    "git-commit-prompt": "git-commit-prompt.bat"
   },
   "pkg": {
-    "nodeVersion": "18"
+    "scripts": "src/**/*.js"
   },
   "scripts": {
     "test": "clear && mocha",
