@@ -1,6 +1,6 @@
-const chalk = require("../chalkMessages.js");
+const chalk = require("../config/chalkConfig.js");
 const { COMMIT_TYPES } = require("../constants/commit_types.js");
-const { readlineQuestionAsync } = require("../readlineQuestionAsync.js");
+const { readlineQuestionAsync } = require("../utils/readlineQuestionAsync.js");
 
 /**
  * @function validateUserInput

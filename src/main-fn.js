@@ -2,7 +2,7 @@ const chalk = require("./lib/chalkMessages.js");
 const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
 const { validateUserInput } = require("./lib/validators/validateUserInput.js");
 const { writeRemoteCommit } = require("./writeRemoteCommit.js");
-const { execAsync } = require("./lib/execAsync.js");
+const { execShellCmd } = require("./lib/execShellCmd.js");
 const { getRemoteBranches } = require("./lib/getRemoteBranches.js");
 const { promptRemoteCommitFlag } = require("./promptRemoteCommitFlag.js");
 const { getUserCommitCategoryInput } = require("./promptCategoryInput.js");
@@ -116,7 +116,7 @@ async function handleRemoteCollaboration(rl) {
 	);
 
 	if (askShowRemoteDiff) {
-		await execAsync(`git show feature/inquirer-list-changed-files --minimal`, rl);
+		await execShellCmd(`git show feature/inquirer-list-changed-files --minimal`, rl);
 	}
 
 	return true; // Placeholder for further implementation

@@ -1,4 +1,4 @@
-const { readlineQuestionAsync } = require("./lib/readlineQuestionAsync");
+const { readlineQuestionAsync } = require("./lib/utils/readlineQuestionAsync");
 
 /**
  * Ask the user to input a commit flag

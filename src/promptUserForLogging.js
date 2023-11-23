@@ -1,4 +1,4 @@
-const { mapStringToBoolean } = require("./lib/mapStringToBoolean");
+const { mapStringToBoolean } = require("./lib/utils/mapStringToBoolean");
 const { validateUserInput } = require("./lib/validators/validateUserInput");
 
 /**
@@ -12,7 +12,7 @@ async function promptUserForLogging(readLineInterface) {
 	try {
 		const allowLoggingChk = mapStringToBoolean(
 			await validateUserInput(
-				"Do you want to allow logging in development mode? (yes / no):",
+				"Do you want to allow logging in development mode? (yes / no) >",
 				readLineInterface,
 				"YES_NO_RESPONSE"
 			)

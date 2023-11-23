@@ -1,6 +1,6 @@
-const { readlineQuestionAsync } = require("../readlineQuestionAsync.js");
+const { readlineQuestionAsync } = require("../utils/readlineQuestionAsync.js");
 const { REMOTE_COMMIT_COMMANDS } = require("../constants/remote_commit_commands.js");
-const chalk = require("../chalkMessages.js");
+const chalk = require("../config/chalkConfig.js");
 
 const validateRemoteGitCommand = async (readLineInterface) => {
 	//

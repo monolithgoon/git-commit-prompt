@@ -1,6 +1,6 @@
 const fs = require(`fs`);
 const path = require(`path`);
-const chalk = require("./chalkMessages");
+const chalk = require("../config/chalkConfig");
 
 module.exports = (filePath) => {
   try {

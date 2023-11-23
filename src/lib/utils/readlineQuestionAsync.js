@@ -1,4 +1,4 @@
-const chalk = require("./chalkMessages.js");
+const chalk = require("../config/chalkConfig.js");
 
 /**
  * Asynchronously prompts the user with a question using readline.

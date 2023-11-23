@@ -1,6 +1,5 @@
 const inquirer = require("inquirer");
-const chalk = require("./lib/chalkMessages.js");
-const { getWorkingGitFiles } = require("./lib/getWorkingGitFiles.js");
+const chalk = require("./lib/config/chalkConfig.js");
 
 /**
  * Module to handle inquirer prompts for Git-related tasks.
@@ -17,12 +16,6 @@ const promptDomainInput = (() => {
 	return {
 		selectGitFile: async (workingFilesArr) => {
 			try {
-				// Generate a CLI list of changed + untracked .git files
-				if (workingFilesArr.length === 0) {
-					console.log(chalk.consoleY("Nothing to commit. Everything up to date."));
-					process.exit();
-				}
-
 				// Get input from inquirer
 				const inquirerResponse = await inquirer.prompt([
 					{

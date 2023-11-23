@@ -1,8 +1,8 @@
-const chalk = require("../src/lib/chalkMessages");
+const chalk = require("./lib/config/chalkConfig");
 const { runProgram } = require("./main");
-const { createReadlineInterface } = require("./lib/createReadlineInterface");
+const { createReadlineInterface } = require("./lib/utils/createReadlineInterface");
 const { promptUserForLogging } = require("./promptUserForLogging");
-const { getWorkingGitFiles } = require("./lib/getWorkingGitFiles");
+const { getWorkingGitFiles } = require("./lib/utils/getWorkingGitFiles");
 
 (async () => {
 	// Get array of all un-committed .git files
@@ -10,7 +10,7 @@ const { getWorkingGitFiles } = require("./lib/getWorkingGitFiles");
 
 	//
 	if (workingGitFiles.length === 0) {
-		console.log(chalk.consoleY("Nothing to commit locally. Everything up to date."));
+		console.log(chalk.consoleYlow("Nothing to commit locally. Everything up to date."));
 		process.exit();
 	}
 

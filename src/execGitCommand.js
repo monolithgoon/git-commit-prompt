@@ -1,5 +1,5 @@
-const chalk = require("./lib/chalkMessages.js");
-const { execAsync } = require("./lib/execAsync.js");
+const chalk = require("./lib/config/chalkConfig.js");
+const { execShellCmd } = require("./lib/utils/execShellCmd.js");
 
 /**
  * Execute a Git command
@@ -9,14 +9,14 @@ const { execAsync } = require("./lib/execAsync.js");
  * @param {string} remoteBranchName - The name of the remote branch
  * @returns {Promise<boolean>} - Resolves with true if successful, false otherwise
  */
-const exeGitCommand = async (
+const execGitCommand = async (
 	readLineInterface,
 	remoteGitCommand,
 	{ remoteRepoName = "", remoteBranchName = "" } = {}
 ) => {
 	try {
 		// Execute the commit command
-		const output = await execAsync(
+		const output = await execShellCmd(
 			`git ${remoteGitCommand} ${remoteRepoName} ${remoteBranchName}`,
 			readLineInterface
 		);
@@ -26,8 +26,8 @@ const exeGitCommand = async (
 		
 		return output;
 	} catch (error) {
-		console.error(chalk.warningStrong(`exeGitCommand error: ${error}`));
+		console.error(chalk.warningStrong(`execGitCommand error: ${error}`));
 		throw new Error(`Commit failed`);
 	}
 };
-exports.exeGitCommand = exeGitCommand;
+exports.execGitCommand = execGitCommand;

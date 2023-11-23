@@ -1,13 +1,13 @@
-const chalk = require("./lib/chalkMessages.js");
+const chalk = require("./lib/config/chalkConfig.js");
 const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
 const { validateUserInput } = require("./lib/validators/validateUserInput.js");
 const { writeLocalCommit } = require("./writeLocalCommit.js");
 const { writeRemoteCommit } = require("./writeRemoteCommit.js");
 const { writeFlaggedRemoteCommit } = require("./writeFlaggedRemoteCommit.js");
-const { mapStringToBoolean } = require("./lib/mapStringToBoolean.js");
+const { mapStringToBoolean } = require("./lib/utils/mapStringToBoolean.js");
 const { getUserCommitCategoryInput } = require("./promptCategoryInput.js");
-const { getRemoteBranches } = require("./lib/getRemoteBranches.js");
-const { execAsync } = require("./lib/execAsync.js");
+const { getRemoteBranches } = require("./lib/utils/getRemoteBranches.js");
+const { execShellCmd } = require("./lib/utils/execShellCmd.js");
 const { promptRemoteCommitFlag } = require("./promptRemoteCommitFlag.js");
 const promptDomainInput = require("./promptDomainInput.js");
 
@@ -33,7 +33,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		askFlaggedRemoteCommit;
 
 	// Show allowed commit types to user
-	console.log(chalk.consoleYlow(`Valid commit types:`));
+	console.log(chalk.consoleYlow(`Valid commit types >`));
 	console.log({ COMMIT_TYPES_DETAIL });
 
 	try {
@@ -70,20 +70,18 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 					break;
 			}
 
-			// Alert user
-			allowDevLoggingChk && console.log({ commitType });
-			allowDevLoggingChk && console.log({ commitDomain });
-			allowDevLoggingChk && console.log({ commitMsg });
-
 			// Combine the commit information into a single message
 			completeCommitMsg = `"[${commitType}] (${commitDomain}) - ${commitMsg}"`;
 
 			// Alert user
-			console.table({ completeCommitMsg });
+			console.table({ commit_type: commitType, commit_domain: commitDomain, commit_msg: commitMsg });
+
+			// Alert user
+			console.info({ completeCommitMsg });
 
 			// Prompt user to confirm the commit message
 			let commitMsgConfirmOk = await validateUserInput(
-				"Confirm commit message is OK? ( yes / no / quit):",
+				"Confirm commit message is OK? ( yes / no / quit) >",
 				rl,
 				"COMMIT_MESSAGE_OK"
 			);
@@ -112,6 +110,9 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 			await validateUserInput("Write local commit (yes / no)", rl, "YES_NO_RESPONSE")
 		);
 
+		// Recursively re-start program
+		!askLocalCommit && runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr);
+
 		// Write local commit
 		askLocalCommit && (await (localCommitOk = writeLocalCommit(rl, completeCommitMsg)));
 
@@ -135,9 +136,10 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		// Alert user
 		console.table({ remoteBranches });
 
-		/** 
-		 * todo => open nano editor hre
+		/**
+		 * todo => open git diff output below in nano
 		 */
+
 		// const askShowRemoteDiff = mapStringToBoolean(
 		// 	await validateUserInput("Show diff with remote? (yes / no)", rl, "YES_NO_RESPONSE")
 		// );
@@ -146,7 +148,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		// allowDevLoggingChk && console.log({ askShowRemoteDiff });
 
 		// // Prompt user to be show diff. with remote branch
-		// askShowRemoteDiff && (await execAsync(`git show feature/inquirer-list-changed-files --minimal`, rl));
+		// askShowRemoteDiff && (await execShellCmd(`git show feature/inquirer-list-changed-files --minimal`, rl));
 
 		// Commit to remote if the user assents
 		remoteCommitOk = await writeRemoteCommit(rl);
