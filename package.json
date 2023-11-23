@@ -4,11 +4,14 @@
   "description": "Command line utility to structure your git commit messages",
   "main": "git-commit-prompt.bat",
   "bin": {
-    "git-commit-prompt": "git-commit-prompt.bat"
+    "git-commit-prompt": "./git-commit-prompt.bat"
+  },
+  "pkg": {
+    "nodeVersion": "18"
   },
   "scripts": {
     "test": "clear && mocha",
-    "postinstall": "pkg --out-path bin git-commit-prompt"
+    "postinstall": "pkg --out-path bin -t node18 git-commit-prompt.bat"
   },
   "repository": {
     "type": "git",
