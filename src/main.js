@@ -135,6 +135,9 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		// Alert user
 		console.table({ remoteBranches });
 
+		/** 
+		 * todo => open nano editor hre
+		 */
 		// const askShowRemoteDiff = mapStringToBoolean(
 		// 	await validateUserInput("Show diff with remote? (yes / no)", rl, "YES_NO_RESPONSE")
 		// );

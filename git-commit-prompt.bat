@@ -28,7 +28,7 @@ export NODE_ENV="development"
 box_text ".GIT BRANCHES "
 git branch
 box_text ".GIT SHOW "
-git show --pretty=medium --no-patch
+git show --pretty=medium --abbrev-commit --no-patch
 box_text ".GIT STATE  "
 git status
 @REM git log --oneline -5

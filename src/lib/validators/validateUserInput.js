@@ -18,7 +18,7 @@ async function validateUserInput(promptMsg, rl, promptFlag) {
 	let promptResponse = await readlineQuestionAsync(`${promptMsg}`, rl);
 
 	// Trim empty space from the end of the response
-	promptResponse = promptResponse.trim();
+	promptResponse = promptResponse.trim().toLowerCase();
 
 	// Check that the user input is a valid, non-empty string
 	if (typeof promptResponse !== "string" || promptResponse.trim() === "") {

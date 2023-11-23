@@ -6,6 +6,6 @@ const { readlineQuestionAsync } = require("../readlineQuestionAsync.js");
  * @returns {Promise<string>} - Resolves with the validated remote branch name
  */
 const validateRemoteBranchName = async (readLineInterface) => {
-	return readlineQuestionAsync(`Enter the name of the remote branch:`, readLineInterface);
+	return readlineQuestionAsync(`Enter the name of the remote branch (leave blank):`, readLineInterface);
 };
 exports.validateRemoteBranchName = validateRemoteBranchName;
