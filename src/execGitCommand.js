@@ -22,8 +22,8 @@ const execGitCommand = async (
 		);
 
 		// Log the commit responses
-		console.info({output });
-		
+		console.info({ output });
+
 		return output;
 	} catch (error) {
 		console.error(chalk.warningStrong(`execGitCommand error: ${error}`));

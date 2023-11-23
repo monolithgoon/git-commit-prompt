@@ -128,7 +128,8 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		allowDevLoggingChk && console.log({ askRemoteCollab });
 
 		// Close program if user declines to collab. with remote
-		!askRemoteCollab && exitProgram(rl);
+		// !askRemoteCollab && exitProgram(rl);
+		if (!askRemoteCollab) exitProgram(rl);
 
 		// Display available remote repo names
 		const remoteBranches = await getRemoteBranches(rl);

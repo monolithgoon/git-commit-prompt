@@ -10,7 +10,7 @@ const chalk = require("./lib/config/chalkConfig.js");
  */
 
 async function writeLocalCommit(readlineInterface, commitMsg) {
-	console.log(chalk.consoleGy("Writing local commit .."));
+	console.log(chalk.consoleGy("Writing local commit .. \n"));
 	try {
 		// Ensure proper quoting around the commit message to handle cases where the commit message contains special characters.
 		// const quotedCommitMsg = `"${commitMsg.replace(/"/g, '\\"')}"`;
@@ -25,7 +25,7 @@ async function writeLocalCommit(readlineInterface, commitMsg) {
 		await execGitCommand(readlineInterface, `add -A && git commit -m ${escapedComment}`);
 
 		//
-		console.log(chalk.running("Local commit write successful"));
+		console.log(chalk.consoleYlow("Local commit successful"));
 
 	} catch (error) {
 		console.error(chalk.warningStrong(`writeLocalCommit error: ${error}`));
