@@ -1,6 +1,6 @@
-const { validateRemoteRepoName } = require("./lib/validators/validateRemoteRepoName.js");
-const { validateRemoteBranchName } = require("./lib/validators/validateRemoteBranchName.js");
-const { validateRemoteGitCommand } = require("./lib/validators/validateRemoteGitCommand.js");
+const { validateRemoteRepoName } = require("./validators/validateRemoteRepoName.js");
+const { validateRemoteBranchName } = require("./validators/validateRemoteBranchName.js");
+const { validateRemoteGitCommand } = require("./validators/validateRemoteGitCommand.js");
 
 /**
  * Ask the user for remote repository information

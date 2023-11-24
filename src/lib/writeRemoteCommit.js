@@ -1,5 +1,5 @@
-const chalk = require("./lib/config/chalkConfig.js");
-const { execGitCommand } = require("./execGitCommand.js");
+const chalk = require("./config/chalkConfig.js");
+const { execGitCommand } = require("../execGitCommand.js");
 const { promptRemoteRepositoryInfo } = require("./promptRemoteRepositoryInfo.js");
 
 /**

@@ -1,5 +1,5 @@
-const { execGitCommand } = require("./execGitCommand.js");
-const chalk = require("./lib/config/chalkConfig.js");
+const { execGitCommand } = require("../execGitCommand.js");
+const chalk = require("./config/chalkConfig.js");
 
 /**
  * Writes a local commit using the provided commit message.

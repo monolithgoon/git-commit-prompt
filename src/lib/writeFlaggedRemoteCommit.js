@@ -1,7 +1,6 @@
-const { promptRemoteCommitFlag } = require("./promptRemoteCommitFlag.js");
 const { promptRemoteRepositoryInfo } = require("./promptRemoteRepositoryInfo.js");
-const chalk = require("./lib/config/chalkConfig.js");
-const { execShellCmd } = require("./lib/utils/execShellCmd.js");
+const chalk = require("./config/chalkConfig.js");
+const { execShellCmd } = require("./utils/execShellCmd.js");
 
 /**
  * Executes a conditional remote commit based on the provided commit flag.

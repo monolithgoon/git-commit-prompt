@@ -1,7 +1,7 @@
 const chalk = require("./lib/config/chalkConfig");
 const { runProgram } = require("./main");
 const { createReadlineInterface } = require("./lib/utils/createReadlineInterface");
-const { promptUserForLogging } = require("./promptUserForLogging");
+const { promptUserForLogging } = require("./lib/promptUserForLogging");
 const { getWorkingGitFiles } = require("./lib/utils/getWorkingGitFiles");
 
 (async () => {

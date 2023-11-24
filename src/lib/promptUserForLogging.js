@@ -1,5 +1,5 @@
-const { mapStringToBoolean } = require("./lib/utils/mapStringToBoolean");
-const { validateUserInput } = require("./lib/validators/validateUserInput");
+const { mapStringToBoolean } = require("./utils/mapStringToBoolean");
+const { validateUserInput } = require("./validators/validateUserInput");
 
 /**
  * Prompts the user to allow logging or not.

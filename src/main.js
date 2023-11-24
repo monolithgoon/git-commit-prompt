@@ -1,14 +1,14 @@
 const chalk = require("./lib/config/chalkConfig.js");
 const { validateUserInput } = require("./lib/validators/validateUserInput.js");
-const { writeLocalCommit } = require("./writeLocalCommit.js");
-const { writeRemoteCommit } = require("./writeRemoteCommit.js");
-const { writeFlaggedRemoteCommit } = require("./writeFlaggedRemoteCommit.js");
+const { writeLocalCommit } = require("./lib/writeLocalCommit.js");
+const { writeRemoteCommit } = require("./lib/writeRemoteCommit.js");
+const { writeFlaggedRemoteCommit } = require("./lib/writeFlaggedRemoteCommit.js");
 const { mapStringToBoolean } = require("./lib/utils/mapStringToBoolean.js");
-const { promptCommitCategoryInput } = require("./promptCommitCategoryInput.js");
+const { promptCommitCategoryInput } = require("./lib/promptCommitCategoryInput.js");
 const { getRemoteBranches } = require("./lib/utils/getRemoteBranches.js");
 const { execShellCmd } = require("./lib/utils/execShellCmd.js");
-const { promptRemoteCommitFlag } = require("./promptRemoteCommitFlag.js");
-const promptScopeInput = require("./promptScopeInput.js");
+const { promptRemoteCommitFlag } = require("./lib/promptRemoteCommitFlag.js");
+const promptScopeInput = require("./lib/promptScopeInput.js");
 const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
 
 function exitProgram(rlInterface) {

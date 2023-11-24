@@ -1,5 +1,5 @@
 const inquirer = require("inquirer");
-const chalk = require("./lib/config/chalkConfig.js");
+const chalk = require("./config/chalkConfig.js");
 
 /**
  * Module to handle inquirer prompts for Git-related tasks.
