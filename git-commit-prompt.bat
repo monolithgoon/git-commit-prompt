@@ -1,3 +1,5 @@
+#! /usr/bin/env bash
+
 @echo off
 
 box_text() {
@@ -37,15 +39,15 @@ git ls-files --others --exclude-standard > temp/untracked-files.txt
 export NODE_ENV="development"
 
 # List all Git branches
-box_text ".GIT BRANCHES"
+box_text ".GIT BRANCHES "
 git branch
 
 # Show details about the last commit
-box_text ".GIT SHOW"
+box_text ".GIT SHOW "
 git show --pretty=medium --abbrev-commit --no-patch
 
 # Show the current Git status
-box_text ".GIT STATE"
+box_text ".GIT STATE    "
 git status
 
 # Display a message indicating the beginning of structuring Git commit messages
@@ -53,7 +55,7 @@ echo ""
 echo Structuring Git commit message...
 echo ""
 
-box_text "> GIT COMMIT PROMPT UTILITY"
+box_text "> GIT COMMIT PROMPT UTILITY   "
 echo ""
 
 # Run a Node.js script located at 'src/index.js' for Git commit message structuring
