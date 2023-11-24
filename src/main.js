@@ -98,7 +98,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 			// If the user determines their message is not OK, allow them to amend it
 			if (!mapStringToBoolean(commitMsgConfirmOk)) {
 				commitAmendChoice = await validateUserInput(
-					`Select which prompt to amend ( "TYPE", "SCOPE", "MESSAGE", "NONE"):`,
+					`Select which prompt to amend ( "TYPE", "SCOPE", "MESSAGE", "NONE") >`,
 					rl,
 					"AMEND"
 				);
@@ -126,6 +126,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 
 		// Proceed -> Write local commit
 		askToLocalCommit && (localCommitOk = await writeLocalCommit(rl, completeCommitMsg));
+		// askToLocalCommit && (localCommitOk = true)
 
 		// Alert user
 		allowDevLoggingChk && console.log({ localCommitOk });
@@ -149,7 +150,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		const remoteBranches = await getRemoteBranches(rl);
 
 		// Alert user
-		console.table({ remoteBranches });
+		console.info({ remoteBranches });
 
 		/**
 		 * todo => open git diff output below in nano
@@ -166,7 +167,9 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		// askShowRemoteDiff && (await execShellCmd(`git show feature/inquirer-list-changed-files --minimal`, rl));
 
 		// Commit to remote if the user assents
+		// rl.pause()
 		remoteCommitOk = await writeRemoteCommit(rl);
+		// rl.resume()
 
 		// Alert user
 		allowDevLoggingChk && console.log({ remoteCommitOk });

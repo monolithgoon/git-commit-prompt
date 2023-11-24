@@ -23,7 +23,7 @@ async function writeLocalCommit(readlineInterface, commitMsg) {
 
 	} catch (error) {
 		console.error(chalk.warningStrong(`writeLocalCommit error: ${error}`));
-		return null;
+		return false;
 	}
 }
 

@@ -18,10 +18,13 @@ const writeRemoteCommit = async (readlineInterface) => {
 		console.log(chalk.consoleGy("Committing to remote .."));
 
 		// Commit changes to the remote repository
-		await execGitCommand(readlineInterface, remoteGitCommand, {
+		const remoteResponse = await execGitCommand(readlineInterface, remoteGitCommand, {
 			remoteRepoName: remoteRepoName,
 			remoteBranchName: remoteBranchName,
 		});
+
+		console.log({remoteResponse})
+		
 		return true;
 	} catch (error) {
 		console.error(chalk.warningStrong(`writeRemoteCommit error: ${error}`));
