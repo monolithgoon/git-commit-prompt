@@ -116,17 +116,20 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 			await validateUserInput("Write local commit (yes / no)", rl, "YES_NO_RESPONSE")
 		);
 
-		// Recursively re-start program
-		!askToLocalCommit && await runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr);
+		// Alert user
+		allowDevLoggingChk && console.log({ askToLocalCommit });
 
-		// Write local commit
-		askToLocalCommit && (await (localCommitOk = writeLocalCommit(rl, completeCommitMsg)));
+		// Recursively re-start program
+		!askToLocalCommit && (await runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr));
+
+		// Proceed -> Write local commit
+		askToLocalCommit && (localCommitOk = await writeLocalCommit(rl, completeCommitMsg));
 
 		// Alert user
 		allowDevLoggingChk && console.log({ localCommitOk });
 
 		// Quit program if local commit fails
-		!localCommitOk && await runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr);
+		!localCommitOk && (await runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr));
 
 		// Ask user to commit to remote
 		const askRemoteCollab = mapStringToBoolean(
@@ -151,7 +154,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		 */
 
 		// const askShowRemoteDiff = mapStringToBoolean(
-		// 	await validateUserInput("Show diff with remote? (yes / no)", rl, "YES_NO_RESPONSE")
+		// 	await validateUserInput("Review diff with remote? (yes / no)", rl, "YES_NO_RESPONSE")
 		// );
 
 		// // Alert user
