@@ -1,3 +1,3 @@
-const AMEND_COMMIT_CHOICES = ["TYPE", "DOMAIN", "MESSAGE", "NONE"];
+const AMEND_COMMIT_CHOICES = ["TYPE", "SCOPE", "MESSAGE", "NONE"];
 
 module.exports = { AMEND_COMMIT_CHOICES };

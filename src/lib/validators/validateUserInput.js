@@ -8,7 +8,7 @@ const { readlineQuestionAsync } = require("../utils/readlineQuestionAsync.js");
  * @param {string} promptMsg - The message to prompt the user for input
  * @param {readline.Interface} rl - The readline interface object used for user input
  * @param {string} promptFlag - A flag indicating the type of prompt to display,
- *                               either "TYPE", "DOMAIN", "MESSAGE", "CONFIRM",
+ *                               either "TYPE", "SCOPE", "MESSAGE", "CONFIRM",
  *                               "AMEND", or "REMOTE"
  * @returns {Promise<string>} - The validated user input as a string
  */
@@ -30,6 +30,7 @@ async function validateUserInput(promptMsg, rl, promptFlag) {
 		// Switch based on the promptFlag
 		switch (promptFlag) {
 			case "TYPE":
+
 				// Check if the input is at least 2 characters long
 				if (promptResponse.length < 2) {
 					console.log(chalk.consoleYlow("Commit type must be at least 2 characters long"));
@@ -44,10 +45,10 @@ async function validateUserInput(promptMsg, rl, promptFlag) {
 				}
 				break;
 
-			case "DOMAIN":
+			case "SCOPE":
 				// Check if the input is at least 3 characters long
 				if (promptResponse.length < 3) {
-					console.log(chalk.consoleYlow("Commit domain must be at least 3 characters long"));
+					console.log(chalk.consoleYlow("Commit scope must be at least 3 characters long"));
 					promptResponse = await validateUserInput(promptMsg, rl, promptFlag);
 				}
 				break;
@@ -70,8 +71,8 @@ async function validateUserInput(promptMsg, rl, promptFlag) {
 
 			case "AMEND":
 				// Check if the input is a valid amend type
-				if (!["TYPE", "DOMAIN", "MESSAGE", "NONE"].includes(promptResponse.toUpperCase())) {
-					console.log(chalk.consoleYlow("Invalid input. Please enter 'TYPE', 'DOMAIN', 'MESSAGE' or 'NONE'"));
+				if (!["TYPE", "SCOPE", "MESSAGE", "NONE"].includes(promptResponse.toUpperCase())) {
+					console.log(chalk.consoleYlow("Invalid input. Please enter 'TYPE', 'SCOPE', 'MESSAGE' or 'NONE'"));
 					promptResponse = await validateUserInput(promptMsg, rl, promptFlag);
 				}
 				break;

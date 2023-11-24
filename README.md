@@ -41,9 +41,9 @@ Select an operation:
 
 ### _Commit Structure_
 
-### `[ TAG ] (<DOMAIN>) - <MESSAGE>`
+### `[ TAG ] (<SCOPE>) - <MESSAGE>`
 
-This CLI tool enforces a strict, opinionated approach to commit messages in a way that enhances clarity, consistency and organization for a codebase. Each commit is tagged with a label enclosed in square brackets, signifying the category of change, followed by a `DOMAIN` — preferebaly a specific file, but could be a directory — indicating where the major change was made, and finally followed by a brief `MESSAGE` describing the commit.
+This CLI tool enforces a strict, opinionated approach to commit messages in a way that enhances clarity, consistency and organization for a codebase. Each commit is tagged with a label enclosed in square brackets, signifying the category of change, followed by a `SCOPE` — preferebaly a specific file, but could be a directory — indicating where the major change was made, and finally followed by a brief `MESSAGE` describing the commit.
 
 ## _Installation_
 

@@ -1,15 +1,15 @@
 const chalk = require("./lib/config/chalkConfig.js");
-const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
 const { validateUserInput } = require("./lib/validators/validateUserInput.js");
 const { writeLocalCommit } = require("./writeLocalCommit.js");
 const { writeRemoteCommit } = require("./writeRemoteCommit.js");
 const { writeFlaggedRemoteCommit } = require("./writeFlaggedRemoteCommit.js");
 const { mapStringToBoolean } = require("./lib/utils/mapStringToBoolean.js");
-const { getUserCommitCategoryInput } = require("./promptCategoryInput.js");
+const { promptCommitCategoryInput } = require("./promptCommitCategoryInput.js");
 const { getRemoteBranches } = require("./lib/utils/getRemoteBranches.js");
 const { execShellCmd } = require("./lib/utils/execShellCmd.js");
 const { promptRemoteCommitFlag } = require("./promptRemoteCommitFlag.js");
-const promptDomainInput = require("./promptDomainInput.js");
+const promptScopeInput = require("./promptScopeInput.js");
+const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
 
 function exitProgram(rlInterface) {
 	process.exitCode = 0;
@@ -24,16 +24,15 @@ function exitProgram(rlInterface) {
 async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 	// Declare variables to store commit information
 	let commitType,
-		commitDomain,
+		commitScope,
 		commitMsg,
 		completeCommitMsg,
 		commitAmendChoice = null,
 		localCommitOk,
-		remoteCommitOk,
-		askFlaggedRemoteCommit;
+		remoteCommitOk;
 
+	/** remove => this doesn't belong here */
 	// Show allowed commit types to user
-	console.log(chalk.consoleYlow(`Valid commit types >`));
 	console.log({ COMMIT_TYPES_DETAIL });
 
 	try {
@@ -43,16 +42,16 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 			// If they have, `commitAmmendChoice` is truthy
 			switch (commitAmendChoice?.toUpperCase()) {
 				case "TYPE":
-					commitType = await getUserCommitCategoryInput("TYPE", rl);
+					commitType = await promptCommitCategoryInput("TYPE", rl);
 					break;
 
-				case "DOMAIN":
-					// commitDomain = await getUserCommitCategoryInput("DOMAIN", rl);
-					commitDomain = await promptDomainInput.selectGitFile(allWorkingGitFilesArr);
+				case "SCOPE":
+					// commitScope = await promptCommitCategoryInput("SCOPE", rl);
+					commitScope = await promptScopeInput.selectGitFile(allWorkingGitFilesArr);
 					break;
 
 				case "MESSAGE":
-					commitMsg = await getUserCommitCategoryInput("MESSAGE", rl);
+					commitMsg = await promptCommitCategoryInput("MESSAGE", rl);
 					break;
 
 				case "NONE":
@@ -60,21 +59,28 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 
 				default:
 					// Here => `commitAmmendChoice` is falsy
-					commitType = await getUserCommitCategoryInput("TYPE", rl);
+					commitType = await promptCommitCategoryInput("TYPE", rl);
 					// *** hack => to allow use combined use of node readline, and Inquirer ***
 					rl.pause();
-					commitDomain = await promptDomainInput.selectGitFile(allWorkingGitFilesArr);
+					commitScope = await promptScopeInput.selectGitFile(allWorkingGitFilesArr);
 					// *** hack ***
 					rl.resume();
-					commitMsg = await getUserCommitCategoryInput("MESSAGE", rl);
+					commitMsg = await promptCommitCategoryInput("MESSAGE", rl);
 					break;
 			}
 
 			// Combine the commit information into a single message
-			completeCommitMsg = `"[${commitType}] (${commitDomain}) - ${commitMsg}"`;
+			completeCommitMsg = `"[${commitType}] (${commitScope}) - ${commitMsg}"`;
+
+			// Ensure proper quoting around the commit message to handle cases where the commit message contains special characters.
+			// const escapedCommitMsg = `"${commitMsg.replace(/"/g, '\\"')}"`;
+
+			// FIXME -> THIS IS CAUSING THE CMD. LINE TO THROW AN ERROR
+			const escaptedCommitMsg = commitMsg.replace(/`/g, "\\`");
+			console.log({ escaptedCommitMsg });
 
 			// Alert user
-			console.table({ commit_type: commitType, commit_domain: commitDomain, commit_msg: commitMsg });
+			console.table({ commit_type: commitType, commit_domain: commitScope, commit_msg: commitMsg });
 
 			// Alert user
 			console.info({ completeCommitMsg });
@@ -90,7 +96,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 			// If the user determines their message is not OK, allow them to amend it
 			if (!mapStringToBoolean(commitMsgConfirmOk)) {
 				commitAmendChoice = await validateUserInput(
-					`Select which prompt to amend ( "TYPE", "DOMAIN", "MESSAGE", "NONE"):`,
+					`Select which prompt to amend ( "TYPE", "SCOPE", "MESSAGE", "NONE"):`,
 					rl,
 					"AMEND"
 				);
@@ -106,18 +112,21 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		}
 
 		// Ask user to commit to remote
-		const askLocalCommit = mapStringToBoolean(
+		const askToLocalCommit = mapStringToBoolean(
 			await validateUserInput("Write local commit (yes / no)", rl, "YES_NO_RESPONSE")
 		);
 
 		// Recursively re-start program
-		!askLocalCommit && runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr);
+		!askToLocalCommit && await runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr);
 
 		// Write local commit
-		askLocalCommit && (await (localCommitOk = writeLocalCommit(rl, completeCommitMsg)));
+		askToLocalCommit && (await (localCommitOk = writeLocalCommit(rl, completeCommitMsg)));
+
+		// Alert user
+		allowDevLoggingChk && console.log({ localCommitOk });
 
 		// Quit program if local commit fails
-		!localCommitOk && exitProgram(rl);
+		!localCommitOk && await runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr);
 
 		// Ask user to commit to remote
 		const askRemoteCollab = mapStringToBoolean(

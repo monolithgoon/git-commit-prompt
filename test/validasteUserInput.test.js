@@ -26,9 +26,9 @@
 //     expect(invalidResult).to.not.equal(validInput);
 //   });
 
-//   it("should validate commit domain input", async () => {
-//     const promptMsg = "Enter commit domain:";
-//     const promptFlag = "DOMAIN";
+//   it("should validate commit scope input", async () => {
+//     const promptMsg = "Enter commit scope:";
+//     const promptFlag = "SCOPE";
 //     const validInput = "example";
 //     const invalidInput = "fuckyouabsolutetwat";
 

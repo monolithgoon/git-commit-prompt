@@ -5,11 +5,11 @@ const { writeRemoteCommit } = require("./writeRemoteCommit.js");
 const { execShellCmd } = require("./lib/execShellCmd.js");
 const { getRemoteBranches } = require("./lib/getRemoteBranches.js");
 const { promptRemoteCommitFlag } = require("./promptRemoteCommitFlag.js");
-const { getUserCommitCategoryInput } = require("./promptCategoryInput.js");
+const { promptCommitCategoryInput } = require("./promptCategoryInput.js");
 const { mapStringToBoolean } = require("./lib/mapStringToBoolean.js");
 const { writeFlaggedRemoteCommit } = require("./writeFlaggedRemoteCommit.js");
 const { writeLocalCommit } = require("./writeLocalCommit.js");
-const promptDomainInput = require("./promptDomainInput.js");
+const promptScopeInput = require("./promptScopeInput.js");
 
 /**
  * Function to exit the program and close the readline interface.
@@ -24,49 +24,49 @@ function exitProgram(rlInterface) {
  * Function to retrieve commit information from the user.
  * @param {readline.Interface} rl - Readline interface for user input.
  * @param {string} commitAmendChoice - User's choice to amend commit.
- * @returns {Object} Object containing commitType, commitDomain, and commitMsg.
+ * @returns {Object} Object containing commitType, commitScope, and commitMsg.
  */
 async function getCommitInformation(rl, commitAmendChoice, allWorkingGitFilesArr) {
-	let commitType, commitDomain, commitMsg;
+	let commitType, commitScope, commitMsg;
 
 	switch (commitAmendChoice?.toUpperCase()) {
 		case "TYPE":
-			commitType = await getUserCommitCategoryInput("TYPE", rl);
+			commitType = await promptCommitCategoryInput("TYPE", rl);
 			break;
 
-		case "DOMAIN":
-			commitDomain = await getUserCommitCategoryInput("DOMAIN", rl);
+		case "SCOPE":
+			commitScope = await promptCommitCategoryInput("SCOPE", rl);
 			break;
 
 		case "MESSAGE":
-			commitMsg = await getUserCommitCategoryInput("MESSAGE", rl);
+			commitMsg = await promptCommitCategoryInput("MESSAGE", rl);
 			break;
 
 		case "NONE":
 			break;
 
 		default:
-			commitType = await getUserCommitCategoryInput("TYPE", rl);
+			commitType = await promptCommitCategoryInput("TYPE", rl);
 			rl.pause();
 			rl.resume();
-			commitMsg = await getUserCommitCategoryInput("MESSAGE", rl);
-			commitDomain = await promptDomainInput.selectGitFile(allWorkingGitFilesArr);
+			commitMsg = await promptCommitCategoryInput("MESSAGE", rl);
+			commitScope = await promptScopeInput.selectGitFile(allWorkingGitFilesArr);
 			break;
 	}
 
-	return { commitType, commitDomain, commitMsg };
+	return { commitType, commitScope, commitMsg };
 }
 
 /**
  * Function to confirm the commit message with the user.
  * @param {readline.Interface} rl - Readline interface for user input.
  * @param {string} commitType - Type of the commit.
- * @param {string} commitDomain - Domain of the commit.
+ * @param {string} commitScope - Domain of the commit.
  * @param {string} commitMsg - Commit message.
  * @returns {boolean} True if the user confirms, false otherwise.
  */
-async function confirmCommitMessage(rl, commitType, commitDomain, commitMsg) {
-	const completeCommitMsg = `"[${commitType}] (${commitDomain}) - ${commitMsg}"`;
+async function confirmCommitMessage(rl, commitType, commitScope, commitMsg) {
+	const completeCommitMsg = `"[${commitType}] (${commitScope}) - ${commitMsg}"`;
 
 	console.table({ completeCommitMsg });
 
@@ -143,24 +143,21 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 	let promptFlaggedRemoteCommit = true;
 	let promptCustomRemoteCommand = true;
 
-	console.log(chalk.consoleYlow(`Valid commit types:`));
-	console.log({ COMMIT_TYPES_DETAIL });
-
 	try {
-		let { commitType, commitDomain, commitMsg } = await getCommitInformation(rl, commitAmendChoice, allWorkingGitFilesArr);
+		let { commitType, commitScope, commitMsg } = await getCommitInformation(rl, commitAmendChoice, allWorkingGitFilesArr);
 
-		while (!(await confirmCommitMessage(rl, commitType, commitDomain, commitMsg))) {
-			console.log({ commitType, commitDomain, commitMsg });
+		while (!(await confirmCommitMessage(rl, commitType, commitScope, commitMsg))) {
+			console.log({ commitType, commitScope, commitMsg });
 			commitAmendChoice = await validateUserInput(
-				`Select which prompt to amend ( "TYPE", "DOMAIN", "MESSAGE", "NONE"):`,
+				`Select which prompt to amend ( "TYPE", "SCOPE", "MESSAGE", "NONE"):`,
 				rl,
 				"AMEND"
 			);
 
-			({ commitType, commitDomain, commitMsg } = await getCommitInformation(rl, commitAmendChoice, allWorkingGitFilesArr));
+			({ commitType, commitScope, commitMsg } = await getCommitInformation(rl, commitAmendChoice, allWorkingGitFilesArr));
 
 			// Combine the commit information into a single message
-			completeCommitMsg = `"[${commitType}] (${commitDomain}) - ${commitMsg}"`;
+			completeCommitMsg = `"[${commitType}] (${commitScope}) - ${commitMsg}"`;
       console.log({completeCommitMsg})
 		}
 

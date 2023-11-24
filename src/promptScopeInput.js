@@ -3,15 +3,15 @@ const chalk = require("./lib/config/chalkConfig.js");
 
 /**
  * Module to handle inquirer prompts for Git-related tasks.
- * @module promptDomainInput
+ * @module promptScopeInput
  */
 
-const promptDomainInput = (() => {
+const promptScopeInput = (() => {
 	/**
-	 * Prompts the user to select a file representing the commit domain.
+	 * Prompts the user to select a file representing the commit scope.
 	 * @async
 	 * @function selectGitFile
-	 * @returns {Promise<string>} The selected file representing the commit domain.
+	 * @returns {Promise<string>} The selected file representing the commit scope.
 	 */
 	return {
 		selectGitFile: async (workingFilesArr) => {
@@ -21,13 +21,13 @@ const promptDomainInput = (() => {
 					{
 						type: "rawlist",
 						name: "commit_domain",
-						message: chalk.consoleB("Select a file that represents your commit domain"),
+						message: chalk.consoleB("Select a file that represents your commit scope"),
 						choices: workingFilesArr,
 					},
 				]);
 
 				// Show user the selection
-				// console.info(`\n`, chalk.consoleYlow("Selected domain "), chalk.consoleB(inquirerResponse.commit_domain), `\n`);
+				// console.info(`\n`, chalk.consoleYlow("Selected scope "), chalk.consoleB(inquirerResponse.commit_domain), `\n`);
 
 				// Return the selected file
 				return inquirerResponse.commit_domain;
@@ -38,4 +38,4 @@ const promptDomainInput = (() => {
 	};
 })();
 
-module.exports = promptDomainInput;
+module.exports = promptScopeInput;
