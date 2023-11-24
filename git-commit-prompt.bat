@@ -21,22 +21,43 @@ box_text() {
 }
 
 
+# Clear the console
 clear
+
+# Create a temporary directory named 'temp'
 mkdir temp
+
+# List the names of files that have changed and save to 'temp/changed-files.txt'
 git diff --name-only > temp/changed-files.txt
+
+# List untracked files and save to 'temp/untracked-files.txt'
 git ls-files --others --exclude-standard > temp/untracked-files.txt
-export NODE_ENV="development" 
-box_text ".GIT BRANCHES "
+
+# Set the NODE_ENV environment variable to "development"
+export NODE_ENV="development"
+
+# List all Git branches
+box_text ".GIT BRANCHES"
 git branch
-box_text ".GIT SHOW "
+
+# Show details about the last commit
+box_text ".GIT SHOW"
 git show --pretty=medium --abbrev-commit --no-patch
-box_text ".GIT STATE  "
+
+# Show the current Git status
+box_text ".GIT STATE"
 git status
-@REM git log --oneline -5
-echo ``
+
+# Display a message indicating the beginning of structuring Git commit messages
+echo ""
 echo Structuring Git commit message...
-echo ``
-box_text "> GIT COMMIT PROMPT UTILITY "
-echo ``
+echo ""
+
+box_text "> GIT COMMIT PROMPT UTILITY"
+echo ""
+
+# Run a Node.js script located at 'src/index.js' for Git commit message structuring
 node src/index.js
+
+# Display the last 10 commit messages in one line
 git log --oneline -10

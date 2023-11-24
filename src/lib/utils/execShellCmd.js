@@ -20,10 +20,8 @@ function execShellCmd(command, rl) {
 			if (error) {
 				reject(error);
 			} else if (stderr) {
-				console.log({ stderr });
 				reject(stderr);
 			} else {
-				console.log({ stdout });
 				resolve(stdout);
 			}
 		});
