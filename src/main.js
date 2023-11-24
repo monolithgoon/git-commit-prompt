@@ -46,8 +46,10 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 					break;
 
 				case "SCOPE":
-					// commitScope = await promptCommitCategoryInput("SCOPE", rl);
+					// *** hack => to allow use combined use of node readline, and Inquirer ***
+					rl.pause();
 					commitScope = await promptScopeInput.selectGitFile(allWorkingGitFilesArr);
+					rl.resume();
 					break;
 
 				case "MESSAGE":
@@ -73,11 +75,11 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 			completeCommitMsg = `"[${commitType}] (${commitScope}) - ${commitMsg}"`;
 
 			// Ensure proper quoting around the commit message to handle cases where the commit message contains special characters.
-			// const escapedCommitMsg = `"${commitMsg.replace(/"/g, '\\"')}"`;
-
+			// const escaptedCommitMsg = commitMsg.replace(/`/g, "\\`");
+			
 			// FIXME -> THIS IS CAUSING THE CMD. LINE TO THROW AN ERROR
-			const escaptedCommitMsg = commitMsg.replace(/`/g, "\\`");
-			console.log({ escaptedCommitMsg });
+			const escapedCommitMsg = `"${commitMsg.replace(/"/g, '\\"')}"`;
+			console.log({ escapedCommitMsg });
 
 			// Alert user
 			console.table({ commit_type: commitType, commit_domain: commitScope, commit_msg: commitMsg });
