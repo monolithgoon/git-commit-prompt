@@ -1,4 +1,0 @@
-git-commit-prompt.bat
-src/index.js
-src/main.js
-test/validateRemoteCommand.test.js

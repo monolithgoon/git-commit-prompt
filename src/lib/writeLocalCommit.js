@@ -1,4 +1,4 @@
-const { execGitCommand } = require("../execGitCommand.js");
+const { execGitCommand } = require("./execGitCommand.js");
 const chalk = require("./config/chalkConfig.js");
 
 /**

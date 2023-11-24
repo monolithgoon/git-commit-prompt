@@ -22,6 +22,7 @@ box_text() {
 
 
 clear
+mkdir temp
 git diff --name-only > temp/changed-files.txt
 git ls-files --others --exclude-standard > temp/untracked-files.txt
 export NODE_ENV="development" 

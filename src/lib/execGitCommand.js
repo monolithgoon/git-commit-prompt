@@ -1,5 +1,4 @@
-const chalk = require("./lib/config/chalkConfig.js");
-const { execShellCmd } = require("./lib/utils/execShellCmd.js");
+const { execShellCmd } = require("../lib/utils/execShellCmd.js");
 
 function isBenignErrChk(response) {
 	// Process stdout to extract relevant information (e.g., branch updates)
