@@ -1,6 +1,6 @@
 const { promptRemoteRepositoryInfo } = require("./promptRemoteRepositoryInfo.js");
 const chalk = require("./config/chalkConfig.js");
-const { execShellCmd } = require("./utils/execShellCmd.js");
+const { execShellCommand } = require("./utils/execShellCommand.js");
 
 /**
  * Executes a conditional remote commit based on the provided commit flag.
@@ -18,7 +18,7 @@ async function writeFlaggedRemoteCommit(readLineInterface, commitFlag) {
 
 		console.log(chalk.consoleGy("Executing remote commit command .."));
 
-		pushOriginResponse = await execShellCmd(`git ${remoteGitCommand} ${remoteRepoName} ${remoteBranchName} ${commitFlag}`, readLineInterface);
+		pushOriginResponse = await execShellCommand(`git ${remoteGitCommand} ${remoteRepoName} ${remoteBranchName} ${commitFlag}`, readLineInterface);
 		console.log({ pushOriginResponse });
 		return pushOriginResponse;
 	} catch (error) {

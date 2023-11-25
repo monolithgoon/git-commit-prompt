@@ -1,6 +1,25 @@
 #! /usr/bin/env bash
-
 @echo off
+
+# Fn. to create a temporary directory named 'temp' for storing lists of staged & unstaged Git files
+
+create_temp_dir() {
+
+    # Determine null device based on the platform
+    if [ "$(uname)" == "Darwin" ]; then
+        devNull="/dev/null"
+    elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+        devNull="/dev/null"
+    elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ] || [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then
+        devNull="nul"
+    else
+        echo "Unsupported operating system"
+        exit 1
+    fi
+
+    # Run the mkdir command and redirect stderr to the null device if "temp" already exits
+    mkdir temp 2>"$devNull"
+}
 
 box_text() {
     local text="$1"
@@ -26,8 +45,8 @@ box_text() {
 # Clear the console
 clear
 
-# Create a temporary directory named 'temp'
-mkdir temp
+# Create "temp" directory
+create_temp_dir
 
 # List the names of files that have changed and save to 'temp/changed-files.txt'
 git diff --name-only > temp/changed-files.txt
@@ -50,13 +69,10 @@ git show --pretty=medium --abbrev-commit --no-patch
 box_text ".GIT STATE    "
 git status
 
-# Display a message indicating the beginning of structuring Git commit messages
-echo ""
-echo Structuring Git commit message...
-echo ""
 
 box_text "> GIT COMMIT PROMPT UTILITY   "
-echo ""
+
+# Display a message indicating the beginning of structuring Git commit messages
 
 # Run a Node.js script located at 'src/index.js' for Git commit message structuring
 node src/index.js

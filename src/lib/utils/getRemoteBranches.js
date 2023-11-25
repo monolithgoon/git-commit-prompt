@@ -1,4 +1,4 @@
-const { execShellCmd } = require("./execShellCmd.js");
+const { execShellCommand } = require("./execShellCommand.js");
 
 /**
  * Display available remote repo names
@@ -6,6 +6,6 @@ const { execShellCmd } = require("./execShellCmd.js");
  * @returns {Promise<string>} - Resolves with the available remote branches
  */
 const getRemoteBranches = async (readLineInterface) => {
-	return execShellCmd("git branch -r", readLineInterface);
+	return execShellCommand("git branch -r", readLineInterface);
 };
 exports.getRemoteBranches = getRemoteBranches;

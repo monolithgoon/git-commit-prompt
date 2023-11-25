@@ -1,4 +1,4 @@
-const { execShellCmd } = require("../lib/utils/execShellCmd.js");
+const { execShellCommand } = require("../lib/utils/execShellCommand.js");
 
 function isBenignErrChk(response) {
 	// Process stdout to extract relevant information (e.g., branch updates)
@@ -30,7 +30,7 @@ const execGitCommand = async (
 	let commitOutput;
 	try {
 		// Execute the commit command
-		commitOutput = await execShellCmd(
+		commitOutput = await execShellCommand(
 			`git ${remoteGitCommand} ${remoteRepoName} ${remoteBranchName}`,
 			readLineInterface
 		);

@@ -1,23 +1,23 @@
 const chai = require("chai");
 const chaiAsPromised = require("chai-as-promised");
-const { execShellCmd } = require("../src/lib/execShellCmd");
+const { execShellCommand } = require("../src/lib/execShellCommand");
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 
-describe("execShellCmd function", () => {
+describe("execShellCommand function", () => {
 
 	// 1.
 	it("should resolve with stdout when the command succeeds", async () => {
-		const result = await execShellCmd(`echo Hello, Mocha`);
+		const result = await execShellCommand(`echo Hello, Mocha`);
 		expect(result).to.equal("Hello, Mocha\n");
 	});
 
 	// 2.
 	it("should reject with an error when the command fails", async () => {
 		try {
-			await execShellCmd("nonexistent-command");
+			await execShellCommand("nonexistent-command");
 			// If the command succeeds, the test should fail
-			expect.fail("Expected execShellCmd to reject but it resolved");
+			expect.fail("Expected execShellCommand to reject but it resolved");
 		} catch (error) {
 			expect(error).to.be.an("error");
 		}
@@ -26,9 +26,9 @@ describe("execShellCmd function", () => {
 	// 3.
 	it("should reject with stderr when the command has stderr output", async () => {
 		try {
-			await execShellCmd('echo "Error message" 1>&2');
+			await execShellCommand('echo "Error message" 1>&2');
 			// If the command succeeds, the test should fail
-			expect.fail("Expected execShellCmd to reject but it resolved");
+			expect.fail("Expected execShellCommand to reject but it resolved");
 		} catch (error) {
 			expect(error).to.equal("Error message\n");
 		}

@@ -6,7 +6,7 @@ const { writeFlaggedRemoteCommit } = require("./lib/writeFlaggedRemoteCommit.js"
 const { mapStringToBoolean } = require("./lib/utils/mapStringToBoolean.js");
 const { promptCommitCategoryInput } = require("./lib/promptCommitCategoryInput.js");
 const { getRemoteBranches } = require("./lib/utils/getRemoteBranches.js");
-const { execShellCmd } = require("./lib/utils/execShellCmd.js");
+const { execShellCommand } = require("./lib/utils/execShellCommand.js");
 const { promptRemoteCommitFlag } = require("./lib/promptRemoteCommitFlag.js");
 const promptScopeInput = require("./lib/promptScopeInput.js");
 const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
@@ -76,17 +76,18 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 
 			// Ensure proper quoting around the commit message to handle cases where the commit message contains special characters.
 			// const escaptedCommitMsg = commitMsg.replace(/`/g, "\\`");
-			
+
 			// FIXME -> THIS IS CAUSING THE CMD. LINE TO THROW AN ERROR
-			const escapedCommitMsg = `"${commitMsg.replace(/"/g, '\\"')}"`;
-			console.log({ escapedCommitMsg });
+			const escapedCommitMsg = commitMsg.replace(/`/g, "\\`");
 
 			// Alert user
 			console.table({ commit_type: commitType, commit_domain: commitScope, commit_msg: commitMsg });
 
 			// Alert user
-			console.info({ completeCommitMsg });
-
+			console.log('Before execShellCommand');
+			await execShellCommand(`echo "Commit Message: ${escapedCommitMsg}"`);
+			console.log('After execShellCommand');
+			
 			// Prompt user to confirm the commit message
 			let commitMsgConfirmOk = await validateUserInput(
 				"Confirm commit message is OK? ( yes / no / quit) >",
@@ -125,7 +126,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		!askToLocalCommit && (await runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr));
 
 		// Proceed -> Write local commit
-		askToLocalCommit && (localCommitOk = await writeLocalCommit(rl, completeCommitMsg));
+		askToLocalCommit && (localCommitOk = await writeLocalCommit(rl, escapedCommitMsg));
 		// askToLocalCommit && (localCommitOk = true)
 
 		// Alert user
@@ -164,7 +165,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		// allowDevLoggingChk && console.log({ askShowRemoteDiff });
 
 		// // Prompt user to be show diff. with remote branch
-		// askShowRemoteDiff && (await execShellCmd(`git show feature/inquirer-list-changed-files --minimal`, rl));
+		// askShowRemoteDiff && (await execShellCommand(`git show feature/inquirer-list-changed-files --minimal`, rl));
 
 		// Commit to remote if the user assents
 		// rl.pause()

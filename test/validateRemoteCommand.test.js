@@ -10,11 +10,11 @@ describe("exeGitCommand", () => {
 		const remoteBranchName = "master";
 		const readlineInterface = {}; // You can create a mock for readline interface if needed
 
-		// Mock the execShellCmd function
+		// Mock the execShellCommand function
 		const execAsyncStub = sinon.stub().resolves("Success response");
 
-		// Replace the actual execShellCmd function with the stub
-		sinon.replace(require("../src/lib/execShellCmd"), "execShellCmd", execAsyncStub);
+		// Replace the actual execShellCommand function with the stub
+		sinon.replace(require("../src/lib/execShellCommand"), "execShellCommand", execAsyncStub);
 
 		try {
 			await exeGitCommand(readlineInterface, remoteCommand, {
@@ -22,14 +22,14 @@ describe("exeGitCommand", () => {
 				remoteBranchName: remoteBranchName,
 			});
 
-			// Verify that execShellCmd was called with the correct arguments
+			// Verify that execShellCommand was called with the correct arguments
 			sinon.assert.calledWithExactly(
 				execAsyncStub,
 				`git ${remoteCommand} ${remoteRepoName} ${remoteBranchName}`,
 				readlineInterface
 			);
 		} finally {
-			// Restore the original execShellCmd function
+			// Restore the original execShellCommand function
 			sinon.restore();
 		}
 	});
@@ -40,18 +40,18 @@ describe("exeGitCommand", () => {
 		const remoteBranchName = "master";
 		const readlineInterface = {}; // You can create a mock for readline interface if needed
 
-		// Mock the execShellCmd function to throw an error
+		// Mock the execShellCommand function to throw an error
 		const execAsyncStub = sinon.stub().rejects(new Error("Commit failed"));
 
-		// Replace the actual execShellCmd function with the stub
-		sinon.replace(require("../src/lib/execShellCmd"), "execShellCmd", execAsyncStub);
+		// Replace the actual execShellCommand function with the stub
+		sinon.replace(require("../src/lib/execShellCommand"), "execShellCommand", execAsyncStub);
 
 		try {
 			await expect(
 				exeGitCommand(readlineInterface, remoteCommand, { remoteRepoName, remoteBranchName })
 			).to.be.rejectedWith("Commit failed");
 		} finally {
-			// Restore the original execShellCmd function
+			// Restore the original execShellCommand function
 			sinon.restore();
 		}
 	});
