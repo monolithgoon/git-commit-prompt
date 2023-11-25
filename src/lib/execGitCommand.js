@@ -1,6 +1,13 @@
+const signale = require("signale");
 const { execShellCommand } = require("../lib/utils/execShellCommand.js");
 
 function isBenignErrChk(response) {
+	console.log(response);
+
+	// Serious error ->
+	// Return false if there is no response from remote
+	if (response.signal === null) return false;
+	
 	// Process stdout to extract relevant information (e.g., branch updates)
 	const branchUpdateRegex = /To (.+?)\s+(.+?)\s+(.+) -> (.+)/;
 	const isBenignResponse = response.match(branchUpdateRegex);
@@ -36,7 +43,7 @@ const execGitCommand = async (
 		);
 
 		// Log the commit responses
-		console.info({ commitOutput });
+		signale.success(commitOutput)
 
 		return true;
 	} catch (error) {

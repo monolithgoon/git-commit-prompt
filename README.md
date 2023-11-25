@@ -1,7 +1,7 @@
 # Git Commit Prompt
 _An interactive command line utility that enforces a structured git commit message convention._
 
-##  _Overview_
+## _Highlights_
 
 This module will save you time in 3 ways -
 - **_Easy Message Formatting_** - The program guides you through setting up commit messages in a consistent way. You don't need to spend time thinking about the format.

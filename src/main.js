@@ -10,6 +10,7 @@ const { execShellCommand } = require("./lib/utils/execShellCommand.js");
 const { promptRemoteCommitFlag } = require("./lib/promptRemoteCommitFlag.js");
 const promptScopeInput = require("./lib/promptScopeInput.js");
 const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
+const createProgramState = require("./lib/createProgramState.js");
 
 function exitProgram(rlInterface) {
 	process.exitCode = 0;
@@ -27,6 +28,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		commitScope,
 		commitMsg,
 		completeCommitMsg,
+		escapedCommitMsg,
 		commitAmendChoice = null,
 		localCommitOk,
 		remoteCommitOk;
@@ -34,6 +36,25 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 	/** remove => this doesn't belong here */
 	// Show allowed commit types to user
 	console.log({ COMMIT_TYPES_DETAIL });
+
+	/** 
+	 * SANDBOX
+	 */
+	
+	// Get user inputed CLI args
+	// const { cliAnswers, cliOptions, passThroughParams } = parseRuntimeArgs();
+
+	// Init session state
+	let cliState = null;
+
+	// Set the dev. logging check option in CLI state
+	if (allowDevLoggingChk) {
+		// cliState = createProgramState({ disableEmoji: cliOptions.disableEmoji });
+	} else {
+		cliState = createProgramState();
+	}
+
+	console.log({ cliState });
 
 	try {
 		// Prompt the user for commit information until they confirm their message
@@ -78,16 +99,18 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 			// const escaptedCommitMsg = commitMsg.replace(/`/g, "\\`");
 
 			// FIXME -> THIS IS CAUSING THE CMD. LINE TO THROW AN ERROR
-			const escapedCommitMsg = commitMsg.replace(/`/g, "\\`");
+			escapedCommitMsg = completeCommitMsg.replace(/`/g, "\\`");
 
 			// Alert user
 			console.table({ commit_type: commitType, commit_domain: commitScope, commit_msg: commitMsg });
 
 			// Alert user
-			console.log('Before execShellCommand');
-			await execShellCommand(`echo "Commit Message: ${escapedCommitMsg}"`);
-			console.log('After execShellCommand');
-			
+			console.log({ escapedCommitMsg });
+			// console.log("Before execShellCommand");
+			// await execShellCommand(`cat src/index.js`);
+			// await execShellCommand(`echo "Commit Message: ${escapedCommitMsg}"`);
+			// console.log("After execShellCommand");
+
 			// Prompt user to confirm the commit message
 			let commitMsgConfirmOk = await validateUserInput(
 				"Confirm commit message is OK? ( yes / no / quit) >",

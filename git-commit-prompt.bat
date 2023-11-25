@@ -58,11 +58,11 @@ git ls-files --others --exclude-standard > temp/untracked-files.txt
 export NODE_ENV="development"
 
 # List all Git branches
-box_text ".GIT BRANCHES "
+box_text ".GIT BRANCH(S)  "
 git branch
 
 # Show details about the last commit
-box_text ".GIT SHOW "
+box_text "LATEST COMMIT "
 git show --pretty=medium --abbrev-commit --no-patch
 
 # Show the current Git status
