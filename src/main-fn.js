@@ -1,5 +1,5 @@
 const chalk = require("./lib/chalkMessages.js");
-const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
+const { COMMIT_SUBJECT_TYPES_DETAIL } = require("./lib/constants/commit_subject_types.js");
 const { validateUserInput } = require("./lib/validators/validateUserInput.js");
 const { writeRemoteCommit } = require("./writeRemoteCommit.js");
 const { execShellCommand } = require("./lib/execShellCommand.js");

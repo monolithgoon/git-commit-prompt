@@ -1,5 +1,5 @@
 const chalk = require("../config/chalkConfig.js");
-const { COMMIT_TYPES } = require("../constants/commit_types.js");
+const { COMMIT_SUBJECT_TYPES } = require("../constants/commit_subject_types.js");
 const { readlineQuestionAsync } = require("../utils/readlineQuestionAsync.js");
 
 /**
@@ -38,9 +38,9 @@ async function validateUserInput(promptMsg, rl, promptFlag) {
 				}
 
 				// Check if the user's input is a valid commit type
-				if (!Object.values(COMMIT_TYPES).includes(promptResponse.toLowerCase())) {
+				if (!Object.values(COMMIT_SUBJECT_TYPES).includes(promptResponse.toLowerCase())) {
 					console.log(chalk.consoleYlow(`Invalid input. Please enter a correct type:`));
-					console.log(COMMIT_TYPES);
+					console.log(COMMIT_SUBJECT_TYPES);
 					promptResponse = await validateUserInput(promptMsg, rl, promptFlag);
 				}
 				break;

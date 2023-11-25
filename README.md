@@ -89,7 +89,7 @@ Deletions of prior commits are denoted by "[delete]", while documentation update
 A commit that reverts a previous change is marked with "[revert]". Tasks focusing on code style, formatting, or structural modifications are assigned the "[style]" label. Lastly, additions or modifications to tests, test frameworks, or test data are categorized under "[test]".
 
 ```javascript
-const COMMIT_TYPES_DETAIL = Object.freeze({
+const COMMIT_SUBJECT_TYPES_DETAIL = Object.freeze({
 	1: "[ build  ]: Related to build or CI/CD system configuration and scripts",
 	2: "[ chore  ]: Maintenance tasks, code cleanup, or general changes that don't fit into other categories",
 	3: "[ CI     ]: Related to continuous integration and continuous deployment (CI/CD) pipeline changes",

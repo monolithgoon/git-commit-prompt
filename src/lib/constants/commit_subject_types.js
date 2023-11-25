@@ -1,4 +1,4 @@
-// const COMMIT_TYPES_DETAIL = Object.freeze({
+// const COMMIT_SUBJECT_TYPES_DETAIL = Object.freeze({
 // 	1: "FEAT: Used for new features or significant enhancements. For example: `feat: Add user authentication functionality",
 // 	2: "FIX: Indicates a commit that fixes a bug or resolves an issue. For example: `fix: Resolve issue with data not being saved",
 // 	3: "CHORE: Commits related to maintenance tasks, code cleanup, or general changes that don't fit into other categories. For example: `chore: Refactor code for better readability",
@@ -12,7 +12,7 @@
 // 	11: "REVERT: Indicates that the commit is reverting a previous commit. For example: `revert: Revert changes from commit abc123",
 // 	12: "DELETE: Delete a previous commit",
 // });
-const COMMIT_TYPES_DETAIL = Object.freeze({
+const COMMIT_SUBJECT_TYPES_DETAIL = Object.freeze({
 	1: "[ build  ]: Related to build or CI/CD system configuration and scripts",
 	2: "[ chore  ]: Maintenance tasks, code cleanup, or general changes that don't fit into other categories",
 	3: "[ CI     ]: Related to continuous integration and continuous deployment (CI/CD) pipeline changes",
@@ -27,7 +27,7 @@ const COMMIT_TYPES_DETAIL = Object.freeze({
 	12: "[ test    ]: Adding or modifying tests, test frameworks, or test data",
 });
 
-const COMMIT_TYPES = Object.freeze({
+const COMMIT_SUBJECT_TYPES = Object.freeze({
 	1: "build",
 	2: "chore",
 	3: "ci",
@@ -42,4 +42,4 @@ const COMMIT_TYPES = Object.freeze({
 	12: "test",
 });
 
-module.exports = { COMMIT_TYPES_DETAIL, COMMIT_TYPES };
+module.exports = { COMMIT_SUBJECT_TYPES_DETAIL, COMMIT_SUBJECT_TYPES };

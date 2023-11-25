@@ -9,7 +9,7 @@ const { getRemoteBranches } = require("./lib/utils/getRemoteBranches.js");
 const { execShellCommand } = require("./lib/utils/execShellCommand.js");
 const { promptRemoteCommitFlag } = require("./lib/promptRemoteCommitFlag.js");
 const promptScopeInput = require("./lib/promptScopeInput.js");
-const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
+const { COMMIT_SUBJECT_TYPES_DETAIL } = require("./lib/constants/commit_subject_types.js");
 const createProgramState = require("./lib/createProgramState.js");
 const signale = require("signale");
 
@@ -36,12 +36,12 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 
 	/** remove => this doesn't belong here */
 	// Show allowed commit types to user
-	console.log({ COMMIT_TYPES_DETAIL });
+	console.log({ COMMIT_SUBJECT_TYPES_DETAIL });
 
-	/** 
+	/**
 	 * SANDBOX
 	 */
-	
+
 	// Get user inputed CLI args
 	// const { cliAnswers, cliOptions, passThroughParams } = parseRuntimeArgs();
 
@@ -56,6 +56,10 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 	}
 
 	console.log({ cliState });
+
+	/**
+	 * SANDBOX
+	 */
 
 	try {
 		// Prompt the user for commit information until they confirm their message
@@ -176,7 +180,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 
 		// Alert user
 		// console.info({ remoteBranches });
-		signale.info({prefix: "[Remote Branches]"}, remoteBranches)
+		signale.info({ prefix: "[Remote Branches]" }, remoteBranches);
 
 		/**
 		 * todo => open git diff output below in nano
