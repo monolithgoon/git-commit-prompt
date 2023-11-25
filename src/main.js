@@ -11,6 +11,7 @@ const { promptRemoteCommitFlag } = require("./lib/promptRemoteCommitFlag.js");
 const promptScopeInput = require("./lib/promptScopeInput.js");
 const { COMMIT_TYPES_DETAIL } = require("./lib/constants/commit_types.js");
 const createProgramState = require("./lib/createProgramState.js");
+const signale = require("signale");
 
 function exitProgram(rlInterface) {
 	process.exitCode = 0;
@@ -174,7 +175,8 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		const remoteBranches = await getRemoteBranches(rl);
 
 		// Alert user
-		console.info({ remoteBranches });
+		// console.info({ remoteBranches });
+		signale.info({prefix: "[Remote Branches]"}, remoteBranches)
 
 		/**
 		 * todo => open git diff output below in nano

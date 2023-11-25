@@ -9,6 +9,11 @@
   "pkg": {
     "scripts": "src/**/*.js"
   },
+  "signale": {
+    "displayScope": true,
+    "uppercaseLabel": true,
+    "underlineLabel": false
+  },
   "scripts": {
     "test": "clear && mocha",
     "postinstall": "pkg --out-path bin -t node18 git-commit-prompt.bat"
