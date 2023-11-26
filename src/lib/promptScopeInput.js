@@ -21,13 +21,13 @@ const promptScopeInput = (() => {
 					{
 						type: "rawlist",
 						name: "commit_domain",
-						message: chalk.consoleB("Select a file that represents your commit scope"),
+						message: chalk.consoleBrBB("Select a file that represents your commit scope"),
 						choices: workingFilesArr,
 					},
 				]);
 
 				// Show user the selection
-				// console.info(`\n`, chalk.consoleYlow("Selected scope "), chalk.consoleB(inquirerResponse.commit_domain), `\n`);
+				// console.info(`\n`, chalk.consoleYB("Selected scope "), chalk.consoleBrBB(inquirerResponse.commit_domain), `\n`);
 
 				// Return the selected file
 				return inquirerResponse.commit_domain;

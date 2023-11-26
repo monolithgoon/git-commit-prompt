@@ -1,3 +1,1 @@
-const config = Object.freeze({
-  
-})
+const config = Object.freeze({});

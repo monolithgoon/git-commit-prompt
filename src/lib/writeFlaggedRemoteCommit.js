@@ -16,7 +16,7 @@ async function writeFlaggedRemoteCommit(readLineInterface, commitFlag) {
 		// // Ask the user to input a commit flag
 		// const commitFlag = await promptRemoteCommitFlag(readLineInterface);
 
-		console.log(chalk.consoleGy("Executing remote commit command .."));
+		console.log(chalk.consoleGyB("Executing remote commit command .."));
 
 		pushOriginResponse = await execShellCommand(`git ${remoteGitCommand} ${remoteRepoName} ${remoteBranchName} ${commitFlag}`, readLineInterface);
 		console.log({ pushOriginResponse });

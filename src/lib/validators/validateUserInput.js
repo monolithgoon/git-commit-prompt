@@ -22,7 +22,7 @@ async function validateUserInput(promptMsg, rl, promptFlag) {
 
 	// Check that the user input is a valid, non-empty string
 	if (typeof promptResponse !== "string" || promptResponse.trim() === "") {
-		console.log(chalk.consoleYlow(`Response must be a non-empty string`));
+		console.log(chalk.consoleYB(`Response must be a non-empty string`));
 
 		// Recursively call the function until a valid input is received
 		promptResponse = await validateUserInput(promptMsg, rl, promptFlag);
@@ -33,13 +33,13 @@ async function validateUserInput(promptMsg, rl, promptFlag) {
 
 				// Check if the input is at least 2 characters long
 				if (promptResponse.length < 2) {
-					console.log(chalk.consoleYlow("Commit type must be at least 2 characters long"));
+					console.log(chalk.consoleYB("Commit type must be at least 2 characters long"));
 					promptResponse = await validateUserInput(promptMsg, rl, promptFlag);
 				}
 
 				// Check if the user's input is a valid commit type
 				if (!Object.values(COMMIT_SUBJECT_TYPES).includes(promptResponse.toLowerCase())) {
-					console.log(chalk.consoleYlow(`Invalid input. Please enter a correct type:`));
+					console.log(chalk.consoleYB(`Invalid input. Please enter a correct type:`));
 					console.log(COMMIT_SUBJECT_TYPES);
 					promptResponse = await validateUserInput(promptMsg, rl, promptFlag);
 				}
@@ -48,7 +48,7 @@ async function validateUserInput(promptMsg, rl, promptFlag) {
 			case "SCOPE":
 				// Check if the input is at least 3 characters long
 				if (promptResponse.length < 3) {
-					console.log(chalk.consoleYlow("Commit scope must be at least 3 characters long"));
+					console.log(chalk.consoleYB("Commit scope must be at least 3 characters long"));
 					promptResponse = await validateUserInput(promptMsg, rl, promptFlag);
 				}
 				break;
@@ -56,7 +56,7 @@ async function validateUserInput(promptMsg, rl, promptFlag) {
 			case "MESSAGE":
 				// Check if the input is at least 10 characters long
 				if (promptResponse.length < 10) {
-					console.log(chalk.consoleYlow("Commit message must be at least 10 characters long"));
+					console.log(chalk.consoleYB("Commit message must be at least 10 characters long"));
 					promptResponse = await validateUserInput(promptMsg, rl, promptFlag);
 				}
 				break;
@@ -64,7 +64,7 @@ async function validateUserInput(promptMsg, rl, promptFlag) {
 			case "COMMIT_MESSAGE_OK":
 				// Check if the input is a valid confirmation response
 				if (!["yes", "y", "no", "n", "quit", "end", "close"].includes(promptResponse.toLowerCase())) {
-					console.log(chalk.consoleYlow("Invalid input. Please enter 'Y', 'N', 'END', 'QUIT' or 'CLOSE'"));
+					console.log(chalk.consoleYB("Invalid input. Please enter 'Y', 'N', 'END', 'QUIT' or 'CLOSE'"));
 					promptResponse = await validateUserInput(promptMsg, rl, promptFlag);
 				}
 				break;
@@ -72,7 +72,7 @@ async function validateUserInput(promptMsg, rl, promptFlag) {
 			case "AMEND":
 				// Check if the input is a valid amend type
 				if (!["TYPE", "SCOPE", "MESSAGE", "NONE"].includes(promptResponse.toUpperCase())) {
-					console.log(chalk.consoleYlow("Invalid input. Please enter 'TYPE', 'SCOPE', 'MESSAGE' or 'NONE'"));
+					console.log(chalk.consoleYB("Invalid input. Please enter 'TYPE', 'SCOPE', 'MESSAGE' or 'NONE'"));
 					promptResponse = await validateUserInput(promptMsg, rl, promptFlag);
 				}
 				break;
@@ -80,7 +80,7 @@ async function validateUserInput(promptMsg, rl, promptFlag) {
 			case "YES_NO_RESPONSE":
 				// Check if the input is a valid remote response
 				if (!["yes", "y", "no", "n"].includes(promptResponse.toLowerCase())) {
-					console.log(chalk.consoleYlow("Invalid input. Please enter 'Y' or 'N'"));
+					console.log(chalk.consoleYB("Invalid input. Please enter 'Y' or 'N'"));
 					promptResponse = await validateUserInput(promptMsg, rl, promptFlag);
 				}
 				break;

@@ -10,14 +10,14 @@ const chalk = require("./config/chalkConfig.js");
  */
 
 async function writeLocalCommit(readlineInterface, commitMsg) {
-	console.log(chalk.consoleGy("Writing local commit .. \n"));
+	console.log(chalk.consoleGyB("Writing local commit .. \n"));
 	try {
 
 		// Add and commit the changes using the complete commit message
 		const result = await execGitCommand(readlineInterface, `add -A && git commit -m ${commitMsg}`);
 
 		//
-		console.log(chalk.consoleYlow("Local commit successful"));
+		console.log(chalk.consoleYB("Local commit successful"));
 
 		if (result) return true;
 

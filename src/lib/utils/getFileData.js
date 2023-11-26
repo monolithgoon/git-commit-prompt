@@ -12,7 +12,7 @@ module.exports = (filePath) => {
 
     return content;
   } catch (err) {
-    console.error(chalk.consoleYlow('Error reading file:', err.message));
+    console.error(chalk.consoleYB('Error reading file:', err.message));
     return null;
   }
 };

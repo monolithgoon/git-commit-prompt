@@ -231,7 +231,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		console.error(chalk.fail(error));
 		process.exitCode = 1;
 	} finally {
-		console.log(chalk.consoleGy("Closing program ..."));
+		console.log(chalk.consoleGyB("Closing program ..."));
 		exitProgram(rl);
 	}
 }

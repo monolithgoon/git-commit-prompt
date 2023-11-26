@@ -38,7 +38,7 @@ describe("readlineQuestionAsync", () => {
 
 		// Ensure the mockInterface.question method was called with the correct arguments
 		assert.strictEqual(
-			mockInterface.question.calledWithExactly(chalkMessages.consoleB(question) + " ", sinon.match.func),
+			mockInterface.question.calledWithExactly(chalkMessages.consoleBrBB(question) + " ", sinon.match.func),
 			true
 		);
 		// Ensure the function resolves with the correct user input
@@ -88,7 +88,7 @@ describe("readlineQuestionAsync", () => {
 		// 	const result = await readlineQuestionAsync(question, rl);
 
 		// 	// Ensure the readline.question method was called with the correct arguments
-		// 	assert.strictEqual(rl.question.calledWithExactly(chalk.consoleGy(question) + " ", sinon.match.func), true);
+		// 	assert.strictEqual(rl.question.calledWithExactly(chalk.consoleGyB(question) + " ", sinon.match.func), true);
 		// 	// Ensure the function resolves with the correct user input
 		// 	assert.strictEqual(result, userInput);
 		// } finally {

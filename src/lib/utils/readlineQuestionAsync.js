@@ -10,7 +10,7 @@ const chalk = require("../config/chalkConfig.js");
 function readlineQuestionAsync(question, rl) {
   return new Promise((resolve, reject) => {
     // Ask the user the specified question
-    rl.question(chalk.consoleB(question) + ' ', (answer) => {
+    rl.question(chalk.consoleBrBB(question) + ' ', (answer) => {
       try {
         // Resolve the promise with the user's input
         resolve(answer);
@@ -23,7 +23,7 @@ function readlineQuestionAsync(question, rl) {
     // Listen for the 'close' event to ensure the readline interface is closed
     rl.once('close', () => {
       rl.close();
-      console.log(chalk.consoleGy('Readline interface closed'));
+      console.log(chalk.consoleGyB('Readline interface closed'));
     });
 
     // Listen for the 'error' event to catch errors during the question process

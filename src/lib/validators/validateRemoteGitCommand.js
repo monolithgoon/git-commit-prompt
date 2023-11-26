@@ -14,7 +14,7 @@ const validateRemoteGitCommand = async (readLineInterface) => {
 	if (Object.values(REMOTE_COMMIT_COMMANDS).includes(userCommitCommand)) {
 	} else {
 		console.log(
-			chalk.consoleYlow(
+			chalk.consoleYB(
 				`Invalid commit command. Please enter a valid commit command from the list: ${Object.values(
 					REMOTE_COMMIT_COMMANDS
 				).join(", ")}`
