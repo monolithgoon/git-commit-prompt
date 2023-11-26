@@ -16,9 +16,6 @@ async function writeLocalCommit(readlineInterface, commitMsg) {
 		// Add and commit the changes using the complete commit message
 		const result = await execGitCommand(readlineInterface, `add -A && git commit -m ${commitMsg}`);
 
-		//
-		console.log(chalk.consoleYB("Local commit successful"));
-
 		if (result) return true;
 
 	} catch (error) {

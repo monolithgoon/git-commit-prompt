@@ -1,4 +1,5 @@
 const chalk = require("./lib/config/chalkConfig.js");
+const signale = require("signale");
 const { validateUserInput } = require("./lib/validators/validateUserInput.js");
 const { writeLocalCommit } = require("./lib/writeLocalCommit.js");
 const { writeRemoteCommit } = require("./lib/writeRemoteCommit.js");
@@ -10,8 +11,10 @@ const { execShellCommand } = require("./lib/utils/execShellCommand.js");
 const { promptRemoteCommitFlag } = require("./lib/promptRemoteCommitFlag.js");
 const promptScopeInput = require("./lib/promptScopeInput.js");
 const { COMMIT_SUBJECT_TYPES_DETAIL } = require("./lib/constants/commit_subject_types.js");
-const createProgramState = require("./lib/createProgramState.js");
-const signale = require("signale");
+
+// *** sandbox ***
+const createInterfaceState = require("./lib/_createState.js");
+const runInteractivePrompts = require("./lib/_runInteractivePromts.js");
 
 function exitProgram(rlInterface) {
 	process.exitCode = 0;
@@ -44,18 +47,27 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 
 	// Get user inputed CLI args
 	// const { cliAnswers, cliOptions, passThroughParams } = parseRuntimeArgs();
+	const cliAnswers = {
+		body: undefined,
+		breaking: undefined,
+		issues: undefined,
+		lerna: undefined,
+		scope: undefined,
+		subject: undefined,
+		type: undefined,
+	};
 
 	// Init session state
 	let cliState = null;
 
 	// Set the dev. logging check option in CLI state
 	if (allowDevLoggingChk) {
-		// cliState = createProgramState({ disableEmoji: cliOptions.disableEmoji });
+		cliState = createInterfaceState();
 	} else {
-		cliState = createProgramState();
+		// cliState = createInterfaceState({ disableEmoji: cliOptions.disableEmoji });
 	}
 
-	console.log({ cliState });
+	// await runInteractivePrompts(cliState, cliAnswers);
 
 	/**
 	 * SANDBOX
@@ -101,8 +113,6 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 			completeCommitMsg = `"[${commitType}] (${commitScope}) - ${commitMsg}"`;
 
 			// Ensure proper quoting around the commit message to handle cases where the commit message contains special characters.
-			// const escaptedCommitMsg = commitMsg.replace(/`/g, "\\`");
-
 			// FIXME -> THIS IS CAUSING THE CMD. LINE TO THROW AN ERROR
 			escapedCommitMsg = completeCommitMsg.replace(/`/g, "\\`");
 
@@ -111,10 +121,6 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 
 			// Alert user
 			console.log({ escapedCommitMsg });
-			// console.log("Before execShellCommand");
-			// await execShellCommand(`cat src/index.js`);
-			// await execShellCommand(`echo "Commit Message: ${escapedCommitMsg}"`);
-			// console.log("After execShellCommand");
 
 			// Prompt user to confirm the commit message
 			let commitMsgConfirmOk = await validateUserInput(

@@ -69,14 +69,14 @@ const list = [
 // https://github.com/angular/angular/blob/master/CONTRIBUTING.md#scope
 const scopes = [];
 
-const questions = [
+const promptKeys = [
   'type',
-  'scope',
-  'subject',
-  'body',
-  'breaking',
-  'issues',
-  'lerna'
+  // 'scope',
+  // 'subject',
+  // 'body',
+  // 'breaking',
+  // 'issues',
+  // 'lerna'
 ];
 
 module.exports = {
@@ -87,7 +87,7 @@ module.exports = {
   list,
   maxMessageLength: 64,
   minMessageLength: 3,
-  questions,
+  promptKeys,
   scopes,
   types
 };
