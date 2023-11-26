@@ -66,8 +66,9 @@ box_text "LATEST COMMIT "
 git show --pretty=medium --abbrev-commit --no-patch
 
 # Show the current Git status
-box_text ".GIT STATE    "
+box_text ".GIT STATUS   "
 git status
+git status --porcelain
 
 
 box_text "> GIT COMMIT PROMPT UTILITY   "

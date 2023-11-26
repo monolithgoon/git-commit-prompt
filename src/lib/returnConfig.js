@@ -3,8 +3,8 @@
 const path = require("path");
 const fs = require("fs");
 const signale = require("signale");
-const cliConfigDefaults = require("./constants/config_defaults");
-const USER_COFIG_FILES = require("./constants/user_config_files");
+const cliConfigDefaults = require("./constants/_config_defaults");
+const USER_COFIG_FILES = require("./constants/_user_config_files");
 
 /**
  * Finds and loads configuration overrides from specified directories.
