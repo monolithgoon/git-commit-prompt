@@ -1,7 +1,7 @@
-const getGitRepoRootDir = require("./utils/getGitRepoRootDir");
+const getGitRepoRootDir = require("./utils/_getGitRepoRootDir");
 const returnConfig = require("./_returnConfig");
 
-const createInterfaceState = (defaultConfig = {}) => {
+const createGlobalState = (defaultConfig = {}) => {
 	let rootDir;
 
 	try {
@@ -11,7 +11,7 @@ const createInterfaceState = (defaultConfig = {}) => {
 	}
 
 	const globalState = {
-		promptCategoriesResponseState: {
+		promptResponseData: {
 			body: ``,
 			breaking: ``,
 			issues: ``,
@@ -30,4 +30,4 @@ const createInterfaceState = (defaultConfig = {}) => {
 	return globalState;
 };
 
-module.exports = createInterfaceState;
+module.exports = createGlobalState;

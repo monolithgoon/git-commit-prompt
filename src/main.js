@@ -1,3 +1,4 @@
+const path = require("path");
 const chalk = require("./lib/config/chalkConfig.js");
 const signale = require("signale");
 const { validateUserInput } = require("./lib/validators/validateUserInput.js");
@@ -13,9 +14,10 @@ const promptScopeInput = require("./lib/promptScopeInput.js");
 const { COMMIT_SUBJECT_TYPES_DETAIL } = require("./lib/constants/commit_subject_types.js");
 
 // *** sandbox ***
-const createInterfaceState = require("./lib/_createState.js");
+const createGlobalState = require("./lib/_createGlobalState.js");
 const runInteractivePrompts = require("./lib/_runInteractivePromts.js");
 const { pauseResumeReadline } = require("./lib/utils/pauseResumeReadline.js");
+const getDotGitDirPath = require("./lib/utils/_getDotGitDirPath.js");
 
 function exitProgram(rlInterface) {
 	process.exitCode = 0;
@@ -63,14 +65,19 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 
 	// Set the dev. logging check option in CLI state
 	if (allowDevLoggingChk) {
-		globalState = createInterfaceState();
+		globalState = createGlobalState();
 	} else {
-		// globalState = createInterfaceState({ disableEmoji: cliOptions.disableEmoji });
+		// globalState = createGlobalState({ disableEmoji: cliOptions.disableEmoji });
 	}
 
-	const promptResponses = await pauseResumeReadline(rl, runInteractivePrompts, globalState, cliAnswers);
+	// Prompt the user for parts of the commit message, and
+	// Write the responses to the global state
+	await pauseResumeReadline(rl, runInteractivePrompts, globalState, cliAnswers);
 
-	console.table(globalState.promptCategoriesResponseState)
+	// Init a .git commit msg. file
+	const commitMsgFile = path.join(getDotGitDirPath(), "COMMIT_EDITMSG");
+
+	allowDevLoggingChk && console.table(globalState.promptResponseData);
 
 	/**
 	 * SANDBOX

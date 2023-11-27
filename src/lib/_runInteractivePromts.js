@@ -9,7 +9,7 @@ inquirer.registerPrompt("list-search", ListSearchPrompt);
 const runInteractivePrompts = async (state, cliAnswers = {}) => {
 	// Update the state with inputs from the CMD line
 	Object.keys(cliAnswers).forEach((key) => {
-		state.promptCategoriesResponseState[key] = cliAnswers[key];
+		state.promptResponseData[key] = cliAnswers[key];
 	});
 
 	const prompts = createPrompts(state, cliAnswers);
@@ -20,12 +20,12 @@ const runInteractivePrompts = async (state, cliAnswers = {}) => {
 
 	console.log({ promptResponses });
 
-	Object.keys(state.promptCategoriesResponseState).forEach((promptCat) => {
+	Object.keys(state.promptResponseData).forEach((promptCat) => {
 		console.log({ promptCat });
 		console.table(promptResponses[`${promptCat}`]);
 
 		if (promptResponses[promptCat]) {
-			state.promptCategoriesResponseState[promptCat] = promptResponses[promptCat];
+			state.promptResponseData[promptCat] = promptResponses[promptCat];
 		}
 	});
 
