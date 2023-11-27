@@ -1,32 +1,35 @@
 const inquirer = require("inquirer");
-const ListSearchPrompt = require('inquirer-list-search-prompt');
+const ListSearchPrompt = require("inquirer-list-search-prompt");
 // const LimitedInputPrompt = require('./LimitedInputPrompt');
 const createPrompts = require("./_createPrompts");
 
 // inquirer.registerPrompt('limitedInput', LimitedInputPrompt);
-inquirer.registerPrompt('list-search', ListSearchPrompt);
+inquirer.registerPrompt("list-search", ListSearchPrompt);
 
 const runInteractivePrompts = async (state, cliAnswers = {}) => {
 	// Update the state with inputs from the CMD line
 	Object.keys(cliAnswers).forEach((key) => {
-		state.commitMsgCategoriesState[key] = cliAnswers[key];
+		state.promptCategoriesResponseState[key] = cliAnswers[key];
 	});
 
 	const prompts = createPrompts(state, cliAnswers);
 
 	console.log({ prompts });
 
-	const responses = await inquirer.prompt(prompts);
+	const promptResponses = await inquirer.prompt(prompts);
 
-	console.log({ responses });
+	console.log({ promptResponses });
 
-	Object.keys(state.commitMsgCategoriesState).forEach((msgCatState) => {
-		if (responses[msgCatState]) {
-			state.commitMsgCategoriesState[msgCatState] = responses[msgCatState];
+	Object.keys(state.promptCategoriesResponseState).forEach((promptCat) => {
+		console.log({ promptCat });
+		console.table(promptResponses[`${promptCat}`]);
+
+		if (promptResponses[promptCat]) {
+			state.promptCategoriesResponseState[promptCat] = promptResponses[promptCat];
 		}
 	});
 
-	return responses;
+	return promptResponses;
 };
 
 module.exports = runInteractivePrompts;

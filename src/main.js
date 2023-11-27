@@ -15,6 +15,7 @@ const { COMMIT_SUBJECT_TYPES_DETAIL } = require("./lib/constants/commit_subject_
 // *** sandbox ***
 const createInterfaceState = require("./lib/_createState.js");
 const runInteractivePrompts = require("./lib/_runInteractivePromts.js");
+const { pauseResumeReadline } = require("./lib/utils/pauseResumeReadline.js");
 
 function exitProgram(rlInterface) {
 	process.exitCode = 0;
@@ -67,23 +68,9 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 		// cliState = createInterfaceState({ disableEmoji: cliOptions.disableEmoji });
 	}
 
-	/** 
-	 * The `runWithInteraction` fn. orchestrates the pausing and resuming of Node.js's native readline interface. 
-	 * This enables the integration of Inquirer prompts within the existing flow of execution. 
-	 * By temporarily halting the readline interface, it allows Inquirer to perform its operations undisturbed, ensuring a harmonious coexistence of the native readline and Inquirer functionalities.
-	 */
-	const pauseResumeReadline = async (rl, runFn, ...args) => {
-		rl.pause();
-		try {
-			await runFn(...args);
-		} catch (error) {
-			console.error("An error occurred:", error);
-		} finally {
-			rl.resume();
-		}
-	};
+	const promptResponses = await pauseResumeReadline(rl, runInteractivePrompts, cliState, cliAnswers);
 
-	await pauseResumeReadline(rl, runInteractivePrompts, cliState, cliAnswers);
+	console.log({ promptResponses});
 
 	/**
 	 * SANDBOX
@@ -116,11 +103,9 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 				default:
 					// Here => `commitAmmendChoice` is falsy
 					commitType = await promptCommitCategoryInput("TYPE", rl);
+					// commitScope = await promptScopeInput.selectGitFile(allWorkingGitFilesArr);
 					// *** hack => to allow use combined use of node readline, and Inquirer ***
-					rl.pause();
-					commitScope = await promptScopeInput.selectGitFile(allWorkingGitFilesArr);
-					// *** hack ***
-					rl.resume();
+					commitScope = await pauseResumeReadline(rl, promptScopeInput.selectGitFile, allWorkingGitFilesArr);
 					commitMsg = await promptCommitCategoryInput("MESSAGE", rl);
 					break;
 			}

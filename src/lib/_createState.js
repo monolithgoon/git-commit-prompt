@@ -11,7 +11,7 @@ const createInterfaceState = (defaultConfig = {}) => {
 	}
 
 	const cliState = {
-		commitMsgCategoriesState: {
+		promptCategoriesResponseState: {
 			body: ``,
 			breaking: ``,
 			issues: ``,
