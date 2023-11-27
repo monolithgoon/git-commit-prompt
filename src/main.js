@@ -18,6 +18,7 @@ const createGlobalState = require("./lib/_createGlobalState.js");
 const runInteractivePrompts = require("./lib/_runInteractivePromts.js");
 const { pauseResumeReadline } = require("./lib/utils/pauseResumeReadline.js");
 const getDotGitDirPath = require("./lib/utils/_getDotGitDirPath.js");
+const parseCommandLineFlags = require("./lib/_parseCommandLineFlags.js");
 
 function exitProgram(rlInterface) {
 	process.exitCode = 0;
@@ -49,16 +50,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 	 */
 
 	// Get user inputed CLI args
-	// const { cliAnswers, cliOptions, passThroughParams } = parseRuntimeArgs();
-	const cliAnswers = {
-		body: undefined,
-		breaking: undefined,
-		issues: undefined,
-		lerna: undefined,
-		scope: undefined,
-		subject: undefined,
-		type: undefined,
-	};
+	const { cliPromptFlags, cliConfigFlags, passThroughParams } = parseCommandLineFlags();
 
 	// Init session state
 	let globalState = null;
@@ -67,12 +59,12 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 	if (allowDevLoggingChk) {
 		globalState = createGlobalState();
 	} else {
-		// globalState = createGlobalState({ disableEmoji: cliOptions.disableEmoji });
+		// globalState = createGlobalState({ disableEmoji: cliConfigFlags.disableEmoji });
 	}
 
 	// Prompt the user for parts of the commit message, and
 	// Write the responses to the global state
-	await pauseResumeReadline(rl, runInteractivePrompts, globalState, cliAnswers);
+	await pauseResumeReadline(rl, runInteractivePrompts, globalState, cliPromptFlags);
 
 	// Init a .git commit msg. file
 	const commitMsgFile = path.join(getDotGitDirPath(), "COMMIT_EDITMSG");
