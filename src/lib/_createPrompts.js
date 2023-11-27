@@ -3,16 +3,16 @@
 // const qBreaking = require('./_prompts/breaking');
 // const qIssues = require('./_prompts/issues');
 // const qLerna = require('./_prompts/lerna');
-// const qScope = require('./_prompts/scope');
+const promptScope = require('./constants/_prompts/scope-prompt');
 // const qSubject = require('./_prompts/subject');
-const promptType = require("./constants/_prompts/type");
+const promptType = require("./constants/_prompts/type-prompt");
 
 const promptCreators = {
 	// body: qBody,
 	// breaking: qBreaking,
 	// issues: qIssues,
 	// lerna: qLerna,
-	// scope: qScope,
+	scope: promptScope,
 	// subject: qSubject,
 	type: promptType,
 };

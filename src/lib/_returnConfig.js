@@ -3,7 +3,7 @@
 const path = require("path");
 const fs = require("fs");
 const signale = require("signale");
-const cliConfigDefaults = require("./constants/_config_defaults");
+const defaultConfig = require("./constants/_default_config");
 const USER_COFIG_FILES = require("./constants/_user_config_files");
 
 /**
@@ -59,17 +59,17 @@ const findConfigOverrides = (gitRepoRootDir) => {
 };
 
 /**
- * Returns the final configuration by merging defaults and overrides.
+ * Returns the final configuration by merging defaultConfig and any user-determined overrides.
  *
  * @param {string} [gitRepoRootDir] - The root directory to start searching for configuration files.
  * @returns {Object} - Merged configuration.
  */
 const returnConfig = (gitRepoRootDir) => {
 	// Get configuration overrides
-	const cliConfigOverrides = findConfigOverrides(gitRepoRootDir);
+	const userConfigOverrides = findConfigOverrides(gitRepoRootDir);
 
 	// Check if the overrides are of type object
-	if (typeof cliConfigOverrides !== "object") {
+	if (typeof userConfigOverrides !== "object") {
 		// If not, log an error and exit the process
 		signale.fatal(new TypeError("Expected changelog config to be an object."));
 
@@ -79,8 +79,8 @@ const returnConfig = (gitRepoRootDir) => {
 
 	// Merge default configuration and overrides
 	return {
-		...cliConfigDefaults,
-		...cliConfigOverrides,
+		...defaultConfig,
+		...userConfigOverrides,
 	};
 };
 
