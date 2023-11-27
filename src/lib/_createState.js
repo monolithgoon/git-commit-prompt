@@ -10,7 +10,7 @@ const createInterfaceState = (defaultConfig = {}) => {
 		throw new Error("Could not find Git root folder.");
 	}
 
-	const cliState = {
+	const globalState = {
 		promptCategoriesResponseState: {
 			body: ``,
 			breaking: ``,
@@ -27,7 +27,7 @@ const createInterfaceState = (defaultConfig = {}) => {
 		rootDir,
 	};
 
-	return cliState;
+	return globalState;
 };
 
 module.exports = createInterfaceState;

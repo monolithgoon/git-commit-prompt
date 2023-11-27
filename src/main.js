@@ -59,18 +59,18 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 	};
 
 	// Init session state
-	let cliState = null;
+	let globalState = null;
 
 	// Set the dev. logging check option in CLI state
 	if (allowDevLoggingChk) {
-		cliState = createInterfaceState();
+		globalState = createInterfaceState();
 	} else {
-		// cliState = createInterfaceState({ disableEmoji: cliOptions.disableEmoji });
+		// globalState = createInterfaceState({ disableEmoji: cliOptions.disableEmoji });
 	}
 
-	const promptResponses = await pauseResumeReadline(rl, runInteractivePrompts, cliState, cliAnswers);
+	const promptResponses = await pauseResumeReadline(rl, runInteractivePrompts, globalState, cliAnswers);
 
-	console.log({ promptResponses});
+	console.table(globalState.promptCategoriesResponseState)
 
 	/**
 	 * SANDBOX
