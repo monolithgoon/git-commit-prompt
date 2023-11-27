@@ -13,9 +13,11 @@ const { HELP_SCREEN } = require("./constants/_help_screen");
  * }}
  */
 const parseCommandLineFlags = () => {
+	// The use of _: freeArgs is specific to the minimist library and captures the positional or free arguments directly. 
+	// On the other hand, ...otherUnspecifiedArgs collects any additional parameters that were not explicitly destructured into individual variables.
 	const {
 		// eslint-disable-next-line no-unused-vars
-		_: inputs,
+		_: unspecifiedArgs,
 		"dry-run": dryRun,
 		hook,
 		"disable-emoji": disableEmoji,
@@ -32,7 +34,7 @@ const parseCommandLineFlags = () => {
 		h,
 		version,
 		v,
-		...passThroughParams
+		...otherUnspecifiedArgs
 	} = minimist(process.argv.slice(2), {
 		alias: {
 			h: "help",
@@ -77,7 +79,7 @@ const parseCommandLineFlags = () => {
 	return {
 		cliConfigFlags,
 		cliPromptFlags,
-		passThroughParams,
+		otherUnspecifiedArgs,
 	};
 };
 

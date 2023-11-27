@@ -8,17 +8,18 @@ const { writeFlaggedRemoteCommit } = require("./lib/writeFlaggedRemoteCommit.js"
 const { mapStringToBoolean } = require("./lib/utils/mapStringToBoolean.js");
 const { promptCommitCategoryInput } = require("./lib/promptCommitCategoryInput.js");
 const { getRemoteBranches } = require("./lib/utils/getRemoteBranches.js");
-const { execShellCommand } = require("./lib/utils/execShellCommand.js");
 const { promptRemoteCommitFlag } = require("./lib/promptRemoteCommitFlag.js");
 const promptScopeInput = require("./lib/promptScopeInput.js");
 const { COMMIT_SUBJECT_TYPES_DETAIL } = require("./lib/constants/commit_subject_types.js");
 
 // *** sandbox ***
+const shellescape = require("shell-escape");
 const createGlobalState = require("./lib/_createGlobalState.js");
 const runInteractivePrompts = require("./lib/_runInteractivePromts.js");
 const { pauseResumeReadline } = require("./lib/utils/pauseResumeReadline.js");
 const getDotGitDirPath = require("./lib/utils/_getDotGitDirPath.js");
 const parseCommandLineFlags = require("./lib/_parseCommandLineFlags.js");
+const { execShellCommand } = require("./lib/utils/execShellCommand.js");
 
 function exitProgram(rlInterface) {
 	process.exitCode = 0;
@@ -50,7 +51,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 	 */
 
 	// Get user inputed CLI args
-	const { cliPromptFlags, cliConfigFlags, passThroughParams } = parseCommandLineFlags();
+	const { cliPromptFlags, cliConfigFlags, otherUnspecifiedArgs } = parseCommandLineFlags();
 
 	// Init session state
 	let globalState = null;
@@ -69,7 +70,29 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 	// Init a .git commit msg. file
 	const commitMsgFile = path.join(getDotGitDirPath(), "COMMIT_EDITMSG");
 
+	// Alert user
 	allowDevLoggingChk && console.table(globalState.promptResponseData);
+
+	// **** todo
+	// fs.writeFileSync(commitMsgFile, message);
+
+	// **** todo
+	// const message = formatCommitMessage(state);
+
+	// **** todo
+	// const appendedArgs = [];
+
+	// Escape and stringify an array of arguments to be executed on the shell
+	const command = shellescape([
+		"git",
+		"commit",
+		"--file",
+		commitMsgFile,
+		// ...appendedArgs
+	]);
+
+	// **** todo
+	// execShellCommand(command);
 
 	/**
 	 * SANDBOX
