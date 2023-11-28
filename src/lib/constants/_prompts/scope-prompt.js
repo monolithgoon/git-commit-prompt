@@ -11,10 +11,8 @@ const findScope = function (substring, scopes) {
 };
 
 exports.createPrompt = (state) => {
-	const { scopes } = state.config;
-
 	const { activeGitScopes } = state;
-	// console.log({ activeGitScopes });
+	console.log({ activeGitScopes });
 
 	if (!activeGitScopes) {
 		return null;
@@ -28,10 +26,17 @@ exports.createPrompt = (state) => {
 		return null;
 	}
 
+	// activeGitScopes: [
+	// 	{ key: "1", value: "src/" },
+	// 	{ key: "2", value: "src/getUniqueDirectories.js" },
+	// ];
+	// convert activeGitScopes from objects to plain arr. of strings
+	const scopesArr = activeGitScopes.map((el) => el.value);
+
 	const prompt = {
 		message: "Select the scope this commit affects:",
 		name: "scope",
-		source: (_answers, input) => findScope(input, activeGitScopes),
+		source: (_answers, filterInput) => findScope(filterInput, scopesArr),
 		type: "list-search",
 	};
 

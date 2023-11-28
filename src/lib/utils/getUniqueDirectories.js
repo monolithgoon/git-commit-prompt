@@ -32,7 +32,12 @@ function getUniquePaths(filesArray) {
 		});
 	});
 
-	return Array.from(directories);
+	return Array.from(directories).map((item, index) => {
+		return {
+			key: (index + 1).toString(),
+			value: item,
+		};
+	});
 }
 
 exports.getUniquePaths = getUniquePaths;

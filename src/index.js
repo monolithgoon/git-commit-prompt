@@ -3,7 +3,7 @@ const { runProgram } = require("./main");
 const { createReadlineInterface } = require("./lib/utils/createReadlineInterface");
 const { promptUserForLogging } = require("./lib/promptUserForLogging");
 const { getActiveGitFiles } = require("./lib/utils/getActiveGitFiles");
-const { getUniquePaths } = require("./getUniquePaths");
+const { getUniquePaths } = require("./lib/utils/getUniqueDirectories");
 
 (async () => {
 	// Get array of all un-committed .git files
@@ -18,7 +18,7 @@ const { getUniquePaths } = require("./getUniquePaths");
 	}
 
 	//
-	const activeGitScopes = getUniquePaths(activeGitFiles.map((el) => el.value));
+	const activeGitFilePaths = getUniquePaths(activeGitFiles.map((el) => el.value));
 
 	// Create a readline interface to prompt the user for input
 	const rl = createReadlineInterface();
@@ -30,5 +30,5 @@ const { getUniquePaths } = require("./getUniquePaths");
 	allowDevLoggingChk && (process.env.ALLOW_DEV_LOGGING = true);
 
 	// Run the program
-	await runProgram(rl, allowDevLoggingChk, activeGitScopes);
+	await runProgram(rl, allowDevLoggingChk, activeGitFilePaths);
 })();

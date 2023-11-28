@@ -42,13 +42,13 @@ const execGitCommand = async (
 	let commitOutput;
 	try {
 		// Execute the commit command
-		// commitOutput = await execShellCommand(
-		// 	`git ${remoteGitCommand} ${remoteRepoName} ${remoteBranchName}`,
-		// 	readLineInterface
-		// );
 		commitOutput = await execShellCommand(
-			shellEscape([`git`, `${remoteGitCommand}`, `${remoteRepoName}`, `${remoteBranchName}`], readLineInterface)
+			`git ${remoteGitCommand} ${remoteRepoName} ${remoteBranchName}`,
+			readLineInterface
 		);
+		// commitOutput = await execShellCommand(
+		// 	shellEscape([`git`, `${remoteGitCommand}`, `${remoteRepoName}`, `${remoteBranchName}`], readLineInterface)
+		// );
 
 		// Log the commit responses
 		signale.success(`\n ${commitOutput}`);
