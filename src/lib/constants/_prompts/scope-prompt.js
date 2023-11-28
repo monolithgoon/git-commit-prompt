@@ -13,22 +13,25 @@ const findScope = function (substring, scopes) {
 exports.createPrompt = (state) => {
 	const { scopes } = state.config;
 
-	if (!scopes) {
+	const { activeGitScopes } = state;
+	// console.log({ activeGitScopes });
+
+	if (!activeGitScopes) {
 		return null;
 	}
 
-	if (!Array.isArray(scopes)) {
-		throw new TypeError("scopes must be an array of strings.");
+	if (!Array.isArray(activeGitScopes)) {
+		throw new TypeError("Scopes must be an array of strings.");
 	}
 
-	if (scopes.length < 1) {
+	if (activeGitScopes.length < 1) {
 		return null;
 	}
 
 	const prompt = {
-		message: "Select the scope this component affects:",
+		message: "Select the scope this commit affects:",
 		name: "scope",
-		source: (_answers, input) => findScope(input, scopes),
+		source: (_answers, input) => findScope(input, activeGitScopes),
 		type: "list-search",
 	};
 

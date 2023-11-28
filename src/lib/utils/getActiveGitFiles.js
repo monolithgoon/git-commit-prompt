@@ -5,7 +5,7 @@ function processArray(arr) {
 	return arr.length === 1 && arr[0] === "" ? [] : arr;
 }
 
-function getWorkingGitFiles() {
+function getActiveGitFiles() {
 	//
 	const changedFilesArr = processArray(getFileData(GIT_WORKING_FILE_PATHS.changed_files));
 	const untrackedFilesArr = processArray(getFileData(GIT_WORKING_FILE_PATHS.untracked_files));
@@ -17,17 +17,17 @@ function getWorkingGitFiles() {
 	let changedFilesPath = (GIT_WORKING_FILE_PATHS.changed_files.match(/temp\/changed-files\.txt$/) || [])[0] || "";
 	let untrackedFilesPath = (GIT_WORKING_FILE_PATHS.untracked_files.match(/temp\/untracked-files\.txt$/) || [])[0] || "";
 
-	// Exclude the changed-files.txt and untracked-files.txt
+	// Always exclude the temp `changed-files.txt` and `untracked-files.txt` files
 	allFiles = allFiles.filter((file) => file !== changedFilesPath && file !== untrackedFilesPath);
 
-	const allFilesArray = allFiles.map((item, index) => {
+	const activeGitFiles = allFiles.map((item, index) => {
 		return {
 			key: (index + 1).toString(),
 			value: item,
 		};
 	});
 
-	return allFilesArray;
+	return activeGitFiles;
 }
 
-exports.getWorkingGitFiles = getWorkingGitFiles;
+exports.getActiveGitFiles = getActiveGitFiles;

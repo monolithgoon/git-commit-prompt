@@ -33,6 +33,7 @@ const createPrompts = (state, cliAnswers) => {
 			console.log({ promptKey, idx });
 			const prompt = promptCreators[promptKey].createPrompt(state);
 
+			// **** Todo
 			// Set custom messages for prompts if configured
 			if (state.config.messages && state.config.messages[promptKey]) {
 				prompt.message = state.config.messages[promptKey];

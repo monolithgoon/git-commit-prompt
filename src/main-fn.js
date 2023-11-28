@@ -26,7 +26,7 @@ function exitProgram(rlInterface) {
  * @param {string} commitAmendChoice - User's choice to amend commit.
  * @returns {Object} Object containing commitType, commitScope, and commitMsg.
  */
-async function getCommitInformation(rl, commitAmendChoice, allWorkingGitFilesArr) {
+async function getCommitInformation(rl, commitAmendChoice, activeGitFilesArr) {
 	let commitType, commitScope, commitMsg;
 
 	switch (commitAmendChoice?.toUpperCase()) {
@@ -50,7 +50,7 @@ async function getCommitInformation(rl, commitAmendChoice, allWorkingGitFilesArr
 			rl.pause();
 			rl.resume();
 			commitMsg = await promptCommitCategoryInput("MESSAGE", rl);
-			commitScope = await promptScopeInput.selectGitFile(allWorkingGitFilesArr);
+			commitScope = await promptScopeInput.selectGitFile(activeGitFilesArr);
 			break;
 	}
 
@@ -137,14 +137,14 @@ async function handleRemoteCommit(rl) {
  * @param {readline.Interface} rl - Readline interface for user input.
  * @param {boolean} allowDevLoggingChk - Flag to allow development logging.
  */
-async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
+async function runProgram(rl, allowDevLoggingChk, activeGitFilesArr) {
 	let commitAmendChoice, completeCommitMsg;
 	let askToProceed = true;
 	let promptFlaggedRemoteCommit = true;
 	let promptCustomRemoteCommand = true;
 
 	try {
-		let { commitType, commitScope, commitMsg } = await getCommitInformation(rl, commitAmendChoice, allWorkingGitFilesArr);
+		let { commitType, commitScope, commitMsg } = await getCommitInformation(rl, commitAmendChoice, activeGitFilesArr);
 
 		while (!(await confirmCommitMessage(rl, commitType, commitScope, commitMsg))) {
 			console.log({ commitType, commitScope, commitMsg });
@@ -154,7 +154,7 @@ async function runProgram(rl, allowDevLoggingChk, allWorkingGitFilesArr) {
 				"AMEND"
 			);
 
-			({ commitType, commitScope, commitMsg } = await getCommitInformation(rl, commitAmendChoice, allWorkingGitFilesArr));
+			({ commitType, commitScope, commitMsg } = await getCommitInformation(rl, commitAmendChoice, activeGitFilesArr));
 
 			// Combine the commit information into a single message
 			completeCommitMsg = `"[${commitType}] (${commitScope}) - ${commitMsg}"`;

@@ -1,5 +1,6 @@
 const signale = require("signale");
 const { execShellCommand } = require("../lib/utils/execShellCommand.js");
+const shellEscape = require("shell-escape");
 
 function isBenignErrChk(response) {
 	// Log verbose reponse
@@ -41,9 +42,12 @@ const execGitCommand = async (
 	let commitOutput;
 	try {
 		// Execute the commit command
+		// commitOutput = await execShellCommand(
+		// 	`git ${remoteGitCommand} ${remoteRepoName} ${remoteBranchName}`,
+		// 	readLineInterface
+		// );
 		commitOutput = await execShellCommand(
-			`git ${remoteGitCommand} ${remoteRepoName} ${remoteBranchName}`,
-			readLineInterface
+			shellEscape([`git`, `${remoteGitCommand}`, `${remoteRepoName}`, `${remoteBranchName}`], readLineInterface)
 		);
 
 		// Log the commit responses

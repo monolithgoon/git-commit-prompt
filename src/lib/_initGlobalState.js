@@ -1,7 +1,7 @@
 const getGitRepoRootDir = require("./utils/_getGitRepoRootDir");
 const returnConfig = require("./_returnConfig");
 
-const createGlobalState = (defaultConfig = {}) => {
+const initGlobalState = (defaultConfig = {}) => {
 	let rootDir;
 
 	try {
@@ -20,6 +20,7 @@ const createGlobalState = (defaultConfig = {}) => {
 			subject: ``,
 			type: ``,
 		},
+		activeGitScopes: [],
 		config: {
 			...returnConfig(rootDir),
 			...defaultConfig,
@@ -30,4 +31,4 @@ const createGlobalState = (defaultConfig = {}) => {
 	return globalState;
 };
 
-module.exports = createGlobalState;
+module.exports = initGlobalState;
