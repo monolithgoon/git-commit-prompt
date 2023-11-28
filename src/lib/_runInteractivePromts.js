@@ -21,8 +21,8 @@ const runInteractivePrompts = async (state, cliAnswers = {}) => {
 	console.log({ promptResponses });
 
 	Object.keys(state.promptResponseData).forEach((promptCat) => {
-		console.log({ promptCat });
-		console.table(promptResponses[`${promptCat}`]);
+		// console.log({ promptCat });
+		// console.table(promptResponses[`${promptCat}`]);
 
 		if (promptResponses[promptCat]) {
 			state.promptResponseData[promptCat] = promptResponses[promptCat];

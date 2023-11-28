@@ -12,7 +12,7 @@ const promptKeys = [
 
 const commitTypeDetails = {
 	chore: {
-		description: "Build process or auxiliary tool changes",
+		description: "Maintenance tasks, code cleanup, or general changes that don't fit into other categories",
 		emoji: "🤖",
 		value: "chore",
 	},
