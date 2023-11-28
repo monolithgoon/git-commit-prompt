@@ -31,8 +31,14 @@ function exitProgram(rlInterface) {
  * and then executes a git commit and push to remote.
  * @function runProgram
  */
-async function runProgram(rl, allowDevLoggingChk, activeGitFilePaths) {
-	// Declare variables to store commit information
+// async function runProgram({ readlineInterface: rl, activeGitScopes: gitScopes, config: { allowDevLoggingChk } }) {
+async function runProgram(globalState) {
+	
+	//
+	const rl = globalState.sessionReadlineInterface;
+	const gitScopes = globalState.activeGitScopes;
+	const allowDevLoggingChk = globalState.config.allowDevLoggingChk;
+
 	let commitType,
 		commitScope,
 		commitMsg,
@@ -53,18 +59,18 @@ async function runProgram(rl, allowDevLoggingChk, activeGitFilePaths) {
 	// Get user inputed CLI args
 	const { cliPromptFlags, cliConfigFlags, otherUnspecifiedArgs } = parseCommandLineFlags();
 
-	// Init session state
-	let globalState = null;
+	// // Init session state
+	// let globalState = null;
 
-	// Set the dev. logging check option in CLI state
-	if (allowDevLoggingChk) {
-		globalState = initGlobalState();
-	} else {
-		// globalState = initGlobalState({ disableEmoji: cliConfigFlags.disableEmoji });
-	}
+	// // Set the dev. logging check option in CLI state
+	// if (allowDevLoggingChk) {
+	// 	globalState = initGlobalState();
+	// } else {
+	// 	// globalState = initGlobalState({ disableEmoji: cliConfigFlags.disableEmoji });
+	// }
 
-	// Update global state with array of unstaged and untracked git files
-	globalState.activeGitScopes = [...activeGitFilePaths];
+	// // Update global state with array of unstaged and untracked git files
+	// globalState.activeGitScopes = [...gitScopes];
 
 	// Prompt the user for parts of the commit message, and
 	// Write the responses to the global state
@@ -114,10 +120,10 @@ async function runProgram(rl, allowDevLoggingChk, activeGitFilePaths) {
 
 				case "SCOPE":
 					// rl.pause();
-					// commitScope = await promptScopeInput.selectGitFile(activeGitFilePaths);
+					// commitScope = await promptScopeInput.selectGitFile(gitScopes);
 					// rl.resume();
 					// *** hack => to allow use combined use of node readline, and Inquirer ***
-					commitScope = await pauseResumeReadline(rl, promptScopeInput.selectGitFile, activeGitFilePaths);
+					commitScope = await pauseResumeReadline(rl, promptScopeInput.selectGitFile, gitScopes);
 					break;
 
 				case "MESSAGE":
@@ -130,9 +136,9 @@ async function runProgram(rl, allowDevLoggingChk, activeGitFilePaths) {
 				default:
 					// Here => `commitAmmendChoice` is falsy
 					commitType = await promptCommitCategoryInput("TYPE", rl);
-					// commitScope = await promptScopeInput.selectGitFile(activeGitFilePaths);
+					// commitScope = await promptScopeInput.selectGitFile(gitScopes);
 					// *** hack => to allow use combined use of node readline, and Inquirer ***
-					commitScope = await pauseResumeReadline(rl, promptScopeInput.selectGitFile, activeGitFilePaths);
+					commitScope = await pauseResumeReadline(rl, promptScopeInput.selectGitFile, gitScopes);
 					commitMsg = await promptCommitCategoryInput("MESSAGE", rl);
 					break;
 			}
@@ -185,7 +191,7 @@ async function runProgram(rl, allowDevLoggingChk, activeGitFilePaths) {
 		allowDevLoggingChk && console.log({ askToLocalCommit });
 
 		// Recursively re-start program
-		!askToLocalCommit && (await runProgram(rl, allowDevLoggingChk, activeGitFilePaths));
+		!askToLocalCommit && (await runProgram(rl, allowDevLoggingChk, gitScopes));
 
 		// Proceed -> Write local commit
 		askToLocalCommit && (localCommitOk = await writeLocalCommit(rl, escapedCommitMsg));
@@ -195,7 +201,7 @@ async function runProgram(rl, allowDevLoggingChk, activeGitFilePaths) {
 		allowDevLoggingChk && console.log({ localCommitOk });
 
 		// Quit program if local commit fails
-		!localCommitOk && (await runProgram(rl, allowDevLoggingChk, activeGitFilePaths));
+		!localCommitOk && (await runProgram(rl, allowDevLoggingChk, gitScopes));
 
 		// Ask user to commit to remote
 		const askRemoteCollab = mapStringToBoolean(

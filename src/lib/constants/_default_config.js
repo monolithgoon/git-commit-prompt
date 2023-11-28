@@ -66,9 +66,6 @@ const commitTypeDetails = {
 // https://github.com/angular/angular/blob/master/CONTRIBUTING.md#type
 const commitTypesKeys = ["test", "feat", "fix", "chore", "docs", "refactor", "style", "ci", "perf"];
 
-// https://github.com/angular/angular/blob/master/CONTRIBUTING.md#scope
-const scopes = [`src/index.js`, `src/main.js`];
-
 module.exports = {
 	breakingChangePrefix: "🧨 ",
 	closedIssueMessage: "Closes: ",
@@ -78,6 +75,5 @@ module.exports = {
 	maxMessageLength: 64,
 	minMessageLength: 3,
 	promptKeys,
-	scopes,
 	commitTypeDetails,
 };
