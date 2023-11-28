@@ -2,7 +2,7 @@ const fuzzy = require("fuzzy");
 
 const scopeToInquirerListItem = (commitScopes, commitScope) => {
 	return {
-		name: `${commitScopes.indexOf(commitScope) + 1}: ${commitScope}`,
+		name: `${commitScopes.indexOf(commitScope) + 1}) ${commitScope}`,
 		value: commitScope,
 	};
 };

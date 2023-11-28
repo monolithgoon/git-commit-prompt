@@ -7,38 +7,36 @@ const { getUniquePaths } = require("./lib/utils/getUniqueDirectories");
 const initGlobalState = require("./lib/_initGlobalState");
 
 (async () => {
-  try {
-
-		// 
+	try {
+		//
 		const rl = createReadlineInterface();
 
-    // Prompt the user for logging preference
-    // const allowDevLoggingChk = await promptUserForLogging(createReadlineInterface());
-    const allowDevLoggingChk = await promptUserForLogging(rl);
+		// Get array of all un-committed .git files
+		const activeGitFiles = getActiveGitFiles();
 
-    // Set Node env variable based on user preferences
-    process.env.ALLOW_DEV_LOGGING = allowDevLoggingChk;
+		if (activeGitFiles.length === 0) {
+			console.log(chalk.consoleYB("Nothing to commit locally. Everything up to date."));
+			process.exit(0); // Use exit code 0 for success
+		}
 
-    // Get array of all un-committed .git files
-    const activeGitFiles = getActiveGitFiles();
+		// Prompt the user for logging preference
+		const allowDevLoggingChk = await promptUserForLogging(rl);
 
-    if (activeGitFiles.length === 0) {
-      console.log(chalk.consoleYB("Nothing to commit locally. Everything up to date."));
-      process.exit(0); // Use exit code 0 for success
-    }
+		// Set Node env variable based on user preferences
+		process.env.ALLOW_DEV_LOGGING = allowDevLoggingChk;
 
-    // Extract unique file paths from the array of uncommitted Git files
-    const activeGitFilePaths = getUniquePaths(activeGitFiles.map(({ value }) => value));
+		// Extract unique file paths from the array of uncommitted Git files
+		const activeGitFilePaths = getUniquePaths(activeGitFiles.map(({ value }) => value));
 
-    // Set global state based on user preferences
-    const globalState = initGlobalState({ allowDevLoggingChk });
+		// Set global state based on user preferences
+		const globalState = initGlobalState({ allowDevLoggingChk });
 		globalState.sessionReadlineInterface = rl;
-    globalState.activeGitScopes = [...activeGitFilePaths];
+		globalState.activeGitScopes = [...activeGitFilePaths];
 
-    // Run the program
-    await runProgram(globalState);
-  } catch (error) {
-    console.error(chalk.fail("An unexpected error occurred:", error));
-    process.exit(1); // Use exit code 1 for general errors
-  }
+		// Run the program
+		await runProgram(globalState);
+	} catch (error) {
+		console.error(chalk.fail("An unexpected error occurred:", error));
+		process.exit(1); // Use exit code 1 for general errors
+	}
 })();
