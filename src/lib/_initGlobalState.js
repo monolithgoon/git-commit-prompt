@@ -4,7 +4,8 @@ const returnConfig = require("./_returnConfig");
 
 const initGlobalState = (defaultConfig = {}) => {
   let rootDir;
-  let sessionReadlineInterface = createReadlineInterface();
+  // let sessionReadlineInterface = createReadlineInterface();
+  let sessionReadlineInterface = null
 
   try {
     // Attempt to find the Git root folder
@@ -16,6 +17,7 @@ const initGlobalState = (defaultConfig = {}) => {
 
   // Define the initial state of the global configuration
   const globalState = {
+		sessionReadlineInterface,
     promptResponseData: {
       // Initial values for prompt response data
       body: ``,
@@ -35,7 +37,6 @@ const initGlobalState = (defaultConfig = {}) => {
     },
     // Set the Git root directory and readline interface
     rootDir,
-    sessionReadlineInterface,
   };
 
   return globalState;

@@ -8,8 +8,13 @@ const initGlobalState = require("./lib/_initGlobalState");
 
 (async () => {
   try {
+
+		// 
+		const rl = createReadlineInterface();
+
     // Prompt the user for logging preference
-    const allowDevLoggingChk = await promptUserForLogging(createReadlineInterface());
+    // const allowDevLoggingChk = await promptUserForLogging(createReadlineInterface());
+    const allowDevLoggingChk = await promptUserForLogging(rl);
 
     // Set Node env variable based on user preferences
     process.env.ALLOW_DEV_LOGGING = allowDevLoggingChk;
@@ -27,6 +32,7 @@ const initGlobalState = require("./lib/_initGlobalState");
 
     // Set global state based on user preferences
     const globalState = initGlobalState({ allowDevLoggingChk });
+		globalState.sessionReadlineInterface = rl;
     globalState.activeGitScopes = [...activeGitFilePaths];
 
     // Run the program
