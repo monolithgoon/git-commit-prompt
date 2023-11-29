@@ -172,7 +172,7 @@ async function runProgram(globalState) {
 
 		// Ask user to commit to remote
 		const askToLocalCommit = mapStringToBoolean(
-			await validateUserInput("Write local commit (yes / no)", rl, "YES_NO_RESPONSE")
+			await validateUserInput("Proceed (yes) or re-start from beginning (no) >", rl, "YES_NO_RESPONSE")
 		);
 
 		// Alert user
@@ -193,7 +193,7 @@ async function runProgram(globalState) {
 
 		// Ask user to commit to remote
 		const askRemoteCollab = mapStringToBoolean(
-			await validateUserInput("Collaborate with remote? (yes / no)", rl, "YES_NO_RESPONSE")
+			await validateUserInput("Collaborate with remote? (yes / no) >", rl, "YES_NO_RESPONSE")
 		);
 
 		// Alert user
@@ -236,7 +236,7 @@ async function runProgram(globalState) {
 		let askToProceed = false;
 		!remoteCommitOk &&
 			(askToProceed = mapStringToBoolean(
-				await validateUserInput("Continue with remote commit? (yes / no)", rl, "YES_NO_RESPONSE")
+				await validateUserInput("Continue with remote commit? (yes / no) >", rl, "YES_NO_RESPONSE")
 			));
 
 		// Exit program if user declines to proceed
@@ -247,7 +247,7 @@ async function runProgram(globalState) {
 		!remoteCommitOk &&
 			(promptFlaggedRemoteCommit = mapStringToBoolean(
 				await validateUserInput(
-					"Do you want to write a --flagged .git command to commit to remote? (yes / no)",
+					"Do you want to write a --flagged .git command to commit to remote? (yes / no) >",
 					rl,
 					"YES_NO_RESPONSE"
 				)
@@ -270,7 +270,7 @@ async function runProgram(globalState) {
 		!remoteCommitOk &&
 			(promptCustomRemoteCommand = mapStringToBoolean(
 				await validateUserInput(
-					`Do you want to write a custom .git command with --flags? (yes / no)`,
+					`Do you want to write a custom .git command with --flags? (yes / no) >`,
 					rl,
 					"YES_NO_RESPONSE"
 				)
