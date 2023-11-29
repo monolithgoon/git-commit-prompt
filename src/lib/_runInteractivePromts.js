@@ -17,17 +17,17 @@ inquirer.registerPrompt("list-search", ListSearchPrompt);
  * @function runInteractivePrompts
  * @memberof module:InteractivePrompts
  * @param {Object} state - The state object containing session information.
- * @param {Object} cliAnswers - Answers provided through the command line.
+ * @param {Object} cliPromptFlags - Flags provided through the command line.
  * @returns {Promise<Object>} A Promise that resolves with the user's prompt responses.
  */
-const runInteractivePrompts = async (state, cliAnswers = {}) => {
+const runInteractivePrompts = async (state, cliPromptFlags = {}) => {
   // Update the state with inputs from the CMD line
-  Object.keys(cliAnswers).forEach((key) => {
-    state.promptResponseData[key] = cliAnswers[key];
+  Object.keys(cliPromptFlags).forEach((key) => {
+    state.promptResponseData[key] = cliPromptFlags[key];
   });
 
-  // Generate prompts based on the state and CLI answers
-  const prompts = createPrompts(state, cliAnswers);
+  // Generate prompts based on the state and CLI flags
+  const prompts = createPrompts(state, cliPromptFlags);
 
   // Log generated prompts for debugging
   console.log({ prompts });
