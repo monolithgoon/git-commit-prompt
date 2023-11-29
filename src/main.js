@@ -27,14 +27,15 @@ function exitProgram(rlInterface) {
 }
 
 /**
- * @description Prompts the user for a commit message,
- * and then executes a git commit and push to remote.
+ * Executes a series of prompts to gather information for a Git commit,
+ * writes the commit locally, and optionally pushes it to a remote repository.
+ * @async
  * @function runProgram
+ * @param {Object} globalState - The global state object containing session information.
+ * @returns {Promise<void>} A Promise that resolves when the program completes.
  */
-// async function runProgram({ readlineInterface: rl, activeGitScopes: gitScopes, config: { allowDevLoggingChk } }) {
 async function runProgram(globalState) {
-	
-	//
+	// Extract props. of global state
 	const rl = globalState.sessionReadlineInterface;
 	const gitScopes = globalState.activeGitScopes;
 	const allowDevLoggingChk = globalState.config.allowDevLoggingChk;
@@ -58,19 +59,6 @@ async function runProgram(globalState) {
 
 	// Get user inputed CLI args
 	const { cliPromptFlags, cliConfigFlags, otherUnspecifiedArgs } = parseCommandLineFlags();
-
-	// // Init session state
-	// let globalState = null;
-
-	// // Set the dev. logging check option in CLI state
-	// if (allowDevLoggingChk) {
-	// 	globalState = initGlobalState();
-	// } else {
-	// 	// globalState = initGlobalState({ disableEmoji: cliConfigFlags.disableEmoji });
-	// }
-
-	// // Update global state with array of unstaged and untracked git files
-	// globalState.activeGitScopes = [...gitScopes];
 
 	// Prompt the user for parts of the commit message, and
 	// Write the responses to the global state

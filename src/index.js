@@ -22,14 +22,20 @@ const initGlobalState = require("./lib/_initGlobalState");
 		// Prompt the user for logging preference
 		const allowDevLoggingChk = await promptUserForLogging(rl);
 
+		// *** todo ***
+		// Select default config options from checklist
+		const commitAllFilesChk = await promptUserForLogging(rl);
+
 		// Set Node env variable based on user preferences
 		process.env.ALLOW_DEV_LOGGING = allowDevLoggingChk;
 
 		// Extract unique file paths from the array of uncommitted Git files
 		const activeGitFilePaths = getUniquePaths(activeGitFiles.map(({ value }) => value));
 
-		// Set global state based on user preferences
-		const globalState = initGlobalState({ allowDevLoggingChk });
+		// Set global state defaultConfig object based on user preferences
+		const globalState = initGlobalState({ allowDevLoggingChk, commitAllFilesChk });
+
+		// Update global state properties
 		globalState.sessionReadlineInterface = rl;
 		globalState.activeGitScopes = [...activeGitFilePaths];
 

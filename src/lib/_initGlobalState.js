@@ -4,8 +4,7 @@ const returnConfig = require("./_returnConfig");
 
 const initGlobalState = (defaultConfig = {}) => {
   let rootDir;
-  // let sessionReadlineInterface = createReadlineInterface();
-  let sessionReadlineInterface = null
+  let sessionReadlineInterface = null;
 
   try {
     // Attempt to find the Git root folder
