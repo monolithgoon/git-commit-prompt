@@ -1,4 +1,3 @@
-const { createReadlineInterface } = require("./utils/createReadlineInterface");
 const getGitRepoRootDir = require("./utils/_getGitRepoRootDir");
 const returnConfig = require("./_returnConfig");
 

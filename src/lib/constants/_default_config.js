@@ -67,13 +67,13 @@ const commitTypeDetails = {
 const commitTypesKeys = ["test", "feat", "fix", "chore", "docs", "refactor", "style", "ci", "perf"];
 
 module.exports = {
+	format,
+	promptKeys,
+	commitTypeDetails,
+	commitTypesKeys,
 	breakingChangePrefix: "🧨 ",
 	closedIssueMessage: "Closes: ",
 	closedIssuePrefix: "✔ ",
-	format,
-	commitTypesKeys,
 	maxMessageLength: 64,
 	minMessageLength: 3,
-	promptKeys,
-	commitTypeDetails,
 };

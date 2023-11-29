@@ -9,6 +9,7 @@ const createPrompts = require("./_createPrompts");
  * @memberof module:InteractivePrompts
  */
 inquirer.registerPrompt("list-search", ListSearchPrompt);
+// inquirer.registerPrompt('limitedInput', LimitedInputPrompt); **** todo ****
 
 /**
  * Runs interactive prompts using Inquirer to gather user input.

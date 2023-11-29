@@ -34,7 +34,7 @@ const promptCreators = {
  * @param {Object} cliPromptFlags - Flags provided through the command line for prompts.
  * @returns {Array<Object>} An array of prompts to be used with Inquirer.
  */
-const createPrompts = (state, cliPromptFlags) => {
+const createPrompts = (state, cliPromptFlags = {}) => {
   // Console logs are left in the code, likely for debugging purposes
   console.log(state.config.promptKeys);
 
