@@ -9,3 +9,6 @@ https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesConn
 ###
 
 https://blog.logrocket.com/building-typescript-cli-node-js-commander/
+
+### _NPM Packages_
+https://github.com/faressoft/terminalizer

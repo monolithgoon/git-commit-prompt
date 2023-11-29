@@ -21,22 +21,23 @@ const { updateObjectWithArray } = require("./lib/utils/updateObjectWithArray");
 			process.exit(0); // Use exit code 0 for success
 		}
 
-		// Prompt the user for logging preference
-		const allowDevLoggingChk = await promptUserForLogging(rl);
-		console.log({ allowDevLoggingChk });
+		// // Prompt the user for logging preference
+		// const allowDevLoggingChk = await promptUserForLogging(rl);
 
-		// Set Node env variable based on user preferences
-		process.env.ALLOW_DEV_LOGGING_CHK = allowDevLoggingChk;
+		// // Set Node env variable based on user preferences
+		// process.env.ALLOW_DEV_LOGGING_CHK = allowDevLoggingChk;
 
 		// Extract unique file paths from the array of uncommitted Git files
 		const activeGitFilePaths = getUniquePaths(activeGitFiles.map(({ value }) => value));
 
 		// Update `defaultConfig` object props. based on user preferences
-		const globalState = initGlobalState({ allowDevLoggingChk });
+		// const globalState = initGlobalState({ allowDevLoggingChk });
+		const globalState = initGlobalState();
 
 		// *** todo ***
 		// Select default config options from checklist
 		const runtimeConfigOverrides = await promptForRuntimeConfigs();
+		console.log({ runtimeConfigOverrides });
 
 		// Update global state properties
 		globalState.sessionReadlineInterface = rl;
@@ -50,5 +51,3 @@ const { updateObjectWithArray } = require("./lib/utils/updateObjectWithArray");
 		process.exit(1); // Use exit code 1 for general errors
 	}
 })();
-
-
