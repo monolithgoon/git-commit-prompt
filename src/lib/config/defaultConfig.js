@@ -1,6 +1,6 @@
 const format = "{type}{scope}: {emoji}{subject}";
 
-const promptKeys = [
+const promptCategoryKeys = [
 	"type",
 	"scope",
 	// 'subject',
@@ -68,9 +68,12 @@ const commitTypesKeys = ["test", "feat", "fix", "chore", "docs", "refactor", "st
 
 module.exports = {
 	format,
-	promptKeys,
+	promptCategoryKeys,
 	commitTypeDetails,
 	commitTypesKeys,
+	allowDevLoggingChk: false,
+	commitAllFilesChk: false,
+	pushToOriginChk: false,
 	breakingChangePrefix: "🧨 ",
 	closedIssueMessage: "Closes: ",
 	closedIssuePrefix: "✔ ",

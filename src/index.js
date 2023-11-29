@@ -5,6 +5,8 @@ const { promptUserForLogging } = require("./lib/promptUserForLogging");
 const { getActiveGitFiles } = require("./lib/utils/getActiveGitFiles");
 const { getUniquePaths } = require("./lib/utils/getUniqueDirectories");
 const initGlobalState = require("./lib/_initGlobalState");
+const promptForRuntimeConfigs = require("./lib/_runRuntimeConfigPrompts");
+const { updateObjectWithArray } = require("./lib/utils/updateObjectWithArray");
 
 (async () => {
 	try {
@@ -21,23 +23,25 @@ const initGlobalState = require("./lib/_initGlobalState");
 
 		// Prompt the user for logging preference
 		const allowDevLoggingChk = await promptUserForLogging(rl);
-
-		// *** todo ***
-		// Select default config options from checklist
-		const commitAllFilesChk = await promptUserForLogging(rl);
+		console.log({ allowDevLoggingChk });
 
 		// Set Node env variable based on user preferences
-		process.env.ALLOW_DEV_LOGGING = allowDevLoggingChk;
+		process.env.ALLOW_DEV_LOGGING_CHK = allowDevLoggingChk;
 
 		// Extract unique file paths from the array of uncommitted Git files
 		const activeGitFilePaths = getUniquePaths(activeGitFiles.map(({ value }) => value));
 
-		// Set global state defaultConfig object based on user preferences
-		const globalState = initGlobalState({ allowDevLoggingChk, commitAllFilesChk });
+		// Update `defaultConfig` object props. based on user preferences
+		const globalState = initGlobalState({ allowDevLoggingChk });
+
+		// *** todo ***
+		// Select default config options from checklist
+		const runtimeConfigOverrides = await promptForRuntimeConfigs();
 
 		// Update global state properties
 		globalState.sessionReadlineInterface = rl;
 		globalState.activeGitScopes = [...activeGitFilePaths];
+		updateObjectWithArray(globalState.config, runtimeConfigOverrides);
 
 		// Run the program
 		await runProgram(globalState);
@@ -46,3 +50,5 @@ const initGlobalState = require("./lib/_initGlobalState");
 		process.exit(1); // Use exit code 1 for general errors
 	}
 })();
+
+

@@ -36,9 +36,11 @@ const promptCreators = {
  */
 const createPrompts = (state, cliPromptFlags = {}) => {
   // Console logs are left in the code, likely for debugging purposes
-  console.log(state.config.promptKeys);
+  console.log(state.config.promptCategoryKeys);
 
-  const prompts = state.config.promptKeys
+  // Create a prompt for each category defined in state
+  const prompts = state.config.promptCategoryKeys
+  
 		// Filter out prompt keys for which CLI args already exist
     .filter((promptKey) => cliPromptFlags[promptKey] === undefined)
 

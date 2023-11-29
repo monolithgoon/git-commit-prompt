@@ -3,12 +3,11 @@
 const path = require("path");
 const fs = require("fs");
 const signale = require("signale");
-const defaultConfig = require("./constants/_default_config");
+const defaultConfig = require("./config/defaultConfig");
 const USER_COFIG_FILES = require("./constants/_user_config_files");
 
 /**
  * Finds and loads configuration overrides from specified directories.
- *
  * @param {string} [gitRepoRootDir] - The root directory to start searching for configuration files.
  * @returns {Object} - Configuration overrides, if found.
  */
@@ -60,7 +59,6 @@ const findConfigOverrides = (gitRepoRootDir) => {
 
 /**
  * Returns the final configuration by merging defaultConfig and any user-determined overrides.
- *
  * @param {string} [gitRepoRootDir] - The root directory to start searching for configuration files.
  * @returns {Object} - Merged configuration.
  */

@@ -1,1 +1,0 @@
-const config = Object.freeze({});
