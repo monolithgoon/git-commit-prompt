@@ -4,7 +4,7 @@
   "description": "Command line utility to structure your git commit messages",
   "main": "git-commit-prompt.bat",
   "bin": {
-    "git-commit-prompt": "git-commit-prompt.bat"
+    "prompt": "git-commit-prompt.bat"
   },
   "pkg": {
     "scripts": "src/**/*.js"
@@ -39,6 +39,7 @@
     "chai-as-promised": "^7.1.1",
     "mocha": "^10.2.0",
     "pkg": "^5.8.1",
+    "signale": "^1.4.0",
     "sinon": "^17.0.1"
   }
 }
