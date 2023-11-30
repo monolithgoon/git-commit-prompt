@@ -8,46 +8,47 @@ const initGlobalState = require("./lib/_initGlobalState");
 const promptForRuntimeConfigs = require("./lib/_runRuntimeConfigPrompts");
 const { updateObjectWithArray } = require("./lib/utils/updateObjectWithArray");
 
+// Execute the main functionality in an asynchronous IIFE
 (async () => {
-	try {
-		//
-		const rl = createReadlineInterface();
+  try {
+    // Create a Readline interface for user input
+    const rl = createReadlineInterface();
 
-		// Get array of all un-committed .git files
-		const activeGitFiles = getActiveGitFiles();
+    // Get an array of all uncommitted .git files
+    const activeGitFiles = getActiveGitFiles();
 
-		if (activeGitFiles.length === 0) {
-			console.log(chalk.consoleYB("Nothing to commit locally. Everything up to date."));
-			process.exit(0); // Use exit code 0 for success
-		}
+    // Check if there are no uncommitted files
+    if (activeGitFiles.length === 0) {
+      console.log(chalk.consoleYB("Nothing to commit locally. Everything is up to date."));
+      process.exit(0); // Use exit code 0 for success
+    }
 
-		// // Prompt the user for logging preference
-		// const allowDevLoggingChk = await promptUserForLogging(rl);
+    // Extract unique file paths from the array of uncommitted Git files
+    const activeGitFilePaths = getUniquePaths(activeGitFiles.map(({ value }) => value));
 
-		// // Set Node env variable based on user preferences
-		// process.env.ALLOW_DEV_LOGGING_CHK = allowDevLoggingChk;
+		// Prompt to set the program's behaviour from a checklist
+    const runtimeConfigOverrides = await promptForRuntimeConfigs();
+    console.log({ runtimeConfigOverrides });
 
-		// Extract unique file paths from the array of uncommitted Git files
-		const activeGitFilePaths = getUniquePaths(activeGitFiles.map(({ value }) => value));
+    // Destructure relevant properties from runtimeConfigOverrides
+    const { allowDevLoggingChk, commitAllFilesChk, collabWithOriginChk } = runtimeConfigOverrides;
 
-		// Update `defaultConfig` object props. based on user preferences
-		// const globalState = initGlobalState({ allowDevLoggingChk });
-		const globalState = initGlobalState();
+    // Initialize the global state, and update it's config property with user preferences
+    const globalState = initGlobalState({ allowDevLoggingChk, commitAllFilesChk, collabWithOriginChk });
 
-		// *** todo ***
-		// Select default config options from checklist
-		const runtimeConfigOverrides = await promptForRuntimeConfigs();
-		console.log({ runtimeConfigOverrides });
+    // Update global state properties
+    globalState.sessionReadlineInterface = rl;
+    globalState.activeGitScopes = [...activeGitFilePaths];
 
-		// Update global state properties
-		globalState.sessionReadlineInterface = rl;
-		globalState.activeGitScopes = [...activeGitFilePaths];
-		updateObjectWithArray(globalState.config, runtimeConfigOverrides);
+		// Update globalState config obj. without hard-coded destructurinng like above 
+    // Note: This line is currently commented; uncomment if needed
+    // updateObjectWithArray(globalState.config, runtimeConfigOverrides);
 
-		// Run the program
-		await runProgram(globalState);
-	} catch (error) {
-		console.error(chalk.fail("An unexpected error occurred:", error));
-		process.exit(1); // Use exit code 1 for general errors
-	}
+    // Run the main program logic
+    await runProgram(globalState);
+  } catch (error) {
+    // Handle unexpected errors
+    console.error(chalk.fail("An unexpected error occurred:", error));
+    process.exit(1); // Use exit code 1 for general errors
+  }
 })();

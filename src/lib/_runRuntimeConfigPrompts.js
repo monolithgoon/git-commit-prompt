@@ -33,7 +33,7 @@ const cliOptions = [
 	},
 	{
 		index: 3,
-		name: "pushToOriginChk",
+		name: "collabWithOriginChk",
 		description: "Push commit to remote?",
 	},
 	// Add more options as needed

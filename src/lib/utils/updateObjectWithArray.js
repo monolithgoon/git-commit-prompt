@@ -8,7 +8,7 @@ function updateObjectWithArray(originalObj, updatesArr) {
 	// updatesArr => [
 	// 	{ allowDevLoggingChk: true },
 	// 	{ commitAllFilesChk: true },
-	// 	{ pushToOriginChk: true }
+	// 	{ collabWithOriginChk: true }
 	// ]
 	updatesArr.forEach((update) => {
 		// update => { allowDevLoggingChk: true }
