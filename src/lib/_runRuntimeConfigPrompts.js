@@ -24,17 +24,17 @@ const cliOptions = [
 	{
 		index: 1,
 		name: "allowDevLoggingChk",
-		description: "Allow development logging?",
+		description: " Allow development logging?",
 	},
 	{
 		index: 2,
 		name: "commitAllFilesChk",
-		description: "Commit all files?",
+		description: " Commit all files?",
 	},
 	{
 		index: 3,
 		name: "collabWithOriginChk",
-		description: "Push commit to remote?",
+		description: " Push commit to remote?",
 	},
 	// Add more options as needed
 ];

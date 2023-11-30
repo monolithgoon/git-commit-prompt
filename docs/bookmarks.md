@@ -12,3 +12,4 @@ https://blog.logrocket.com/building-typescript-cli-node-js-commander/
 
 ### _NPM Packages_
 https://github.com/faressoft/terminalizer
+https://www.npmjs.com/package/inquirer-checkbox-plus-prompt
