@@ -7,12 +7,14 @@ const { createReadlineInterface } = require("./lib/utils/createReadlineInterface
 const { getActiveGitFiles } = require("./lib/utils/getActiveGitFiles");
 const { getUniquePaths } = require("./lib/utils/getUniqueDirectories");
 const initGlobalState = require("./lib/_initGlobalState");
-const promptForRuntimeConfigs = require("./lib/_runRuntimeConfigPrompts");
-const { updateObjectWithArray } = require("./lib/utils/updateObjectWithArray");
+const promptForInitConfigs = require("./lib/_runInitConfigPrompts");
 
 // Execute the main functionality in an asynchronous IIFE
 (async () => {
 	try {
+		// get root dir of project
+		const rootDir = getGitRepoRootDir();
+
 		// Create a Readline interface for user input
 		const rl = createReadlineInterface();
 
@@ -31,27 +33,24 @@ const { updateObjectWithArray } = require("./lib/utils/updateObjectWithArray");
 		// *** todo ***
 		// 1. Check if program preferences file (git-commit-prompt.json) exists
 		// 2. If it exists, skip this step
-		// 3. If not (aka. first time program is run), prompt user to set the program's behaviour via a checklist -> const initProgramConfigs = await promptForRuntimeConfigs();
+		// 3. If not (aka. first time program is run), prompt user to set the program's behaviour via a checklist -> const initProgramConfigs = await promptForInitConfigs();
 		// 4. Persist user specified preferences (`initProgramConfigs`)to a config file
 
-		// Check if the preferences file exists
-		const preferencesExistChk = await checkPreferencesFileExists();
+		// Check if a preferences file exists
+		const preferencesExistChk = await checkPreferencesFileExists(rootDir);
 
 		if (!preferencesExistChk) {
-			// If the preferences file does not exist, prompt for preferences
-			const initProgramConfigs = await promptPreferences();
+			// If the preferences file does not exist,
+			// prompt user to set the program's permanent behaviour via a checklist
+			const initProgramConfigs = await promptForInitConfigs();
 
 			console.log({ initProgramConfigs });
 
 			// Persist the preferences to the preferences file
-			await persistPreferences(initProgramConfigs);
+			await persistDataToJsonFile(rootDir, initProgramConfigs);
 		} else {
 			console.log("Preferences file already exists. Skipping configuration prompt.");
 		}
-
-		// // Prompt to set the program's behaviour from a checklist
-		// const initProgramConfigs = await promptForRuntimeConfigs();
-		// console.log({ initProgramConfigs });
 
 		// Initialize the global state, and update it's config property with user preferences
 		const globalState = initGlobalState();
@@ -59,10 +58,6 @@ const { updateObjectWithArray } = require("./lib/utils/updateObjectWithArray");
 		// Update global state properties
 		globalState.sessionReadlineInterface = rl;
 		globalState.activeGitScopes = [...activeGitFilePaths];
-
-		// *** remove ***
-		// Update globalState config obj. without hard-coded destructurinng like above
-		// updateObjectWithArray(globalState.config, initProgramConfigs);
 
 		// Run the main program logic
 		await runProgram(globalState);
@@ -77,9 +72,8 @@ const { updateObjectWithArray } = require("./lib/utils/updateObjectWithArray");
  * Checks if the program preferences file (git-commit-prompt.json) exists.
  * @returns {boolean} True if the preferences file exists, false otherwise.
  */
-async function checkPreferencesFileExists() {
+async function checkPreferencesFileExists(rootDir) {
 	try {
-		const rootDir = getGitRepoRootDir();
 		// Construct the path to the preferences file
 		const preferencesFilePath = path.join(rootDir, "git-commit-prompt-config.json");
 
@@ -93,23 +87,13 @@ async function checkPreferencesFileExists() {
 }
 
 /**
- * Prompts the user to set the program's behavior via a checklist.
- * @returns {Object} User-specified preferences.
- */
-async function promptPreferences() {
-	// Prompt user for runtime configurations
-	const initProgramConfigs = await promptForRuntimeConfigs();
-	return initProgramConfigs;
-}
-
-/**
  * Persists user-specified preferences to a preferences file.
  * @param {Object} preferences - User-specified preferences.
  */
-async function persistPreferences(preferences) {
+async function persistDataToJsonFile(rootDir, fileName, data) {
 	try {
 		// Construct the path to the preferences file
-		const preferencesFilePath = path.join(__dirname, "git-commit-prompt-config.json");
+		const preferencesFilePath = path.join(rootDir, "git-commit-prompt-config.json");
 
 		// Write the user-specified preferences to the preferences file
 		await fs.writeFile(preferencesFilePath, JSON.stringify(preferences, null, 2));

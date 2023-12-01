@@ -75,8 +75,6 @@ const returnConfig = (gitRepoRootDir) => {
 		process.exit(1);
 	}
 
-	console.log({ userConfigOverrides });
-
 	// Merge default configuration and overrides
 	return {
 		...defaultConfig,
