@@ -51,6 +51,9 @@ create_temp_dir
 # List the names of files that have changed and save to 'temp/changed-files.txt'
 git diff --name-only > temp/changed-files.txt
 
+# Store files which have been staged with `git add` 
+git status --short > temp/staged-files.txt
+
 # List untracked files and save to 'temp/untracked-files.txt'
 git ls-files --others --exclude-standard > temp/untracked-files.txt
 

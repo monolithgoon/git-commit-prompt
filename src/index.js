@@ -35,7 +35,7 @@ const { updateObjectWithArray } = require("./lib/utils/updateObjectWithArray");
 		// 4. Persist user specified preferences (`initProgramConfigs`)to a config file
 
 		// Check if the preferences file exists
-		const preferencesExistChk = await preferencesFileExists();
+		const preferencesExistChk = await checkPreferencesFileExists();
 
 		if (!preferencesExistChk) {
 			// If the preferences file does not exist, prompt for preferences
@@ -77,7 +77,7 @@ const { updateObjectWithArray } = require("./lib/utils/updateObjectWithArray");
  * Checks if the program preferences file (git-commit-prompt.json) exists.
  * @returns {boolean} True if the preferences file exists, false otherwise.
  */
-async function preferencesFileExists() {
+async function checkPreferencesFileExists() {
 	try {
 		const rootDir = getGitRepoRootDir();
 		// Construct the path to the preferences file
