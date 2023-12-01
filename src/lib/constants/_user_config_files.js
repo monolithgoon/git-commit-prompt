@@ -1,4 +1,4 @@
 // List of configuration files to search for in `getConfig.js` module
-USER_CONFIG_FILES = [".git-cz.json", "changelog.config.js", "changelog.config.cjs", "changelog.config.json"];
+PROGRAM_CONFIG_FILES = ["git-commit-prompt.json", "changelog.config.js", "changelog.config.cjs", "changelog.config.json"];
 
-module.exports = USER_CONFIG_FILES;
+module.exports = PROGRAM_CONFIG_FILES;

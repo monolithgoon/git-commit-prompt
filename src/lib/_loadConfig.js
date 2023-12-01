@@ -4,7 +4,7 @@ const path = require("path");
 const fs = require("fs");
 const signale = require("signale");
 const defaultConfig = require("./config/defaultConfig");
-const USER_COFIG_FILES = require("./constants/_user_config_files");
+const PROGRAM_CONFIG_FILES = require("./constants/_user_config_files");
 
 /**
  * Finds and loads configuration overrides from specified directories.
@@ -15,7 +15,7 @@ const findConfigOverrides = (gitRepoRootDir) => {
 	// Set the current directory to the provided gitRepoRootDir or the current working directory
 	const dir = gitRepoRootDir || process.cwd();
 
-	for (const file of USER_COFIG_FILES) {
+	for (const file of PROGRAM_CONFIG_FILES) {
 		// Resolve the absolute path for the current file
 		const filename = path.resolve(dir, file);
 
@@ -74,6 +74,8 @@ const returnConfig = (gitRepoRootDir) => {
 		// eslint-disable-next-line no-process-exit
 		process.exit(1);
 	}
+
+	console.log({ userConfigOverrides });
 
 	// Merge default configuration and overrides
 	return {

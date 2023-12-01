@@ -75,7 +75,7 @@ box_text "> GIT COMMIT PROMPT UTILITY 🚀    "
 
 # Display a message indicating the beginning of structuring Git commit messages
 
-# Run a Node.js script located at 'src/index.js' for Git commit message structuring
+# Run the Node.js script located at 'src/index.js' for Git commit message structuring
 node src/index.js
 
 box_text "GIT LOG   "

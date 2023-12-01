@@ -1,5 +1,5 @@
 const getGitRepoRootDir = require("./utils/_getGitRepoRootDir");
-const loadConfig = require("./_loadConfig");
+const loadConfigsFromFile = require("./_loadConfig");
 
 /**
  * Initializes the global state for the CLI program.
@@ -8,7 +8,8 @@ const loadConfig = require("./_loadConfig");
  * @returns {Object} The initialized global state.
  * @throws {Error} Throws an error if the Git root folder is not found.
  */
-const initGlobalState = (runtimeConfigOverrides = {}) => {
+// const initGlobalState = (runtimeConfigOverrides = {}) => {
+const initGlobalState = () => {
 	let rootDir;
 	let sessionReadlineInterface = null;
 
@@ -36,9 +37,9 @@ const initGlobalState = (runtimeConfigOverrides = {}) => {
 		// Active Git scopes initially set to an empty array
 		activeGitScopes: [],
 		config: {
-			// Merge the configuration from loadConfig and runtimeConfigOverrides
-			...loadConfig(rootDir),
-			...runtimeConfigOverrides,
+			// Merge the configuration from loadConfigsFromFile and runtimeConfigOverrides
+			...loadConfigsFromFile(rootDir),
+			// ...runtimeConfigOverrides,
 		},
 		// Set the Git root directory and readline interface
 		rootDir,

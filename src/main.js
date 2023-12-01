@@ -39,8 +39,6 @@ async function runProgram(globalState) {
 	const rl = globalState.sessionReadlineInterface;
 	const gitScopes = globalState.activeGitScopes;
 	const allowDevLoggingChk = globalState.config.allowDevLoggingChk;
-	console.log(globalState.config)
-	console.log({ allowDevLoggingChk });
 
 	let commitType,
 		commitScope,
