@@ -1,4 +1,5 @@
-# Git Commit Prompt
+# _Git Commit Prompt_
+
 _An interactive command line utility that enforces a structured git commit message convention._
 
 ##  _Overview_
