@@ -2,9 +2,9 @@
 
 _An interactive command line utility that enforces a structured git commit message convention._
 
-##  _Overview_
+## _Overview_
 
-This module will save you time in 3 ways -
+This module will save you time in 3 ways:
 
 📌 **_Easy Message Formatting_** - The program guides you through setting up commit messages in a consistent way. You don't need to spend time thinking about the format.
 
@@ -16,7 +16,6 @@ Select the type of change:
 ...
 
 Enter a short, imperative tense description (max 50 characters):
-
 ```
 
 📌 ***Task Tracking Made Simple -*** If your team tracks tasks or issues, the prompt can automatically link commits to these tasks. This means less manual work for you——no need to mention or close tasks in every commit.
@@ -34,61 +33,45 @@ Select an operation:
 3. Push changes to a remote
 ```
 
-## _Details_
+## _Usage_
 
-### Version
+### _Run_
+
+Run the tool using the following command:
+
 ```bash
-0.0.1
+bash git-commit-prompt.bat
 ```
 
 ### _Commit Structure_
 
-### `[ TAG ] (<SCOPE>) - <MESSAGE>`
-
-This CLI tool enforces a strict, opinionated approach to commit messages in a way that enhances clarity, consistency and organization for a codebase. Each commit is tagged with a label enclosed in square brackets, signifying the category of change, followed by a `SCOPE` — preferebaly a specific file, but could be a directory — indicating where the major change was made, and finally followed by a brief `MESSAGE` describing the commit.
-
-## _Installation_
-
-### _Executables_
-
-The executables encapsulate the Node.js runtime, and all other necessary dependencies inside a single binary file.
-
-Download the pre-compiled binaries here -
-
-| Operating System |Supported Versions 
-|--- |-----------
-| Windows | Microsoft Windows 10+
-| Linux | Ubuntu 20.04+ (x64 and ARM64)
-| macOS | 11+ (x64 and ARM64)
-
-### _Builds_
-
-In order to build VOSTOK, you need to have the GNU C++ compiler (g++), CMake (cmake) and any build system supported by CMake (e.g. GNU make, see all supported generators) installed on your computer. Optionally, VOSTOK may take advantage of OpenMP installed in your system.
-
-To build VOSTOK, create a build directory (CMake prefers out-of-source builds to not clutter up your sources with build artifacts), navigate to it and invoke cmake:
-
-```bash
-git clone https://github.com/GIScience/vostok
-mkdir vostok_build && cd vostok_build
-cmake ../vostok
-cmake --build .
+```text
+[ TAG ] (<SCOPE>) - <MESSAGE>
 ```
 
-The resulting executable vostok resides in your build directory. See all supported CMake generators, if you want CMake to generate project files for your favourite IDE (e.g. cmake -G"Visual Studio 12 2013 Win64" ../vostok).
+This CLI enforces a strict, opinionated commit message format for clarity, consistency, and organization.  
+- **TAG**: Category of change (e.g., `[feat]`, `[fix]`)  
+- **SCOPE**: Specific file or directory affected  
+- **MESSAGE**: A brief description of the commit  
 
-## _Run_
+## _Git Commit Categories_
 
-### `bash git-commit-prompt.bat`
+Outlined below are predefined Git commit message tags, each mapped to a specific category:
 
-## _Pre-set Git Commit Categories_
-
-This outlines a set of Git commit message tags, each associated with a specific category of changes.
-
-For instance, the "[build]" tag relates to configurations and scripts linked to the build or CI/CD system. Maintenance tasks, code cleanup, and general changes that don't fit elsewhere fall under the "[chore]" category. Continuous integration and deployment alterations are captured by the "[CI]" tag.
-
-Deletions of prior commits are denoted by "[delete]", while documentation updates, including comments, README files, or code documentation, are labeled as "[docs]". Introductions of new features or substantial enhancements are marked with "[feat]". Bug fixes or issue resolutions are appropriately tagged with "[fix]". Performance improvements are identified by "[perf]", and commits involving code refactoring without altering external behavior use the "[refactor]" tag.
-
-A commit that reverts a previous change is marked with "[revert]". Tasks focusing on code style, formatting, or structural modifications are assigned the "[style]" label. Lastly, additions or modifications to tests, test frameworks, or test data are categorized under "[test]".
+| Tag         | Description                                                |
+|-------------|------------------------------------------------------------|
+| `[build]`   | Build system configuration or CI/CD updates               |
+| `[chore]`   | Maintenance, cleanup, or uncategorized changes            |
+| `[CI]`      | CI/CD pipeline modifications                              |
+| `[delete]`  | Deletions of previous commits                             |
+| `[docs]`    | Documentation updates                                     |
+| `[feat]`    | New features or major enhancements                        |
+| `[fix]`     | Bug fixes or issue resolutions                            |
+| `[perf]`    | Performance improvements                                  |
+| `[refactor]`| Code refactoring without functional changes               |
+| `[revert]`  | Revert a previous commit                                  |
+| `[style]`   | Code style, formatting, or structural adjustments         |
+| `[test]`    | Add or modify tests, frameworks, or data                  |
 
 ```javascript
 const COMMIT_TYPES_DETAIL = Object.freeze({
@@ -109,6 +92,12 @@ const COMMIT_TYPES_DETAIL = Object.freeze({
 
 ## _Details_
 
+### _Version_
+
+```bash
+0.0.1
+```
+
 ### _System Diagram_
 
 ![git-commit-prompt-sys-diagram](https://github.com/monolithgoon/git-commit-prompt/assets/60096838/331824a1-f4ef-4a47-92c1-5574067c50b5)
@@ -117,3 +106,31 @@ const COMMIT_TYPES_DETAIL = Object.freeze({
 
 ![git-commit-prompt-flow](https://github.com/monolithgoon/git-commit-prompt/assets/60096838/00533453-5d40-49c5-a336-058fd6967a6e)
 
+## _Installation_
+
+### _Executables_
+
+The executables encapsulate the Node.js runtime and all other necessary dependencies inside a single binary file.
+
+Download the pre-compiled binaries here:
+
+| Operating System | Supported Versions |
+|------------------|--------------------|
+| Windows          | Microsoft Windows 10+ |
+| Linux            | Ubuntu 20.04+ (x64 and ARM64) |
+| macOS            | 11+ (x64 and ARM64) |
+
+---
+
+### _Builds_
+
+To build the tool, you need to have the GNU C++ compiler (`g++`), CMake (`cmake`), and a CMake-supported build system (e.g., GNU Make) installed. OpenMP is optional but supported.
+
+```bash
+git clone https://github.com/GIScience/vostok
+mkdir vostok_build && cd vostok_build
+cmake ../vostok
+cmake --build .
+```
+
+The resulting executable will reside in your build directory. Use `cmake -G` to generate project files for IDEs if needed.
