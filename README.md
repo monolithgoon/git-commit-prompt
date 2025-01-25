@@ -5,7 +5,8 @@ _An interactive command line utility that enforces a structured git commit messa
 ##  _Overview_
 
 This module will save you time in 3 ways -
-- **_Easy Message Formatting_** - The program guides you through setting up commit messages in a consistent way. You don't need to spend time thinking about the format.
+
+📌 **_Easy Message Formatting_** - The program guides you through setting up commit messages in a consistent way. You don't need to spend time thinking about the format.
 
 ```bash
 Select the type of change:
@@ -18,13 +19,13 @@ Enter a short, imperative tense description (max 50 characters):
 
 ```
 
-- ***Task Tracking Made Simple -*** If your team tracks tasks or issues, the prompt can automatically link commits to these tasks. This means less manual work for you——no need to mention or close tasks in every commit.
+📌 ***Task Tracking Made Simple -*** If your team tracks tasks or issues, the prompt can automatically link commits to these tasks. This means less manual work for you——no need to mention or close tasks in every commit.
 
 ```bash
 Enter the task/issue number (or leave blank if not applicable):
 ```
 
-- ***Quick Branch and Remote Operations -*** The prompt simplifies common Git tasks like creating branches or pushing changes. It gives developers shortcuts, so they don't have to remember and type out complex commands, saving them time and effort.
+📌 ***Quick Branch and Remote Operations -*** The prompt simplifies common Git tasks like creating branches or pushing changes. It gives developers shortcuts, so they don't have to remember and type out complex commands, saving them time and effort.
 
 ```bash
 Select an operation:
